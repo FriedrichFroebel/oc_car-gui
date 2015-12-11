@@ -1,9 +1,11 @@
 Opencaching.de - Caches entlang einer Route (GUI-Version)
 ===
 
+Download des lauffähigen Programms (JAR-Datei) unter ***Releases*** (https://github.com/FriedrichFroebel/oc_car-gui/releases)
+
 Dies ist eine Version des oc_car-Skriptes in Java mit grafischer Oberfläche.
 
-Dabei habe ich mich so weit wie möglich an das Original gehalten, musste aber im Endeffekt das meiste komplett neu schreiben, da z. B. ein Einbinden von GPSBabel etc. nicht so einfach möglich ist.
+Dabei habe ich mich so weit wie möglich an das Original gehalten, musste aber im Endeffekt das meiste komplett neu schreiben, da z.B. ein Einbinden von GPSBabel etc. nicht so einfach möglich ist.
 
 Dadurch entfällt die Notwendigkeit der Installation zusätzlicher Software. Zudem sollte das Programm auch ohne Anpassungen auf den unterschiedlichen Plattformen laufen.
 
