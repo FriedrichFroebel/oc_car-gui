@@ -36,6 +36,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -43,14 +44,13 @@ import javax.swing.SwingConstants;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.FileUtils;
-import javax.swing.JPasswordField;
 
 public class oc_car extends JFrame {
 	
-	//Programmversion zur Analyse für eventuell verfügbares Update
+	//Programmversion zur Analyse fÃ¼r eventuell verfÃ¼gbares Update
 	private static String version = "1.0";
 	
-	//erweiterte Konsolenausgabe ist standardmäßig deaktiviert
+	//erweiterte Konsolenausgabe ist standardmÃ¤ÃŸig deaktiviert
 	private static boolean debug = false;
 	
 	//Variablen, die von anderen Fenstern beeinflusst werden
@@ -62,12 +62,12 @@ public class oc_car extends JFrame {
 	private static String ocUser = "User";
 	private static double Radius = 2;
 	private static String Start = "Stuttgart";
-	private static String Ziel = "München";
+	private static String Ziel = "MÃ¼nchen";
 	private static int Arten = 1023;
 	private static String Difficulty = "1-5";
 	private static String Terrain = "1-5";
 	
-	//Einbinden einer Datei mit Konfigurationswerten ermöglichen
+	//Einbinden einer Datei mit Konfigurationswerten ermÃ¶glichen
 	private Properties config = new Properties();
 	
 	//Radius als String formatieren
@@ -95,8 +95,8 @@ public class oc_car extends JFrame {
 	private static String sender = "absender@gmail.com";
 	private static String receiver = "empfaenger@gmail.com";
 	private static String password = "";
-	private static String subject = "oc_car - Die GPX-Datei für Deine Route";
-	private static String body = "Die GPX-Datei für Deine Route!";
+	private static String subject = "oc_car - Die GPX-Datei fÃ¼r Deine Route";
+	private static String body = "Die GPX-Datei fÃ¼r Deine Route!";
 
 	//GUI-Elemente, auf die zugegriffen werden muss
 	private JPanel contentPane;
@@ -140,14 +140,14 @@ public class oc_car extends JFrame {
 	//Frame erstellen
 	public oc_car() {
 		setTitle("Opencaching.de - Caches entlang einer Route"); //Titel
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Aktion beim Drücken des X
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Aktion beim DrÃ¼cken des X
 		setBounds(100, 100, 500, 393); //Position und Abmessungen
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		//Beschriftungen bei Textfeldern für Routenabfrage
+		//Beschriftungen bei Textfeldern fÃ¼r Routenabfrage
 		
 		JLabel lblBenutzer = new JLabel("Benutzer:");
 		lblBenutzer.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -184,7 +184,7 @@ public class oc_car extends JFrame {
 		lblTerrainbereich.setBounds(10, 145, 136, 15);
 		contentPane.add(lblTerrainbereich);
 		
-		//Textfelder für Routenabfrage
+		//Textfelder fÃ¼r Routenabfrage
 		
 		tfBenutzer = new JTextField();
 		tfBenutzer.addFocusListener(new FocusAdapter() {
@@ -287,7 +287,7 @@ public class oc_car extends JFrame {
 		tfTerrainbereich.setBounds(152, 143, 100, 20);
 		contentPane.add(tfTerrainbereich);
 		
-		//Radiobuttons für Auswahl der Cachearten
+		//Radiobuttons fÃ¼r Auswahl der Cachearten
 		
 		JRadioButton rdbtnAlle = new JRadioButton("alle");
 		rdbtnAlle.addMouseListener(new MouseAdapter() {
@@ -316,7 +316,7 @@ public class oc_car extends JFrame {
 		rdbtnAuswaehlen.setBounds(204, 96, 100, 23);
 		contentPane.add(rdbtnAuswaehlen);
 		
-		//Radiobuttons gruppieren, damit nur einer ausgewählt werden kann
+		//Radiobuttons gruppieren, damit nur einer ausgewÃ¤hlt werden kann
 		ButtonGroup arten = new ButtonGroup();
 		arten.add(rdbtnAlle);
 		arten.add(rdbtnAuswaehlen);
@@ -334,7 +334,7 @@ public class oc_car extends JFrame {
 		btnGpxRouteLaden.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) { //Enter-Taste gedrückt
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) { //Enter-Taste gedrÃ¼ckt
 					JFileChooser gpxeingabe = new JFileChooser();
 					FileNameExtensionFilter gpx = new FileNameExtensionFilter("GPX-Dateien", "gpx", "GPX");
 					gpxeingabe.setFileFilter(gpx);
@@ -371,7 +371,7 @@ public class oc_car extends JFrame {
 				//nur GPX-Dateien erlauben
 				FileNameExtensionFilter gpx = new FileNameExtensionFilter("GPX-Dateien", "gpx", "GPX");
 				gpxeingabe.setFileFilter(gpx);
-				if (loadpath.equals("")) { //bisher noch keine (gültige) GPX-Datei geladen
+				if (loadpath.equals("")) { //bisher noch keine (gÃ¼ltige) GPX-Datei geladen
 					File f = new File(System.getProperty("user.home") + File.separator + "occar");
 					gpxeingabe.setCurrentDirectory(f);
 				} else { //bereits einmal GPX-Datei geladen
@@ -379,11 +379,11 @@ public class oc_car extends JFrame {
 					gpxeingabe.setCurrentDirectory(f);
 				}
 				int option = gpxeingabe.showOpenDialog(null);
-				//wenn Datei ausgewählt worden ist
+				//wenn Datei ausgewÃ¤hlt worden ist
 				if (option == JFileChooser.APPROVE_OPTION) {
 					//Pfad ermitteln
 					String pfadEingabe = gpxeingabe.getSelectedFile().getAbsolutePath();
-					//Dateiendung prüfen
+					//Dateiendung prÃ¼fen
 					if (FilenameUtils.getExtension(pfadEingabe).toUpperCase().equals("GPX")) {
 						if (debug) System.out.println(pfadEingabe);
 						loadpath = pfadEingabe;
@@ -407,7 +407,7 @@ public class oc_car extends JFrame {
 		sepAllgemeinMail.setBounds(10, 170, 460, 2);
 		contentPane.add(sepAllgemeinMail);
 		
-		//Beschriftungen bei Textfeldern für E-Mail-Versand
+		//Beschriftungen bei Textfeldern fÃ¼r E-Mail-Versand
 		
 		JLabel lblMailserver = new JLabel("E-Mail-Server:");
 		lblMailserver.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -439,7 +439,7 @@ public class oc_car extends JFrame {
 		lblMailtext.setBounds(10, 265, 100, 14);
 		contentPane.add(lblMailtext);
 		
-		//Textfelder für E-Mail-Versand
+		//Textfelder fÃ¼r E-Mail-Versand
 		
 		tfMailserver = new JTextField();
 		tfMailserver.addFocusListener(new FocusAdapter() {
@@ -610,7 +610,7 @@ public class oc_car extends JFrame {
 		btnStartSuche.setBounds(320, 119, 130, 23);
 		contentPane.add(btnStartSuche);
 		
-		checkNewVersion(); //auf neue Version prüfen
+		checkNewVersion(); //auf neue Version prÃ¼fen
 		readConfig(); //Konfigurationsdatei lesen
 		printInitialConfig(); //Konfiguration ausgeben
 		
@@ -625,12 +625,12 @@ public class oc_car extends JFrame {
 		
 	}
 
-	//Zahlenwert für Cachearten erhalten (in Klasse arten_choose verwendet)
+	//Zahlenwert fÃ¼r Cachearten erhalten (in Klasse arten_choose verwendet)
 	public int getCachearten() {
 		return Arten;
 	}
 
-	//Zahlenwert für Cachearten setzen (in Klasse arten_choose verwendet)
+	//Zahlenwert fÃ¼r Cachearten setzen (in Klasse arten_choose verwendet)
 	public void setCachearten(int cachearten) {
 		oc_car.Arten = cachearten;
 	}
@@ -638,7 +638,7 @@ public class oc_car extends JFrame {
 	//Parameter in Konfigurationsdatei schreiben
 	private boolean writeConfig() {
 		try {
-			//Parameter für Routenabfrage
+			//Parameter fÃ¼r Routenabfrage
 			config.setProperty("ocUser", ocUser);
 			config.setProperty("Radius", df_radius.format(Radius));
 			config.setProperty("Start", Start);
@@ -647,7 +647,7 @@ public class oc_car extends JFrame {
 			config.setProperty("Difficulty", Difficulty);
 			config.setProperty("Terrain", Terrain);
 			
-			//Parameter für E-Mail-Versand
+			//Parameter fÃ¼r E-Mail-Versand
 			config.setProperty("host", host);
 			config.setProperty("port", port);
 			config.setProperty("sender", sender);
@@ -658,7 +658,7 @@ public class oc_car extends JFrame {
 			//in XML-Datei schreiben
 			File f = new File(System.getProperty("user.home") + File.separator + "occar" + File.separator + "occar_config.xml");
 			OutputStream o = new FileOutputStream(f);
-			config.storeToXML(o, "Config-Datei für oc_car");
+			config.storeToXML(o, "Config-Datei fÃ¼r oc_car");
 		} catch (IOException e) {
 			if (debug) e.printStackTrace();
 			return false;
@@ -679,22 +679,22 @@ public class oc_car extends JFrame {
 				s = new FileInputStream(f);
 				config.loadFromXML(s);
 				
-				//Parameter für Routenabfrage
+				//Parameter fÃ¼r Routenabfrage
 				ocUser = config.getProperty("ocUser", "User");
 				Radius = Double.parseDouble(config.getProperty("Radius", "2"));
 				Start = config.getProperty("Start", "Stuttgart");
-				Ziel = config.getProperty("Ziel", "München");
+				Ziel = config.getProperty("Ziel", "MÃ¼nchen");
 				Arten = Integer.parseInt(config.getProperty("Arten", "1023"));
 				Difficulty = config.getProperty("Difficulty", "1-5");
 				Terrain = config.getProperty("Terrain", "1-5");
 				
-				//Parameter für E-Mail-Versand
+				//Parameter fÃ¼r E-Mail-Versand
 				host = config.getProperty("host", "smtp.gmail.com");
 				port = config.getProperty("port", "587");
 				sender = config.getProperty("sender", "absender@gmail.com");
 				receiver = config.getProperty("receiver", "empfaenger@gmail.com");
-				subject = config.getProperty("subject", "oc_car - Die GPX-Datei für Deine Route");
-				body = config.getProperty("body", "Die GPX-Datei für Deine Route!");
+				subject = config.getProperty("subject", "oc_car - Die GPX-Datei fÃ¼r Deine Route");
+				body = config.getProperty("body", "Die GPX-Datei fÃ¼r Deine Route!");
 			}
 		} catch (IOException e) {
 			if (debug) e.printStackTrace();
@@ -733,7 +733,7 @@ public class oc_car extends JFrame {
 	        is = url.openStream(); 
 	        br = new BufferedReader(new InputStreamReader(is));
 
-	        line = br.readLine(); //Antwort speichern (nur eine Zeile zurückgeliefert)
+	        line = br.readLine(); //Antwort speichern (nur eine Zeile zurÃ¼ckgeliefert)
 	        
 	        is.close();
 	    } catch (MalformedURLException e) {
@@ -741,16 +741,16 @@ public class oc_car extends JFrame {
 	        return false;
 	    } catch (IOException e) {
 	    	javax.swing.JOptionPane.showMessageDialog(null,
-	    			"Benutzer nicht gefunden!\nBitte Aufrufparameter prüfen!",
-	    			"Ungültiger Benutzername",
+	    			"Benutzer nicht gefunden!\nBitte Aufrufparameter prÃ¼fen!",
+	    			"UngÃ¼ltiger Benutzername",
 	    			JOptionPane.INFORMATION_MESSAGE);
-	        if (debug) System.out.println("Benutzer nicht gefunden! Bitte Aufrufparameter prüfen!");
+	        if (debug) System.out.println("Benutzer nicht gefunden! Bitte Aufrufparameter prÃ¼fen!");
 	        if (debug) System.out.println(line);
 	        return false;
 	    }
 	    if (debug) System.out.println(line);
 	    try {
-	    	//Rückgabestring auf String "uuid" überprüfen
+	    	//RÃ¼ckgabestring auf String "uuid" Ã¼berprÃ¼fen
 	    	if (!line.substring(2,6).equals("uuid")) return false;
 	    } catch (StringIndexOutOfBoundsException e) {
 	    	if (debug) e.printStackTrace();
@@ -770,17 +770,17 @@ public class oc_car extends JFrame {
 	    String line = "";
 	    String Start_mod = "";
 	    
-	    //Umlaute, Leerzeichen ersetzen; ungültige Zeichen entfernen
+	    //Umlaute, Leerzeichen ersetzen; ungÃ¼ltige Zeichen entfernen
 	    for (int i = 0; i < Start.length(); i++) {
 	    	switch (Start.charAt(i)) {
 	    		case ' ': Start_mod += "+"; break;
-	    		case 'Ä':
-	    		case 'ä': Start_mod += "ae"; break;
-	    		case 'Ö':
-	    		case 'ö': Start_mod += "oe"; break;
-	    		case 'Ü':
-	    		case 'ü': Start_mod += "ue"; break;
-	    		case 'ß': Start_mod += "ss"; break;
+	    		case 'Ã„':
+	    		case 'Ã¤': Start_mod += "ae"; break;
+	    		case 'Ã–':
+	    		case 'Ã¶': Start_mod += "oe"; break;
+	    		case 'Ãœ':
+	    		case 'Ã¼': Start_mod += "ue"; break;
+	    		case 'ÃŸ': Start_mod += "ss"; break;
 	    		default: if ((((Start.charAt(i) >= 'A') && Start.charAt(i) <= 'Z'))
     							|| ((Start.charAt(i) >= 'a') && (Start.charAt(i) <= 'z'))
     							|| ((Start.charAt(i) >= '0') && (Start.charAt(i) <= '9'))) {
@@ -848,13 +848,13 @@ public class oc_car extends JFrame {
 	    for (int i = 0; i < Ziel.length(); i++) {
 	    	switch (Ziel.charAt(i)) {
 	    		case ' ': Ziel_mod += "+"; break;
-	    		case 'Ä':
-	    		case 'ä': Ziel_mod += "ae"; break;
-	    		case 'Ö':
-	    		case 'ö': Ziel_mod += "oe"; break;
-	    		case 'Ü':
-	    		case 'ü': Ziel_mod += "ue"; break;
-	    		case 'ß': Ziel_mod += "ss"; break;
+	    		case 'Ã„':
+	    		case 'Ã¤': Ziel_mod += "ae"; break;
+	    		case 'Ã–':
+	    		case 'Ã¶': Ziel_mod += "oe"; break;
+	    		case 'Ãœ':
+	    		case 'Ã¼': Ziel_mod += "ue"; break;
+	    		case 'ÃŸ': Ziel_mod += "ss"; break;
 	    		default: if ((((Ziel.charAt(i) >= 'A') && Ziel.charAt(i) <= 'Z'))
     							|| ((Ziel.charAt(i) >= 'a') && (Ziel.charAt(i) <= 'z'))
     							|| ((Ziel.charAt(i) >= '0') && (Ziel.charAt(i) <= '9'))) {
@@ -915,7 +915,7 @@ public class oc_car extends JFrame {
 			URL url = new URL("http://www.yournavigation.org/api/1.0/gosmore.php?flat=" + latS + "&flon=" + lngS + "&tlat=" + latZ + "&tlon=" + lngZ + "&v=motorcar&fast=1");
 	        File file = new File(System.getProperty("user.home") + File.separator + "occar" + File.separator + "route.kml");
 	        if (file.exists()) {
-	        	file.delete(); //eventuell existierende Datei gleichen Namens löschen
+	        	file.delete(); //eventuell existierende Datei gleichen Namens lÃ¶schen
 	        }
 			FileUtils.copyURLToFile(url, file, 0, 0); //Datei speichern
 		} catch (MalformedURLException e) {
@@ -937,7 +937,7 @@ public class oc_car extends JFrame {
 		    int anzahlZeilen = 0;
 
 		    while (line != null) { //solange noch nicht Dateiende erreicht
-		        if (line.charAt(0) != '<' && line.charAt(0) != ' ') { //linksbündige Zeile suchen
+		        if (line.charAt(0) != '<' && line.charAt(0) != ' ') { //linksbÃ¼ndige Zeile suchen
 		        	if (anzahlZeilen % 10 == 0) { //nur jede 10. Zeile im Array speichern
 		        		coords_list[stelleImArray] = line;
 		        		stelleImArray++;
@@ -1004,7 +1004,7 @@ public class oc_car extends JFrame {
 		    		}
 					
 		    	}
-		        line = br.readLine(); //nächste Zeile lesen
+		        line = br.readLine(); //nÃ¤chste Zeile lesen
 		    }
 		    
 		    br.close();
@@ -1030,14 +1030,14 @@ public class oc_car extends JFrame {
 		return true;
 	}
 	
-	//Radius überprüfen
+	//Radius Ã¼berprÃ¼fen
 	private boolean checkRadius() {
-		if (Radius < 0.1) { //Radius groß genug
+		if (Radius < 0.1) { //Radius groÃŸ genug
 			javax.swing.JOptionPane.showMessageDialog(null, "Der eingegebene Radius ist zu klein!");
 			return false;
 		}
 		if (Radius > 10) { //Radius klein genug
-			javax.swing.JOptionPane.showMessageDialog(null, "Der eingegebene Radius ist zu groß!");
+			javax.swing.JOptionPane.showMessageDialog(null, "Der eingegebene Radius ist zu groÃŸ!");
 			return false;
 		}
 		return true;
@@ -1047,7 +1047,7 @@ public class oc_car extends JFrame {
 	private boolean requestCaches() {
 		String arten = "";
 		
-		//gewünschte Cachearten auslesen
+		//gewÃ¼nschte Cachearten auslesen
 		if (!alleArten) {
 			//bitweiser Vergleich mit entsprechender Maske
 			if ((Arten & (1<<0)) == (1<<0)) {
@@ -1130,7 +1130,7 @@ public class oc_car extends JFrame {
 		    BufferedReader br;
 		    String line = "";
 		    
-		    //die Koordinaten werden genau verkehrt herum gespeichert und müssen umgedreht werden
+		    //die Koordinaten werden genau verkehrt herum gespeichert und mÃ¼ssen umgedreht werden
 		    int j = 0;
 		    String coords_fehler = coords_list[i];
 		    while (coords_fehler.charAt(j) != ',') {
@@ -1141,7 +1141,7 @@ public class oc_car extends JFrame {
 		    //System.out.println(coords);
 		    
 		    try {
-		    	//Abfrage durchführen (Mittelpunkt-Suche mit Radius)
+		    	//Abfrage durchfÃ¼hren (Mittelpunkt-Suche mit Radius)
 		    	if (alleArten) {
 		    		url = new URL("http://www.opencaching.de/okapi/services/caches/search/nearest?center="
 		    				+ coords
@@ -1181,14 +1181,14 @@ public class oc_car extends JFrame {
 		    }
 		    //System.out.println(line);
 		    
-		    //prüfen, ob Dose gefunden
+		    //prÃ¼fen, ob Dose gefunden
 		    if (line.length() < 30) {
 		    	//keine Dose in diesem Bereich
 		    } else {
 		    	String a = line.substring(13, line.length() - 16);
-			    String b = a.replace("\"", ""); //Anführungszeichen durch Leerzeichen ersetzen
+			    String b = a.replace("\"", ""); //AnfÃ¼hrungszeichen durch Leerzeichen ersetzen
 			    b = b.replace(",", " "); //Kommas durch Leerzeichen ersetzen
-			    alle[stelleImArray] = b; //Ergebnis der Abfrage zum Array hinzufügen
+			    alle[stelleImArray] = b; //Ergebnis der Abfrage zum Array hinzufÃ¼gen
 			    stelleImArray++;
 		    }
 		}
@@ -1290,7 +1290,7 @@ public class oc_car extends JFrame {
 				return false;
 			}
 			
-			if (!password.equals("")) { //E-Mail-Versand gewünscht
+			if (!password.equals("")) { //E-Mail-Versand gewÃ¼nscht
 				boolean erfolg = false;
 				erfolg = email.sendMailWithAttachment(host, port,
 					sender, receiver,
@@ -1304,7 +1304,7 @@ public class oc_car extends JFrame {
 				if (!password.equals("") && !erfolg) {
 					lblFortschritt.setText("Fehler beim Versenden der Datei(en)!");
 				}
-			} else { //kein E-Mail-Versand gewünscht
+			} else { //kein E-Mail-Versand gewÃ¼nscht
 				lblFortschritt.setText("Die Datei " + outputFile + " wurde gespeichert!");
 			}
 			
@@ -1319,7 +1319,7 @@ public class oc_car extends JFrame {
 		return true;
 	}
 	
-	//auf neue Programmversion prüfen
+	//auf neue Programmversion prÃ¼fen
 	private boolean checkNewVersion() {
 		URL url;
 	    InputStream is = null;
@@ -1345,10 +1345,10 @@ public class oc_car extends JFrame {
 	        return false;
 	    }
 	    
-	    if (!line.equals(version)) { //Zeileninhalt stimmt nicht mit Versionsangabe des Programms überein
+	    if (!line.equals(version)) { //Zeileninhalt stimmt nicht mit Versionsangabe des Programms Ã¼berein
 	    	//Information anzeigen
 	    	javax.swing.JOptionPane.showMessageDialog(null,
-	    			"Neue Version verfügbar:\n"
+	    			"Neue Version verfÃ¼gbar:\n"
 	    			+ "https://github.com/FriedrichFroebel/oc_car-gui/releases",
 	    			"Versionshinweis",
 	    			JOptionPane.INFORMATION_MESSAGE);
@@ -1367,7 +1367,7 @@ public class oc_car extends JFrame {
 				
 		/*
 		 * die eigentlich wichtigen Schritte
-		 * nur bei Gültigkeit des vorhergehenden wird der nächste ausgeführt
+		 * nur bei GÃ¼ltigkeit des vorhergehenden wird der nÃ¤chste ausgefÃ¼hrt
 		 * sonst bricht das Programm ab und gibt bei aktivierter Debug-Flag
 		 * eine Hinweismeldung aus, wo der Fehler aufgetreten ist
 		 */
