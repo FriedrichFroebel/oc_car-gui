@@ -49,7 +49,7 @@ import javax.swing.JCheckBox;
 public class oc_car extends JFrame {
 	
 	//Programmversion zur Analyse für eventuell verfügbares Update
-	private static String version = "1.3";
+	private static String version = "1.2";
 	
 	//erweiterte Konsolenausgabe ist standardmäßig deaktiviert
 	private static boolean debug = false;
