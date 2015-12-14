@@ -1,3 +1,7 @@
+Version 1.2 - 2015-12-14
+---
+* optionale Passwortspeicherung via Checkbox möglich
+
 Version 1.1 - 2015-12-14
 ---
 * Feld- und Framegrößen erhöht, da teilweise Beschriftungen nicht lesbar
