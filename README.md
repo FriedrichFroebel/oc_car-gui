@@ -11,7 +11,7 @@ Dadurch entfällt die Notwendigkeit der Installation zusätzlicher Software. Zud
 
 Anders als im Original wird zum Speichern der Konfiguration eine XML-Datei genutzt. Aus Sicherheitsgründen wird auch das E-Mail-Passwort nicht mehr in der Konfigurationsdatei gelagert, sondern muss bei gewünschtem E-Mail-Versand in ein entsprechendes Feld eingetragen werden.
 
-Der vom Programm standardmäßig verwendete Ausgabepfad befindet sich im Homeverzeichnis im Ordner "occar".
+Der vom Programm standardmäßig verwendete Ausgabepfad befindet sich im Homeverzeichnis im Ordner "occar" (bei Windows ist dieser normalerweise **C:\Users\<Benutzername>**).
 
 Fehler gefunden? Probleme?
 ---
@@ -36,3 +36,7 @@ Andere Versionen
 * Bash-Version (Linux): https://github.com/kabegeo/oc_car (Original)
 * Bash-Version (Linux): https://github.com/FriedrichFroebel/oc_car (Fork mit Fehlerbehebungen)
 * Bash-Version (Windows): https://github.com/FriedrichFroebel/oc_car-Windows (Programmpfade werden angepasst)
+
+Blogartikel
+---
+* Altmetall-Blog von Schrottie: https://blog.dafb-o.de/oc-caches-along-a-route-ein-gui-fuer-das-bashscript/ (14.12.2015)
