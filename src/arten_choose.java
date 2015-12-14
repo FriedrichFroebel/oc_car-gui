@@ -22,7 +22,7 @@ public class arten_choose extends JFrame {
 		setResizable(false);
 		setTitle("Cachearten ausw\u00E4hlen");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(175, 175, 319, 205);
+		setBounds(175, 175, 360, 205);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -32,52 +32,52 @@ public class arten_choose extends JFrame {
 		//wenn beim bitweisen Vergleich die entsprechende Maske passt, wird die Box markiert
 		
 		JCheckBox boxTradi = new JCheckBox("Traditional Caches");
-		boxTradi.setBounds(10, 10, 150, 25);
+		boxTradi.setBounds(10, 10, 160, 25);
 		contentPane.add(boxTradi);
 		if ((predefined & (1<<0)) == (1<<0)) boxTradi.setSelected(true);
 		
 		JCheckBox boxMulti = new JCheckBox("Multicaches");
-		boxMulti.setBounds(10, 35, 150, 25);
+		boxMulti.setBounds(10, 35, 160, 25);
 		contentPane.add(boxMulti);
 		if ((predefined & (1<<1)) == (1<<1)) boxMulti.setSelected(true);
 		
 		JCheckBox boxMystery = new JCheckBox("R\u00E4tselcaches");
-		boxMystery.setBounds(10, 60, 150, 25);
+		boxMystery.setBounds(10, 60, 160, 25);
 		contentPane.add(boxMystery);
 		if ((predefined & (1<<2)) == (1<<2)) boxMystery.setSelected(true);
 		
 		JCheckBox boxVirtual = new JCheckBox("Virtuelle Caches");
-		boxVirtual.setBounds(10, 85, 150, 23);
+		boxVirtual.setBounds(10, 85, 160, 23);
 		contentPane.add(boxVirtual);
 		if ((predefined & (1<<3)) == (1<<3)) boxVirtual.setSelected(true);
 		
 		JCheckBox boxEvent = new JCheckBox("Eventcaches");
-		boxEvent.setBounds(10, 110, 150, 23);
+		boxEvent.setBounds(10, 110, 160, 23);
 		contentPane.add(boxEvent);
 		if ((predefined & (1<<4)) == (1<<4)) boxEvent.setSelected(true);
 		
 		JCheckBox boxWebcam = new JCheckBox("Webcamcaches");
-		boxWebcam.setBounds(160, 10, 150, 23);
+		boxWebcam.setBounds(175, 10, 175, 23);
 		contentPane.add(boxWebcam);
 		if ((predefined & (1<<5)) == (1<<5)) boxWebcam.setSelected(true);
 		
 		JCheckBox boxMoving = new JCheckBox("Moving Caches");
-		boxMoving.setBounds(160, 35, 150, 23);
+		boxMoving.setBounds(175, 35, 175, 23);
 		contentPane.add(boxMoving);
 		if ((predefined & (1<<6)) == (1<<6)) boxMoving.setSelected(true);
 		
 		JCheckBox boxMath = new JCheckBox("Mathe-/Physikcaches");
-		boxMath.setBounds(160, 60, 150, 23);
+		boxMath.setBounds(175, 60, 175, 23);
 		contentPane.add(boxMath);
 		if ((predefined & (1<<7)) == (1<<7)) boxMath.setSelected(true);
 		
 		JCheckBox boxDrive = new JCheckBox("Drive-In-Caches");
-		boxDrive.setBounds(160, 85, 150, 23);
+		boxDrive.setBounds(175, 85, 175, 23);
 		contentPane.add(boxDrive);
 		if ((predefined & (1<<8)) == (1<<8)) boxDrive.setSelected(true);
 		
 		JCheckBox boxOther = new JCheckBox("Sonstige");
-		boxOther.setBounds(160, 110, 150, 23);
+		boxOther.setBounds(175, 110, 175, 23);
 		contentPane.add(boxOther);
 		if ((predefined & (1<<9)) == (1<<9)) boxOther.setSelected(true);
 		
@@ -103,7 +103,7 @@ public class arten_choose extends JFrame {
 		        CloseFrame(); //Methodenaufruf zum Schließen des Frames
 			}
 		});
-		btnUebernehmen.setBounds(102, 140, 115, 23);
+		btnUebernehmen.setBounds(110, 140, 140, 23);
 		contentPane.add(btnUebernehmen);
 	}
 	

@@ -47,10 +47,10 @@ import org.apache.commons.io.FileUtils;
 
 public class oc_car extends JFrame {
 	
-	//Programmversion zur Analyse fÃ¼r eventuell verfÃ¼gbares Update
-	private static String version = "1.0";
+	//Programmversion zur Analyse für eventuell verfügbares Update
+	private static String version = "1.1";
 	
-	//erweiterte Konsolenausgabe ist standardmÃ¤ÃŸig deaktiviert
+	//erweiterte Konsolenausgabe ist standardmäßig deaktiviert
 	private static boolean debug = false;
 	
 	//Variablen, die von anderen Fenstern beeinflusst werden
@@ -62,12 +62,12 @@ public class oc_car extends JFrame {
 	private static String ocUser = "User";
 	private static double Radius = 2;
 	private static String Start = "Stuttgart";
-	private static String Ziel = "MÃ¼nchen";
+	private static String Ziel = "München";
 	private static int Arten = 1023;
 	private static String Difficulty = "1-5";
 	private static String Terrain = "1-5";
 	
-	//Einbinden einer Datei mit Konfigurationswerten ermÃ¶glichen
+	//Einbinden einer Datei mit Konfigurationswerten ermöglichen
 	private Properties config = new Properties();
 	
 	//Radius als String formatieren
@@ -95,8 +95,8 @@ public class oc_car extends JFrame {
 	private static String sender = "absender@gmail.com";
 	private static String receiver = "empfaenger@gmail.com";
 	private static String password = "";
-	private static String subject = "oc_car - Die GPX-Datei fÃ¼r Deine Route";
-	private static String body = "Die GPX-Datei fÃ¼r Deine Route!";
+	private static String subject = "oc_car - Die GPX-Datei für Deine Route";
+	private static String body = "Die GPX-Datei für Deine Route!";
 
 	//GUI-Elemente, auf die zugegriffen werden muss
 	private JPanel contentPane;
@@ -139,52 +139,53 @@ public class oc_car extends JFrame {
 
 	//Frame erstellen
 	public oc_car() {
+		setResizable(false);
 		setTitle("Opencaching.de - Caches entlang einer Route"); //Titel
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Aktion beim DrÃ¼cken des X
-		setBounds(100, 100, 500, 393); //Position und Abmessungen
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Aktion beim Drücken des X
+		setBounds(100, 100, 564, 393); //Position und Abmessungen
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		//Beschriftungen bei Textfeldern fÃ¼r Routenabfrage
+		//Beschriftungen bei Textfeldern für Routenabfrage
 		
 		JLabel lblBenutzer = new JLabel("Benutzer:");
 		lblBenutzer.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblBenutzer.setBounds(10, 10, 136, 15);
+		lblBenutzer.setBounds(10, 10, 180, 15);
 		contentPane.add(lblBenutzer);
 		
 		JLabel lblStart = new JLabel("Start:");
 		lblStart.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblStart.setBounds(10, 32, 136, 15);
+		lblStart.setBounds(10, 32, 180, 15);
 		contentPane.add(lblStart);
 		
 		JLabel lblZiel = new JLabel("Ziel:");
 		lblZiel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblZiel.setBounds(10, 54, 136, 15);
+		lblZiel.setBounds(10, 54, 180, 15);
 		contentPane.add(lblZiel);
 		
 		JLabel lblRadius = new JLabel("Radius (in km):");
 		lblRadius.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblRadius.setBounds(10, 76, 136, 15);
+		lblRadius.setBounds(10, 76, 180, 15);
 		contentPane.add(lblRadius);
 		
 		JLabel lblCachearten = new JLabel("Cachearten:");
 		lblCachearten.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCachearten.setBounds(10, 98, 136, 15);
+		lblCachearten.setBounds(10, 98, 180, 15);
 		contentPane.add(lblCachearten);
 		
 		JLabel lblSchwierigkeitsbereich = new JLabel("Schwierigkeitsbereich:");
 		lblSchwierigkeitsbereich.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblSchwierigkeitsbereich.setBounds(10, 123, 136, 15);
+		lblSchwierigkeitsbereich.setBounds(10, 123, 180, 15);
 		contentPane.add(lblSchwierigkeitsbereich);
 		
 		JLabel lblTerrainbereich = new JLabel("Terrainbereich:");
 		lblTerrainbereich.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTerrainbereich.setBounds(10, 145, 136, 15);
+		lblTerrainbereich.setBounds(10, 145, 180, 15);
 		contentPane.add(lblTerrainbereich);
 		
-		//Textfelder fÃ¼r Routenabfrage
+		//Textfelder für Routenabfrage
 		
 		tfBenutzer = new JTextField();
 		tfBenutzer.addFocusListener(new FocusAdapter() {
@@ -198,7 +199,7 @@ public class oc_car extends JFrame {
 				writeConfig();
 			}
 		});
-		tfBenutzer.setBounds(152, 8, 150, 20);
+		tfBenutzer.setBounds(196, 8, 150, 20);
 		contentPane.add(tfBenutzer);
 		tfBenutzer.setColumns(10);
 		
@@ -215,7 +216,7 @@ public class oc_car extends JFrame {
 			}
 		});
 		tfStart.setColumns(10);
-		tfStart.setBounds(152, 30, 150, 20);
+		tfStart.setBounds(196, 30, 150, 20);
 		contentPane.add(tfStart);
 		
 		tfZiel = new JTextField();
@@ -231,7 +232,7 @@ public class oc_car extends JFrame {
 			}
 		});
 		tfZiel.setColumns(10);
-		tfZiel.setBounds(152, 52, 150, 20);
+		tfZiel.setBounds(196, 52, 150, 20);
 		contentPane.add(tfZiel);
 		
 		tfRadius = new JTextField();
@@ -252,7 +253,7 @@ public class oc_car extends JFrame {
 			}
 		});
 		tfRadius.setColumns(10);
-		tfRadius.setBounds(152, 74, 100, 20);
+		tfRadius.setBounds(196, 74, 100, 20);
 		contentPane.add(tfRadius);
 		
 		tfSchwierigkeitsbereich = new JTextField();
@@ -268,7 +269,7 @@ public class oc_car extends JFrame {
 			}
 		});
 		tfSchwierigkeitsbereich.setColumns(10);
-		tfSchwierigkeitsbereich.setBounds(152, 121, 100, 20);
+		tfSchwierigkeitsbereich.setBounds(196, 121, 100, 20);
 		contentPane.add(tfSchwierigkeitsbereich);
 		
 		tfTerrainbereich = new JTextField();
@@ -284,10 +285,10 @@ public class oc_car extends JFrame {
 			}
 		});
 		tfTerrainbereich.setColumns(10);
-		tfTerrainbereich.setBounds(152, 143, 100, 20);
+		tfTerrainbereich.setBounds(196, 143, 100, 20);
 		contentPane.add(tfTerrainbereich);
 		
-		//Radiobuttons fÃ¼r Auswahl der Cachearten
+		//Radiobuttons für Auswahl der Cachearten
 		
 		JRadioButton rdbtnAlle = new JRadioButton("alle");
 		rdbtnAlle.addMouseListener(new MouseAdapter() {
@@ -296,7 +297,7 @@ public class oc_car extends JFrame {
 				alleArten = true;
 			}
 		});
-		rdbtnAlle.setBounds(152, 96, 50, 23);
+		rdbtnAlle.setBounds(196, 96, 65, 23);
 		contentPane.add(rdbtnAlle);
 		
 		JRadioButton rdbtnAuswaehlen = new JRadioButton("ausw\u00E4hlen");
@@ -313,10 +314,10 @@ public class oc_car extends JFrame {
 				alleArten = false;
 			}
 		});
-		rdbtnAuswaehlen.setBounds(204, 96, 100, 23);
+		rdbtnAuswaehlen.setBounds(260, 96, 120, 23);
 		contentPane.add(rdbtnAuswaehlen);
 		
-		//Radiobuttons gruppieren, damit nur einer ausgewÃ¤hlt werden kann
+		//Radiobuttons gruppieren, damit nur einer ausgewählt werden kann
 		ButtonGroup arten = new ButtonGroup();
 		arten.add(rdbtnAlle);
 		arten.add(rdbtnAuswaehlen);
@@ -325,7 +326,7 @@ public class oc_car extends JFrame {
 		JLabel lblGpxGeladen = new JLabel("Route geladen");
 		lblGpxGeladen.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		lblGpxGeladen.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGpxGeladen.setBounds(320, 54, 130, 14);
+		lblGpxGeladen.setBounds(334, 54, 150, 14);
 		contentPane.add(lblGpxGeladen);
 		lblGpxGeladen.setVisible(false);
 		
@@ -334,7 +335,7 @@ public class oc_car extends JFrame {
 		btnGpxRouteLaden.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) { //Enter-Taste gedrÃ¼ckt
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) { //Enter-Taste gedrückt
 					JFileChooser gpxeingabe = new JFileChooser();
 					FileNameExtensionFilter gpx = new FileNameExtensionFilter("GPX-Dateien", "gpx", "GPX");
 					gpxeingabe.setFileFilter(gpx);
@@ -371,7 +372,7 @@ public class oc_car extends JFrame {
 				//nur GPX-Dateien erlauben
 				FileNameExtensionFilter gpx = new FileNameExtensionFilter("GPX-Dateien", "gpx", "GPX");
 				gpxeingabe.setFileFilter(gpx);
-				if (loadpath.equals("")) { //bisher noch keine (gÃ¼ltige) GPX-Datei geladen
+				if (loadpath.equals("")) { //bisher noch keine (gültige) GPX-Datei geladen
 					File f = new File(System.getProperty("user.home") + File.separator + "occar");
 					gpxeingabe.setCurrentDirectory(f);
 				} else { //bereits einmal GPX-Datei geladen
@@ -379,11 +380,11 @@ public class oc_car extends JFrame {
 					gpxeingabe.setCurrentDirectory(f);
 				}
 				int option = gpxeingabe.showOpenDialog(null);
-				//wenn Datei ausgewÃ¤hlt worden ist
+				//wenn Datei ausgewählt worden ist
 				if (option == JFileChooser.APPROVE_OPTION) {
 					//Pfad ermitteln
 					String pfadEingabe = gpxeingabe.getSelectedFile().getAbsolutePath();
-					//Dateiendung prÃ¼fen
+					//Dateiendung prüfen
 					if (FilenameUtils.getExtension(pfadEingabe).toUpperCase().equals("GPX")) {
 						if (debug) System.out.println(pfadEingabe);
 						loadpath = pfadEingabe;
@@ -399,15 +400,15 @@ public class oc_car extends JFrame {
 				}
 			}
 		});
-		btnGpxRouteLaden.setBounds(320, 28, 130, 23);
+		btnGpxRouteLaden.setBounds(364, 28, 170, 23);
 		contentPane.add(btnGpxRouteLaden);
 		
 		//Trennstrich zwischen Routenkonfiguration und E-Mail-Einstellungen
 		JSeparator sepAllgemeinMail = new JSeparator();
-		sepAllgemeinMail.setBounds(10, 170, 460, 2);
+		sepAllgemeinMail.setBounds(10, 170, 534, 2);
 		contentPane.add(sepAllgemeinMail);
 		
-		//Beschriftungen bei Textfeldern fÃ¼r E-Mail-Versand
+		//Beschriftungen bei Textfeldern für E-Mail-Versand
 		
 		JLabel lblMailserver = new JLabel("E-Mail-Server:");
 		lblMailserver.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -416,7 +417,7 @@ public class oc_car extends JFrame {
 		
 		JLabel lblPort = new JLabel("Port:");
 		lblPort.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPort.setBounds(235, 181, 100, 14);
+		lblPort.setBounds(275, 181, 100, 14);
 		contentPane.add(lblPort);
 		
 		JLabel lblAbsender = new JLabel("Absender:");
@@ -426,7 +427,7 @@ public class oc_car extends JFrame {
 		
 		JLabel lblEmpfaenger = new JLabel("Empf\u00E4nger:");
 		lblEmpfaenger.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEmpfaenger.setBounds(235, 209, 100, 14);
+		lblEmpfaenger.setBounds(275, 209, 100, 14);
 		contentPane.add(lblEmpfaenger);
 		
 		JLabel lblBetreff = new JLabel("Betreff:");
@@ -439,7 +440,7 @@ public class oc_car extends JFrame {
 		lblMailtext.setBounds(10, 265, 100, 14);
 		contentPane.add(lblMailtext);
 		
-		//Textfelder fÃ¼r E-Mail-Versand
+		//Textfelder für E-Mail-Versand
 		
 		tfMailserver = new JTextField();
 		tfMailserver.addFocusListener(new FocusAdapter() {
@@ -453,7 +454,7 @@ public class oc_car extends JFrame {
 				writeConfig();
 			}
 		});
-		tfMailserver.setBounds(113, 179, 120, 20);
+		tfMailserver.setBounds(113, 179, 165, 20);
 		contentPane.add(tfMailserver);
 		tfMailserver.setColumns(10);
 		
@@ -469,7 +470,7 @@ public class oc_car extends JFrame {
 				writeConfig();
 			}
 		});
-		tfAbsender.setBounds(113, 207, 120, 20);
+		tfAbsender.setBounds(113, 207, 165, 20);
 		contentPane.add(tfAbsender);
 		tfAbsender.setColumns(10);
 		
@@ -486,7 +487,7 @@ public class oc_car extends JFrame {
 			}
 		});
 		tfEmpfaenger.setColumns(10);
-		tfEmpfaenger.setBounds(338, 207, 120, 20);
+		tfEmpfaenger.setBounds(378, 207, 165, 20);
 		contentPane.add(tfEmpfaenger);
 		
 		tfBetreff = new JTextField();
@@ -501,7 +502,7 @@ public class oc_car extends JFrame {
 				writeConfig();
 			}
 		});
-		tfBetreff.setBounds(113, 235, 345, 20);
+		tfBetreff.setBounds(113, 235, 431, 20);
 		contentPane.add(tfBetreff);
 		tfBetreff.setColumns(10);
 		
@@ -517,7 +518,7 @@ public class oc_car extends JFrame {
 				writeConfig();
 			}
 		});
-		tfMailtext.setBounds(113, 263, 345, 20);
+		tfMailtext.setBounds(113, 263, 431, 20);
 		contentPane.add(tfMailtext);
 		tfMailtext.setColumns(10);
 		
@@ -538,7 +539,7 @@ public class oc_car extends JFrame {
 				writeConfig();
 			}
 		});
-		tfPort.setBounds(338, 179, 120, 20);
+		tfPort.setBounds(378, 179, 120, 20);
 		contentPane.add(tfPort);
 		tfPort.setColumns(10);
 		
@@ -553,12 +554,12 @@ public class oc_car extends JFrame {
 		
 		//Trennstrich zwischen E-Mail-Einstellungen und Meldungslabel
 		JSeparator sepMailProgress = new JSeparator();
-		sepMailProgress.setBounds(10, 318, 460, 2);
+		sepMailProgress.setBounds(10, 318, 534, 2);
 		contentPane.add(sepMailProgress);
 		
 		//Meldungslabel	
 		lblFortschritt.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFortschritt.setBounds(10, 327, 460, 20);
+		lblFortschritt.setBounds(10, 327, 544, 20);
 		contentPane.add(lblFortschritt);
 		
 		//Button zum Starten der Suche
@@ -607,10 +608,10 @@ public class oc_car extends JFrame {
 				loadGPX = false; //keine GPX-Datei mehr geladen
 			}
 		});
-		btnStartSuche.setBounds(320, 119, 130, 23);
+		btnStartSuche.setBounds(364, 119, 170, 23);
 		contentPane.add(btnStartSuche);
 		
-		checkNewVersion(); //auf neue Version prÃ¼fen
+		checkNewVersion(); //auf neue Version prüfen
 		readConfig(); //Konfigurationsdatei lesen
 		printInitialConfig(); //Konfiguration ausgeben
 		
@@ -625,12 +626,12 @@ public class oc_car extends JFrame {
 		
 	}
 
-	//Zahlenwert fÃ¼r Cachearten erhalten (in Klasse arten_choose verwendet)
+	//Zahlenwert für Cachearten erhalten (in Klasse arten_choose verwendet)
 	public int getCachearten() {
 		return Arten;
 	}
 
-	//Zahlenwert fÃ¼r Cachearten setzen (in Klasse arten_choose verwendet)
+	//Zahlenwert für Cachearten setzen (in Klasse arten_choose verwendet)
 	public void setCachearten(int cachearten) {
 		oc_car.Arten = cachearten;
 	}
@@ -638,7 +639,7 @@ public class oc_car extends JFrame {
 	//Parameter in Konfigurationsdatei schreiben
 	private boolean writeConfig() {
 		try {
-			//Parameter fÃ¼r Routenabfrage
+			//Parameter für Routenabfrage
 			config.setProperty("ocUser", ocUser);
 			config.setProperty("Radius", df_radius.format(Radius));
 			config.setProperty("Start", Start);
@@ -647,7 +648,7 @@ public class oc_car extends JFrame {
 			config.setProperty("Difficulty", Difficulty);
 			config.setProperty("Terrain", Terrain);
 			
-			//Parameter fÃ¼r E-Mail-Versand
+			//Parameter für E-Mail-Versand
 			config.setProperty("host", host);
 			config.setProperty("port", port);
 			config.setProperty("sender", sender);
@@ -658,7 +659,7 @@ public class oc_car extends JFrame {
 			//in XML-Datei schreiben
 			File f = new File(System.getProperty("user.home") + File.separator + "occar" + File.separator + "occar_config.xml");
 			OutputStream o = new FileOutputStream(f);
-			config.storeToXML(o, "Config-Datei fÃ¼r oc_car");
+			config.storeToXML(o, "Config-Datei für oc_car");
 		} catch (IOException e) {
 			if (debug) e.printStackTrace();
 			return false;
@@ -679,22 +680,22 @@ public class oc_car extends JFrame {
 				s = new FileInputStream(f);
 				config.loadFromXML(s);
 				
-				//Parameter fÃ¼r Routenabfrage
+				//Parameter für Routenabfrage
 				ocUser = config.getProperty("ocUser", "User");
 				Radius = Double.parseDouble(config.getProperty("Radius", "2"));
 				Start = config.getProperty("Start", "Stuttgart");
-				Ziel = config.getProperty("Ziel", "MÃ¼nchen");
+				Ziel = config.getProperty("Ziel", "München");
 				Arten = Integer.parseInt(config.getProperty("Arten", "1023"));
 				Difficulty = config.getProperty("Difficulty", "1-5");
 				Terrain = config.getProperty("Terrain", "1-5");
 				
-				//Parameter fÃ¼r E-Mail-Versand
+				//Parameter für E-Mail-Versand
 				host = config.getProperty("host", "smtp.gmail.com");
 				port = config.getProperty("port", "587");
 				sender = config.getProperty("sender", "absender@gmail.com");
 				receiver = config.getProperty("receiver", "empfaenger@gmail.com");
-				subject = config.getProperty("subject", "oc_car - Die GPX-Datei fÃ¼r Deine Route");
-				body = config.getProperty("body", "Die GPX-Datei fÃ¼r Deine Route!");
+				subject = config.getProperty("subject", "oc_car - Die GPX-Datei für Deine Route");
+				body = config.getProperty("body", "Die GPX-Datei für Deine Route!");
 			}
 		} catch (IOException e) {
 			if (debug) e.printStackTrace();
@@ -733,7 +734,7 @@ public class oc_car extends JFrame {
 	        is = url.openStream(); 
 	        br = new BufferedReader(new InputStreamReader(is));
 
-	        line = br.readLine(); //Antwort speichern (nur eine Zeile zurÃ¼ckgeliefert)
+	        line = br.readLine(); //Antwort speichern (nur eine Zeile zurückgeliefert)
 	        
 	        is.close();
 	    } catch (MalformedURLException e) {
@@ -741,16 +742,16 @@ public class oc_car extends JFrame {
 	        return false;
 	    } catch (IOException e) {
 	    	javax.swing.JOptionPane.showMessageDialog(null,
-	    			"Benutzer nicht gefunden!\nBitte Aufrufparameter prÃ¼fen!",
-	    			"UngÃ¼ltiger Benutzername",
+	    			"Benutzer nicht gefunden!\nBitte Aufrufparameter prüfen!",
+	    			"Ungültiger Benutzername",
 	    			JOptionPane.INFORMATION_MESSAGE);
-	        if (debug) System.out.println("Benutzer nicht gefunden! Bitte Aufrufparameter prÃ¼fen!");
+	        if (debug) System.out.println("Benutzer nicht gefunden! Bitte Aufrufparameter prüfen!");
 	        if (debug) System.out.println(line);
 	        return false;
 	    }
 	    if (debug) System.out.println(line);
 	    try {
-	    	//RÃ¼ckgabestring auf String "uuid" Ã¼berprÃ¼fen
+	    	//Rückgabestring auf String "uuid" überprüfen
 	    	if (!line.substring(2,6).equals("uuid")) return false;
 	    } catch (StringIndexOutOfBoundsException e) {
 	    	if (debug) e.printStackTrace();
@@ -770,17 +771,17 @@ public class oc_car extends JFrame {
 	    String line = "";
 	    String Start_mod = "";
 	    
-	    //Umlaute, Leerzeichen ersetzen; ungÃ¼ltige Zeichen entfernen
+	    //Umlaute, Leerzeichen ersetzen; ungültige Zeichen entfernen
 	    for (int i = 0; i < Start.length(); i++) {
 	    	switch (Start.charAt(i)) {
 	    		case ' ': Start_mod += "+"; break;
-	    		case 'Ã„':
-	    		case 'Ã¤': Start_mod += "ae"; break;
-	    		case 'Ã–':
-	    		case 'Ã¶': Start_mod += "oe"; break;
-	    		case 'Ãœ':
-	    		case 'Ã¼': Start_mod += "ue"; break;
-	    		case 'ÃŸ': Start_mod += "ss"; break;
+	    		case 'Ä':
+	    		case 'ä': Start_mod += "ae"; break;
+	    		case 'Ö':
+	    		case 'ö': Start_mod += "oe"; break;
+	    		case 'Ü':
+	    		case 'ü': Start_mod += "ue"; break;
+	    		case 'ß': Start_mod += "ss"; break;
 	    		default: if ((((Start.charAt(i) >= 'A') && Start.charAt(i) <= 'Z'))
     							|| ((Start.charAt(i) >= 'a') && (Start.charAt(i) <= 'z'))
     							|| ((Start.charAt(i) >= '0') && (Start.charAt(i) <= '9'))) {
@@ -848,13 +849,13 @@ public class oc_car extends JFrame {
 	    for (int i = 0; i < Ziel.length(); i++) {
 	    	switch (Ziel.charAt(i)) {
 	    		case ' ': Ziel_mod += "+"; break;
-	    		case 'Ã„':
-	    		case 'Ã¤': Ziel_mod += "ae"; break;
-	    		case 'Ã–':
-	    		case 'Ã¶': Ziel_mod += "oe"; break;
-	    		case 'Ãœ':
-	    		case 'Ã¼': Ziel_mod += "ue"; break;
-	    		case 'ÃŸ': Ziel_mod += "ss"; break;
+	    		case 'Ä':
+	    		case 'ä': Ziel_mod += "ae"; break;
+	    		case 'Ö':
+	    		case 'ö': Ziel_mod += "oe"; break;
+	    		case 'Ü':
+	    		case 'ü': Ziel_mod += "ue"; break;
+	    		case 'ß': Ziel_mod += "ss"; break;
 	    		default: if ((((Ziel.charAt(i) >= 'A') && Ziel.charAt(i) <= 'Z'))
     							|| ((Ziel.charAt(i) >= 'a') && (Ziel.charAt(i) <= 'z'))
     							|| ((Ziel.charAt(i) >= '0') && (Ziel.charAt(i) <= '9'))) {
@@ -915,7 +916,7 @@ public class oc_car extends JFrame {
 			URL url = new URL("http://www.yournavigation.org/api/1.0/gosmore.php?flat=" + latS + "&flon=" + lngS + "&tlat=" + latZ + "&tlon=" + lngZ + "&v=motorcar&fast=1");
 	        File file = new File(System.getProperty("user.home") + File.separator + "occar" + File.separator + "route.kml");
 	        if (file.exists()) {
-	        	file.delete(); //eventuell existierende Datei gleichen Namens lÃ¶schen
+	        	file.delete(); //eventuell existierende Datei gleichen Namens löschen
 	        }
 			FileUtils.copyURLToFile(url, file, 0, 0); //Datei speichern
 		} catch (MalformedURLException e) {
@@ -937,7 +938,7 @@ public class oc_car extends JFrame {
 		    int anzahlZeilen = 0;
 
 		    while (line != null) { //solange noch nicht Dateiende erreicht
-		        if (line.charAt(0) != '<' && line.charAt(0) != ' ') { //linksbÃ¼ndige Zeile suchen
+		        if (line.charAt(0) != '<' && line.charAt(0) != ' ') { //linksbündige Zeile suchen
 		        	if (anzahlZeilen % 10 == 0) { //nur jede 10. Zeile im Array speichern
 		        		coords_list[stelleImArray] = line;
 		        		stelleImArray++;
@@ -1004,7 +1005,7 @@ public class oc_car extends JFrame {
 		    		}
 					
 		    	}
-		        line = br.readLine(); //nÃ¤chste Zeile lesen
+		        line = br.readLine(); //nächste Zeile lesen
 		    }
 		    
 		    br.close();
@@ -1030,14 +1031,14 @@ public class oc_car extends JFrame {
 		return true;
 	}
 	
-	//Radius Ã¼berprÃ¼fen
+	//Radius überprüfen
 	private boolean checkRadius() {
-		if (Radius < 0.1) { //Radius groÃŸ genug
+		if (Radius < 0.1) { //Radius groß genug
 			javax.swing.JOptionPane.showMessageDialog(null, "Der eingegebene Radius ist zu klein!");
 			return false;
 		}
 		if (Radius > 10) { //Radius klein genug
-			javax.swing.JOptionPane.showMessageDialog(null, "Der eingegebene Radius ist zu groÃŸ!");
+			javax.swing.JOptionPane.showMessageDialog(null, "Der eingegebene Radius ist zu groß!");
 			return false;
 		}
 		return true;
@@ -1045,9 +1046,14 @@ public class oc_car extends JFrame {
 	
 	//Caches entlang der Route suchen
 	private boolean requestCaches() {
+		
+		//Fortschrittsframe aktivieren
+		progressBar progress = new progressBar();
+		progress.setVisible(true);
+		
 		String arten = "";
 		
-		//gewÃ¼nschte Cachearten auslesen
+		//gewünschte Cachearten auslesen
 		if (!alleArten) {
 			//bitweiser Vergleich mit entsprechender Maske
 			if ((Arten & (1<<0)) == (1<<0)) {
@@ -1130,7 +1136,7 @@ public class oc_car extends JFrame {
 		    BufferedReader br;
 		    String line = "";
 		    
-		    //die Koordinaten werden genau verkehrt herum gespeichert und mÃ¼ssen umgedreht werden
+		    //die Koordinaten werden genau verkehrt herum gespeichert und müssen umgedreht werden
 		    int j = 0;
 		    String coords_fehler = coords_list[i];
 		    while (coords_fehler.charAt(j) != ',') {
@@ -1141,7 +1147,7 @@ public class oc_car extends JFrame {
 		    //System.out.println(coords);
 		    
 		    try {
-		    	//Abfrage durchfÃ¼hren (Mittelpunkt-Suche mit Radius)
+		    	//Abfrage durchführen (Mittelpunkt-Suche mit Radius)
 		    	if (alleArten) {
 		    		url = new URL("http://www.opencaching.de/okapi/services/caches/search/nearest?center="
 		    				+ coords
@@ -1181,14 +1187,17 @@ public class oc_car extends JFrame {
 		    }
 		    //System.out.println(line);
 		    
-		    //prÃ¼fen, ob Dose gefunden
+		    //Fortschritt
+		    progress.updatebar((100 * i) / anzahlAbfragen);
+		    
+		    //prüfen, ob Dose gefunden
 		    if (line.length() < 30) {
 		    	//keine Dose in diesem Bereich
 		    } else {
 		    	String a = line.substring(13, line.length() - 16);
-			    String b = a.replace("\"", ""); //AnfÃ¼hrungszeichen durch Leerzeichen ersetzen
+			    String b = a.replace("\"", ""); //Anführungszeichen durch Leerzeichen ersetzen
 			    b = b.replace(",", " "); //Kommas durch Leerzeichen ersetzen
-			    alle[stelleImArray] = b; //Ergebnis der Abfrage zum Array hinzufÃ¼gen
+			    alle[stelleImArray] = b; //Ergebnis der Abfrage zum Array hinzufügen
 			    stelleImArray++;
 		    }
 		}
@@ -1253,6 +1262,8 @@ public class oc_car extends JFrame {
 			}
 		}
 		
+		progress.dispose(); //Fortschrittsframe schließen
+		
 		return true;
 	}
 	
@@ -1290,7 +1301,7 @@ public class oc_car extends JFrame {
 				return false;
 			}
 			
-			if (!password.equals("")) { //E-Mail-Versand gewÃ¼nscht
+			if (!password.equals("")) { //E-Mail-Versand gewünscht
 				boolean erfolg = false;
 				erfolg = email.sendMailWithAttachment(host, port,
 					sender, receiver,
@@ -1304,7 +1315,7 @@ public class oc_car extends JFrame {
 				if (!password.equals("") && !erfolg) {
 					lblFortschritt.setText("Fehler beim Versenden der Datei(en)!");
 				}
-			} else { //kein E-Mail-Versand gewÃ¼nscht
+			} else { //kein E-Mail-Versand gewünscht
 				lblFortschritt.setText("Die Datei " + outputFile + " wurde gespeichert!");
 			}
 			
@@ -1319,7 +1330,7 @@ public class oc_car extends JFrame {
 		return true;
 	}
 	
-	//auf neue Programmversion prÃ¼fen
+	//auf neue Programmversion prüfen
 	private boolean checkNewVersion() {
 		URL url;
 	    InputStream is = null;
@@ -1345,10 +1356,10 @@ public class oc_car extends JFrame {
 	        return false;
 	    }
 	    
-	    if (!line.equals(version)) { //Zeileninhalt stimmt nicht mit Versionsangabe des Programms Ã¼berein
+	    if (!line.equals(version)) { //Zeileninhalt stimmt nicht mit Versionsangabe des Programms überein
 	    	//Information anzeigen
 	    	javax.swing.JOptionPane.showMessageDialog(null,
-	    			"Neue Version verfÃ¼gbar:\n"
+	    			"Neue Version verfügbar:\n"
 	    			+ "https://github.com/FriedrichFroebel/oc_car-gui/releases",
 	    			"Versionshinweis",
 	    			JOptionPane.INFORMATION_MESSAGE);
@@ -1367,7 +1378,7 @@ public class oc_car extends JFrame {
 				
 		/*
 		 * die eigentlich wichtigen Schritte
-		 * nur bei GÃ¼ltigkeit des vorhergehenden wird der nÃ¤chste ausgefÃ¼hrt
+		 * nur bei Gültigkeit des vorhergehenden wird der nächste ausgeführt
 		 * sonst bricht das Programm ab und gibt bei aktivierter Debug-Flag
 		 * eine Hinweismeldung aus, wo der Fehler aufgetreten ist
 		 */
