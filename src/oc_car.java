@@ -44,11 +44,12 @@ import javax.swing.SwingConstants;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.FileUtils;
+import javax.swing.JCheckBox;
 
 public class oc_car extends JFrame {
 	
 	//Programmversion zur Analyse für eventuell verfügbares Update
-	private static String version = "1.1";
+	private static String version = "1.3";
 	
 	//erweiterte Konsolenausgabe ist standardmäßig deaktiviert
 	private static boolean debug = false;
@@ -57,6 +58,7 @@ public class oc_car extends JFrame {
 	private static String loadpath = "";
 	private static boolean alleArten = true;
 	private static boolean loadGPX = false;
+	private static boolean savePW = false;
 	
 	//Konfigurationswerte
 	private static String ocUser = "User";
@@ -586,6 +588,10 @@ public class oc_car extends JFrame {
 					sucheStarten();
 					lblGpxGeladen.setVisible(false);
 					loadGPX = false;
+					if (!savePW) {
+						password = "";
+					}
+					writeConfig();
 				}
 			}
 		});
@@ -606,10 +612,29 @@ public class oc_car extends JFrame {
 				sucheStarten(); //Suche durch Funktionsaufruf starten
 				lblGpxGeladen.setVisible(false); //eventuelll sichtbares Label deaktivieren
 				loadGPX = false; //keine GPX-Datei mehr geladen
+				if (!savePW) { //wenn Passwort nicht gespeichert werden soll
+					password = ""; //Passwortvariable leeren
+				}
+				writeConfig(); //evtl. vorhandenes Passwort in Konfiguration schreiben
 			}
 		});
 		btnStartSuche.setBounds(364, 119, 170, 23);
 		contentPane.add(btnStartSuche);
+		
+		//Passwort speichern?		
+		JCheckBox boxSavePW = new JCheckBox("Passwort speichern");
+		boxSavePW.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if (boxSavePW.isSelected()) { //wenn mit Maus geklickt und Box selektiert
+					savePW = true; //Passwort speichern
+				} else {
+					savePW = false;
+				}
+			}
+		});
+		boxSavePW.setBounds(249, 289, 170, 22);
+		contentPane.add(boxSavePW);
 		
 		checkNewVersion(); //auf neue Version prüfen
 		readConfig(); //Konfigurationsdatei lesen
@@ -622,6 +647,16 @@ public class oc_car extends JFrame {
 		} else {
 			rdtbnAuswaehlen.setSelected(true);
 			alleArten = false;
+		}
+		
+		//Checkbox zur Passwortspeicherung entsprechend der Konfiguration einstellen
+		if (password.equals("")) {
+			boxSavePW.setSelected(false);
+			savePW = false;
+		} else {
+			boxSavePW.setSelected(true);
+			savePW = true;
+			pfPassword.setText(password);
 		}
 		
 	}
@@ -655,11 +690,16 @@ public class oc_car extends JFrame {
 			config.setProperty("receiver", receiver);
 			config.setProperty("subject", subject);
 			config.setProperty("body", body);
+			if (savePW) {
+				config.setProperty("password", password);
+			} else {
+				config.setProperty("password", "");
+			}
 			
 			//in XML-Datei schreiben
 			File f = new File(System.getProperty("user.home") + File.separator + "occar" + File.separator + "occar_config.xml");
 			OutputStream o = new FileOutputStream(f);
-			config.storeToXML(o, "Config-Datei für oc_car");
+			config.storeToXML(o, "Config-Datei für oc_car-gui");
 		} catch (IOException e) {
 			if (debug) e.printStackTrace();
 			return false;
@@ -696,6 +736,8 @@ public class oc_car extends JFrame {
 				receiver = config.getProperty("receiver", "empfaenger@gmail.com");
 				subject = config.getProperty("subject", "oc_car - Die GPX-Datei für Deine Route");
 				body = config.getProperty("body", "Die GPX-Datei für Deine Route!");
+				password = config.getProperty("password", "");
+				System.out.println(password);
 			}
 		} catch (IOException e) {
 			if (debug) e.printStackTrace();
