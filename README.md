@@ -17,7 +17,7 @@ Das Programm ist sicherlich nicht fehlerfrei.
 
 Sollte das Programm nicht das gewünschte Ergebnis bringen, dann könnt Ihr entweder einen Issue hier auf Github erstellen oder mich per persönlicher Opencaching-Nachricht kontaktieren.
 
-Bitte beschreibt in einem solchen Fall Euer Problem möglichst genau, um es eingrenzen zu können. Eine Hilfe ist mir dabei die eingebaute erweiterte Ausgabe auf der Kommandozeile, die aktiviert wird, sobald beim Start der JAR-Datei via Kommandozeile hinter dem Dateinamen nach einem Leerzeichen ein beliebiger Buchstabe geschrieben wird (also beispielsweise "java -jar oc_car-gui.jar d", wenn Ihr Euch im Pfad des Programms befindet). Auch die Eingabe-/Ausgabedateien und die Konfiguration helfen bei der Fehlersuche.
+Bitte beschreibt in einem solchen Fall Euer Problem möglichst genau, um es eingrenzen zu können. Eine Hilfe ist mir dabei die eingebaute erweiterte Ausgabe auf der Kommandozeile, die aktiviert wird, sobald beim Start der JAR-Datei via Kommandozeile hinter dem Dateinamen nach einem Leerzeichen ein beliebiger Buchstabe geschrieben wird (also beispielsweise <code>java -jar oc_car-gui.jar d</code>, wenn Ihr Euch im Pfad des Programms befindet). Auch die Eingabe-/Ausgabedateien und die Konfiguration helfen bei der Fehlersuche.
 
 **Hinweis: Der E-Mail-Versand aus dem Programm heraus ist aktuell nur mit einem GMail-Konto getestet worden.**
 
