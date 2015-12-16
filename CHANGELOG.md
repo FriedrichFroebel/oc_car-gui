@@ -1,3 +1,7 @@
+Version 1.3 - 2015-12-16
+---
+* E-Mail-Versand kann nun via Checkbox aktiviert (und natürlich auch deaktiviert) werden, ohne damit das Passwort und dessen eventuelle Speicherung zu beeinflussen
+
 Version 1.2 - 2015-12-14
 ---
 * optionale Passwortspeicherung via Checkbox möglich
