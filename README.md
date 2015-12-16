@@ -8,7 +8,7 @@ Dabei habe ich mich so weit wie möglich an das Original gehalten, musste aber i
 
 Dadurch entfällt die Notwendigkeit der Installation zusätzlicher Software. Zudem sollte das Programm auch ohne Anpassungen auf den unterschiedlichen Plattformen laufen.
 
-Anders als im Original wird zum Speichern der Konfiguration eine XML-Datei genutzt. Aus Sicherheitsgründen wird auch das E-Mail-Passwort nicht mehr in der Konfigurationsdatei gelagert, sondern muss bei gewünschtem E-Mail-Versand in ein entsprechendes Feld eingetragen werden.
+Anders als im Original wird zum Speichern der Konfiguration eine XML-Datei genutzt. Aus Sicherheitsgründen wird auch das E-Mail-Passwort (standardmäßig) nicht mehr in der Konfigurationsdatei gelagert, sondern muss bei gewünschtem E-Mail-Versand in ein entsprechendes Feld eingetragen werden. Es gibt allerdings die Möglichkeit, das Passwort via Checkbox *unverschlüsselt* in der Konfigurationsdatei zu speichern.
 
 Der vom Programm standardmäßig verwendete Ausgabepfad befindet sich im Homeverzeichnis im Ordner "occar" (bei Windows ist dieser normalerweise **C:\Users&#92;\<Benutzername>**).
 
