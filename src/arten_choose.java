@@ -100,7 +100,7 @@ public class arten_choose extends JFrame {
 				if (boxOther.isSelected()) Auswahl += 1<<9;
 				//System.out.println(Auswahl);
 				zugriff.setCachearten(Auswahl); //im Hauptprogramm geänderten Wert setzen
-		        CloseFrame(); //Methodenaufruf zum Schließen des Frames
+				CloseFrame(); //Methodenaufruf zum Schließen des Frames
 			}
 		});
 		btnUebernehmen.setBounds(110, 140, 140, 23);
