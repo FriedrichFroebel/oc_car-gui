@@ -49,7 +49,7 @@ import org.apache.commons.io.FileUtils;
 public class oc_car extends JFrame {
 	
 	//Programmversion zur Analyse für eventuell verfügbares Update
-	private static String version = "1.3";
+	private static String version = "1.4";
 	
 	//erweiterte Konsolenausgabe ist standardmäßig deaktiviert
 	private static boolean debug = false;
@@ -59,6 +59,10 @@ public class oc_car extends JFrame {
 	private static boolean alleArten = true;
 	private static boolean loadGPX = false;
 	private static boolean savePW = false;
+	
+	//Konstanten
+	int GPX_AbstandWP = 10; //nur jeder 10. Wegpunkt wird gespeichert
+	int KML_AbstandWP = 10; //nur jeder 10. Wegpunkt wird gespeichert
 	
 	//Konfigurationswerte
 	private static String ocUser = "User";
@@ -198,8 +202,12 @@ public class oc_car extends JFrame {
 			}
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				ocUser = tfBenutzer.getText();
-				writeConfig();
+				if (!tfBenutzer.getText().equals("")) {
+					ocUser = tfBenutzer.getText();
+					writeConfig();
+				} else {
+					//tfBenutzer.setText(ocUser);
+				}
 			}
 		});
 		tfBenutzer.setBounds(196, 8, 150, 20);
@@ -214,8 +222,12 @@ public class oc_car extends JFrame {
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				Start = tfStart.getText();
-				writeConfig();
+				if (!tfStart.getText().equals("")) {
+					Start = tfStart.getText();
+					writeConfig();
+				} else {
+					//tfStart.setText(Start);
+				}
 			}
 		});
 		tfStart.setColumns(10);
@@ -230,8 +242,12 @@ public class oc_car extends JFrame {
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				Ziel = tfZiel.getText();
-				writeConfig();
+				if (!tfZiel.getText().equals("")) {
+					Ziel = tfZiel.getText();
+					writeConfig();
+				} else {
+					//tfZiel.setText(Ziel);
+				}
 			}
 		});
 		tfZiel.setColumns(10);
@@ -267,8 +283,21 @@ public class oc_car extends JFrame {
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				Difficulty = tfSchwierigkeitsbereich.getText();
-				writeConfig();
+				if (!tfSchwierigkeitsbereich.getText().equals("")) {
+					int minus = 0;
+					String string = tfSchwierigkeitsbereich.getText();
+					while ((string.charAt(minus) != '-') && (minus < string.length() - 1)) {
+						minus += 1;
+					}
+					try {
+						Double.parseDouble(string.substring(0,minus));
+						Double.parseDouble(string.substring(minus+1,string.length()));
+						Difficulty = string;
+					} catch (NumberFormatException ex) {
+						tfSchwierigkeitsbereich.setText(Difficulty);
+						if (debug) ex.printStackTrace();
+					}
+				}
 			}
 		});
 		tfSchwierigkeitsbereich.setColumns(10);
@@ -283,8 +312,21 @@ public class oc_car extends JFrame {
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				Terrain = tfTerrainbereich.getText();
-				writeConfig();
+				if (!tfTerrainbereich.getText().equals("")) {
+					int minus = 0;
+					String string = tfTerrainbereich.getText();
+					while ((string.charAt(minus) != '-') && (minus < string.length() - 1)) {
+						minus += 1;
+					}
+					try {
+						Double.parseDouble(string.substring(0,minus));
+						Double.parseDouble(string.substring(minus+1,string.length()));
+						Terrain = string;
+					} catch (NumberFormatException ex) {
+						tfTerrainbereich.setText(Terrain);
+						if (debug) ex.printStackTrace();
+					}
+				}
 			}
 		});
 		tfTerrainbereich.setColumns(10);
@@ -313,8 +355,15 @@ public class oc_car extends JFrame {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				writeConfig();
-				alleArten = false;
+				if (Arten != 0) {
+					alleArten = false;
+					writeConfig();
+				} else {
+					alleArten = true;
+					Arten = 1023;
+					writeConfig();
+					rdtbnAlle.setSelected(true);
+				}
 			}
 		});
 		rdbtnAuswaehlen.setBounds(260, 96, 120, 23);
@@ -1007,7 +1056,7 @@ public class oc_car extends JFrame {
 
 		    while (line != null) { //solange noch nicht Dateiende erreicht
 		        if (line.charAt(0) != '<' && line.charAt(0) != ' ') { //linksbündige Zeile suchen
-		        	if (anzahlZeilen % 10 == 0) { //nur jede 10. Zeile im Array speichern
+		        	if (anzahlZeilen % KML_AbstandWP == 0) { //nur jede X. Zeile im Array speichern
 		        		coords_list[stelleImArray] = line;
 		        		stelleImArray++;
 		        	}
@@ -1048,7 +1097,7 @@ public class oc_car extends JFrame {
 				
 				for (int i = 0; i < line.length() - 8; i++) {
 					if (line.substring(i, i+9).equals("trkpt lat")) { //nach Trackpoint suchen
-						if (anzahlZeilen % 10 == 0) { //nur jeden 10. Trackpoint im Array speichern
+						if (anzahlZeilen % GPX_AbstandWP == 0) { //nur jeden X. Trackpoint im Array speichern
 							startpunkt = i + 12;
 			    			int endpunkt = startpunkt;
 			    			//Ende des 2. Koordinatenpaarelements suchen
@@ -1450,24 +1499,24 @@ public class oc_car extends JFrame {
 		 * eine Hinweismeldung aus, wo der Fehler aufgetreten ist
 		 */
 		if (getUUID()) {
-			if (getCoordsOfStart() && getCoordsOfZiel()) {
-				if (loadGPX) {
-					if (GPX2Array()) {
-						if (checkRadius()) {
-							if (requestCaches()) {
-								if (!downloadCaches()) {
-									if (debug) System.out.println("Abbruch: downloadCaches()");
-								}
-							} else {
-								if (debug) System.out.println("Abbruch: requestCaches()");
+			if (loadGPX) {
+				if (GPX2Array()) {
+					if (checkRadius()) {
+						if (requestCaches()) {
+							if (!downloadCaches()) {
+								if (debug) System.out.println("Abbruch: downloadCaches()");
 							}
 						} else {
-							if (debug) System.out.println("Abbruch: checkRadius()");
+							if (debug) System.out.println("Abbruch: requestCaches()");
 						}
 					} else {
-						if (debug) System.out.println("Abbruch: GPX2Array()");
+						if (debug) System.out.println("Abbruch: checkRadius()");
 					}
 				} else {
+					if (debug) System.out.println("Abbruch: GPX2Array()");
+				}
+			} else {
+				if (getCoordsOfStart() && getCoordsOfZiel()) {
 					if (downloadKMLRoute()) {
 						if (KML2Array()) {
 							if (checkRadius()) {
@@ -1492,10 +1541,10 @@ public class oc_car extends JFrame {
 						if (debug) System.out.println("Abbruch: downloadKMLRoute()");
 						return false;
 					}
+				} else {
+					if (debug) System.out.println("Abbruch: getCoords()");
+					return false;
 				}
-			} else {
-				if (debug) System.out.println("Abbruch: getCoords()");
-				return false;
 			}
 		} else {
 			if (debug) System.out.println("Abbruch: getUUID()");
