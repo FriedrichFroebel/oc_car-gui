@@ -1,3 +1,9 @@
+Version 1.4 - 2016-01-01
+---
+* beim Laden einer GPX-Route werden jetzt keine Start- und Zielkoordinaten mehr abgerufen, was bisher zu Abstürzen führte
+* Eingabeparameter werden nun (umfangreicher) geprüft: leere Strings werden nicht gespeichert, D-/T-Bereich wird nun via Gleitkommaparsing geprüft
+* Abstand zwischen den Wegpunkten beim Auslesen von KML-/GPX-Dateien nun via Variable änderbar (jeder X. Wegpunkt wird gespeichert)
+
 Version 1.3 - 2015-12-16
 ---
 * E-Mail-Versand kann nun via Checkbox aktiviert (und natürlich auch deaktiviert) werden, ohne damit das Passwort und dessen eventuelle Speicherung zu beeinflussen
