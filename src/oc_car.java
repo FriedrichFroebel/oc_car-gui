@@ -48,8 +48,10 @@ import org.apache.commons.io.FileUtils;
 
 public class oc_car extends JFrame {
 	
+	private static final long serialVersionUID = 4621012789510411631L;
+
 	//Programmversion zur Analyse für eventuell verfügbares Update
-	private static String version = "1.4";
+	private static String version = "1.5";
 	
 	//erweiterte Konsolenausgabe ist standardmäßig deaktiviert
 	private static boolean debug = false;
@@ -77,7 +79,7 @@ public class oc_car extends JFrame {
 	private Properties config = new Properties();
 	
 	//Radius als String formatieren
-	private static DecimalFormat df_radius = new DecimalFormat( "#.##");
+	private static DecimalFormat df_radius = new DecimalFormat("#.##");
 	
 	//programminterne Daten
 	private static String UUID = "";
@@ -105,7 +107,7 @@ public class oc_car extends JFrame {
 	private static String body = "Die GPX-Datei für Deine Route!";
 	private static boolean sendEmail = false;
 
-	//GUI-Elemente, auf die zugegriffen werden muss
+	//GUI-Elemente, auf die gesondert zugegriffen werden muss
 	private JPanel contentPane;
 	private JTextField tfBenutzer;
 	private JTextField tfStart;
@@ -620,11 +622,6 @@ public class oc_car extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (rdtbnAlle.isSelected()) {
-						alleArten = true;
-					} else {
-						alleArten = false;
-					}
 					try {
 						char[] input = pfPassword.getPassword();
 						String temp = "";
@@ -772,6 +769,7 @@ public class oc_car extends JFrame {
 			
 			//in XML-Datei schreiben
 			File f = new File(System.getProperty("user.home") + File.separator + "occar" + File.separator + "occar_config.xml");
+			//f.getParentFile().mkdirs(); //fehlende Verzeichnisse erstellen
 			OutputStream o = new FileOutputStream(f);
 			config.storeToXML(o, "Config-Datei für oc_car-gui");
 		} catch (IOException e) {
@@ -1274,6 +1272,8 @@ public class oc_car extends JFrame {
 		    				+ Difficulty
 		    				+ "&terrain="
 		    				+ Terrain
+		    				+ "&not_found_by="
+		    				+ UUID
 		    				+ "&status=Available&consumer_key=8YV657YqzqDcVC3QC9wM");
 		    	} else {
 		    		url = new URL("http://www.opencaching.de/okapi/services/caches/search/nearest?center="
@@ -1286,6 +1286,8 @@ public class oc_car extends JFrame {
 		    				+ Difficulty
 		    				+ "&terrain="
 		    				+ Terrain
+		    				+ "&not_found_by="
+		    				+ UUID
 		    				+ "&status=Available&consumer_key=8YV657YqzqDcVC3QC9wM");
 		    	}
 		    	//System.out.println(url);

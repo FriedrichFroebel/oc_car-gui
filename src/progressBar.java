@@ -2,13 +2,13 @@ import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.Border;
 
 public class progressBar extends JFrame {
 
-	private JPanel contentPane;
+	private static final long serialVersionUID = 7292005734599064765L;
+	
 	private JProgressBar progressBar;
 
 	//Frame erstellen
@@ -30,7 +30,6 @@ public class progressBar extends JFrame {
 		progressBar.setBorder(border);
 		getContentPane().add(progressBar, BorderLayout.NORTH);
 		
-		contentPane = new JPanel();
 	}
 	
 	//Anzeige aktualisieren

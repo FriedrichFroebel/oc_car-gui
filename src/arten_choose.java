@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 
 public class arten_choose extends JFrame {
 	
+	private static final long serialVersionUID = -155300462443924275L;
+	
 	private int Auswahl = 0; //ausgewählte Cachearten
 	private oc_car zugriff = new oc_car(); //Cachearten auch in der Hauptklasse verändern
 
