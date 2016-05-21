@@ -695,24 +695,30 @@ public class oc_car extends JFrame {
 	}
 	
 	private boolean chooseGPXFile() {
-		JFileChooser gpxeingabe = new JFileChooser();
+		JFileChooser gpxeingabe = new JFileChooser(); //Dateibrowser
+		
+		//nur GPX-Dateien erlauben
 		FileNameExtensionFilter gpx = new FileNameExtensionFilter("GPX-Dateien", "gpx", "GPX");
 		gpxeingabe.setFileFilter(gpx);
-		if (loadpath.equals("")) {
+		
+		if (loadpath.equals("")) { //bisher noch keine (gültige) GPX-Datei geladen
 			File f = new File(System.getProperty("user.home") + File.separator + "occar");
 			gpxeingabe.setCurrentDirectory(f);
-		} else {
+		} else { //bereits einmal GPX-Datei geladen
 			File f = new File(loadpath);
 			gpxeingabe.setCurrentDirectory(f);
 		}
+		
 		int option = gpxeingabe.showOpenDialog(null);
-		if (option == JFileChooser.APPROVE_OPTION) {
-			String pfadEingabe = gpxeingabe.getSelectedFile().getAbsolutePath();
+		if (option == JFileChooser.APPROVE_OPTION) { //wenn Datei ausgewählt worden ist
+			String pfadEingabe = gpxeingabe.getSelectedFile().getAbsolutePath(); //Pfad ermitteln
+			
+			//Dateiendung prüfen
 			if (FilenameUtils.getExtension(pfadEingabe).toUpperCase().equals("GPX")) {
-				//System.out.println(pfadEingabe);
+				if (debug) System.out.println(pfadEingabe);
 				loadpath = pfadEingabe;
 				loadGPX = true;
-				return true;
+				return true; //Info anzeigen
 			} else {
 				javax.swing.JOptionPane.showMessageDialog(null,
 						"Dateiendung ist nicht GPX, sondern \""
