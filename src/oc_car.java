@@ -51,7 +51,7 @@ public class oc_car extends JFrame {
 	private static final long serialVersionUID = 4621012789510411631L;
 
 	//Programmversion zur Analyse für eventuell verfügbares Update
-	private static String version = "1.5";
+	private static String version = "1.6";
 	
 	//erweiterte Konsolenausgabe ist standardmäßig deaktiviert
 	private static boolean debug = false;
@@ -120,10 +120,10 @@ public class oc_car extends JFrame {
 	private JTextField tfEmpfaenger;
 	private JTextField tfBetreff;
 	private JTextField tfMailtext;
-	private JRadioButton rdtbnAlle;
-	private JRadioButton rdtbnAuswaehlen;
+	private JRadioButton rdbtnAlle;
+	private JRadioButton rdbtnAuswaehlen;
 	private JTextField tfPort;
-	private JLabel lblFortschritt = new JLabel("");;
+	private JLabel lblFortschritt = new JLabel("");
 
 	//Anwendung starten
 	public static void main(String[] args) {
@@ -199,11 +199,11 @@ public class oc_car extends JFrame {
 		tfBenutzer = new JTextField();
 		tfBenutzer.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusGained(FocusEvent arg0) {
+			public void focusGained(FocusEvent e) {
 				tfBenutzer.selectAll();
 			}
 			@Override
-			public void focusLost(FocusEvent arg0) {
+			public void focusLost(FocusEvent e) {
 				if (!tfBenutzer.getText().equals("")) {
 					ocUser = tfBenutzer.getText();
 					writeConfig();
@@ -337,26 +337,22 @@ public class oc_car extends JFrame {
 		
 		//Radiobuttons für Auswahl der Cachearten
 		
-		JRadioButton rdbtnAlle = new JRadioButton("alle");
+		rdbtnAlle = new JRadioButton("alle");
 		rdbtnAlle.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mousePressed(MouseEvent e) {
+				Arten = 1023;
 				alleArten = true;
+				writeConfig();
 			}
 		});
 		rdbtnAlle.setBounds(196, 96, 65, 23);
 		contentPane.add(rdbtnAlle);
 		
-		JRadioButton rdbtnAuswaehlen = new JRadioButton("ausw\u00E4hlen");
-		rdbtnAuswaehlen.addMouseListener(new MouseAdapter() {
+		rdbtnAuswaehlen = new JRadioButton("ausw\u00E4hlen");
+		rdbtnAuswaehlen.addFocusListener(new FocusAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				try {
-					arten_choose artenwahl = new arten_choose();
-					artenwahl.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+			public void focusLost(FocusEvent e) {
 				if (Arten != 0) {
 					alleArten = false;
 					writeConfig();
@@ -364,9 +360,30 @@ public class oc_car extends JFrame {
 					alleArten = true;
 					Arten = 1023;
 					writeConfig();
-					rdtbnAlle.setSelected(true);
+					rdbtnAlle.setSelected(true);
 				}
 			}
+		});
+		rdbtnAuswaehlen.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (Arten != 0) {
+					alleArten = false;
+					writeConfig();
+				} else {
+					alleArten = true;
+					Arten = 1023;
+					writeConfig();
+					rdbtnAlle.setSelected(true);
+				}
+				try {
+					arten_choose artenwahl = new arten_choose();
+					artenwahl.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+			
 		});
 		rdbtnAuswaehlen.setBounds(260, 96, 120, 23);
 		contentPane.add(rdbtnAuswaehlen);
@@ -388,70 +405,16 @@ public class oc_car extends JFrame {
 		JButton btnGpxRouteLaden = new JButton("GPX-Route laden");
 		btnGpxRouteLaden.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent arg0) {
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) { //Enter-Taste gedrückt
-					JFileChooser gpxeingabe = new JFileChooser();
-					FileNameExtensionFilter gpx = new FileNameExtensionFilter("GPX-Dateien", "gpx", "GPX");
-					gpxeingabe.setFileFilter(gpx);
-					if (loadpath.equals("")) {
-						File f = new File(System.getProperty("user.home") + File.separator + "occar");
-						gpxeingabe.setCurrentDirectory(f);
-					} else {
-						File f = new File(loadpath);
-						gpxeingabe.setCurrentDirectory(f);
-					}
-					int option = gpxeingabe.showOpenDialog(null);
-					if (option == JFileChooser.APPROVE_OPTION) {
-						String pfadEingabe = gpxeingabe.getSelectedFile().getAbsolutePath();
-						if (FilenameUtils.getExtension(pfadEingabe).toUpperCase().equals("GPX")) {
-							//System.out.println(pfadEingabe);
-							loadpath = pfadEingabe;
-							loadGPX = true;
-							lblGpxGeladen.setVisible(true);
-						} else {
-							javax.swing.JOptionPane.showMessageDialog(null,
-									"Dateiendung ist nicht GPX, sondern \""
-									+ FilenameUtils.getExtension(pfadEingabe) + "\".",
-									"Fehlerhafte Dateiendung",
-									JOptionPane.WARNING_MESSAGE);
-						}
-					}
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) { //Enter-Taste gedrückt
+					lblGpxGeladen.setVisible(chooseGPXFile());
 				}
 			}
 		});
 		btnGpxRouteLaden.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				JFileChooser gpxeingabe = new JFileChooser(); //Dateibrowser
-				//nur GPX-Dateien erlauben
-				FileNameExtensionFilter gpx = new FileNameExtensionFilter("GPX-Dateien", "gpx", "GPX");
-				gpxeingabe.setFileFilter(gpx);
-				if (loadpath.equals("")) { //bisher noch keine (gültige) GPX-Datei geladen
-					File f = new File(System.getProperty("user.home") + File.separator + "occar");
-					gpxeingabe.setCurrentDirectory(f);
-				} else { //bereits einmal GPX-Datei geladen
-					File f = new File(loadpath);
-					gpxeingabe.setCurrentDirectory(f);
-				}
-				int option = gpxeingabe.showOpenDialog(null);
-				//wenn Datei ausgewählt worden ist
-				if (option == JFileChooser.APPROVE_OPTION) {
-					//Pfad ermitteln
-					String pfadEingabe = gpxeingabe.getSelectedFile().getAbsolutePath();
-					//Dateiendung prüfen
-					if (FilenameUtils.getExtension(pfadEingabe).toUpperCase().equals("GPX")) {
-						if (debug) System.out.println(pfadEingabe);
-						loadpath = pfadEingabe;
-						loadGPX = true;
-						lblGpxGeladen.setVisible(true); //Info anzeigen
-					} else {
-						javax.swing.JOptionPane.showMessageDialog(null,
-								"Dateiendung ist nicht GPX, sondern \""
-								+ FilenameUtils.getExtension(pfadEingabe) + "\".",
-								"Fehlerhafte Dateiendung",
-								JOptionPane.WARNING_MESSAGE);
-					}
-				}
+			public void mousePressed(MouseEvent e) {
+				lblGpxGeladen.setVisible(chooseGPXFile());
 			}
 		});
 		btnGpxRouteLaden.setBounds(364, 28, 170, 23);
@@ -644,7 +607,7 @@ public class oc_car extends JFrame {
 		});
 		btnStartSuche.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mouseClicked(MouseEvent e) {
 				//Passwort ermitteln
 				try {
 					char[] input = pfPassword.getPassword();
@@ -653,7 +616,7 @@ public class oc_car extends JFrame {
 						temp += input[i];
 					}
 					password = temp;
-				} catch (ArrayIndexOutOfBoundsException e) {
+				} catch (ArrayIndexOutOfBoundsException ex) {
 					if (debug) System.out.println("Kein Passwort angegeben");
 				}
 				sucheStarten(); //Suche durch Funktionsaufruf starten
@@ -672,7 +635,7 @@ public class oc_car extends JFrame {
 		JCheckBox boxSavePW = new JCheckBox("Passwort speichern");
 		boxSavePW.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mouseClicked(MouseEvent e) {
 				if (boxSavePW.isSelected()) { //wenn mit Maus geklickt und Box selektiert
 					savePW = true; //Passwort speichern
 				} else {
@@ -687,13 +650,13 @@ public class oc_car extends JFrame {
 		JCheckBox boxSendEmail = new JCheckBox("E-Mail senden");
 		boxSendEmail.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mouseClicked(MouseEvent e) {
 				if (boxSendEmail.isSelected()) {
 					sendEmail = true;
 				} else {
 					sendEmail = false;
 				}
-				System.out.println(sendEmail);
+				//System.out.println(sendEmail);
 			}
 		});
 		boxSendEmail.setBounds(364, 72, 170, 25);
@@ -708,7 +671,7 @@ public class oc_car extends JFrame {
 			rdbtnAlle.setSelected(true);
 			alleArten = true;
 		} else {
-			rdtbnAuswaehlen.setSelected(true);
+			rdbtnAuswaehlen.setSelected(true);
 			alleArten = false;
 		}
 		
@@ -730,6 +693,36 @@ public class oc_car extends JFrame {
 		}
 		
 	}
+	
+	private boolean chooseGPXFile() {
+		JFileChooser gpxeingabe = new JFileChooser();
+		FileNameExtensionFilter gpx = new FileNameExtensionFilter("GPX-Dateien", "gpx", "GPX");
+		gpxeingabe.setFileFilter(gpx);
+		if (loadpath.equals("")) {
+			File f = new File(System.getProperty("user.home") + File.separator + "occar");
+			gpxeingabe.setCurrentDirectory(f);
+		} else {
+			File f = new File(loadpath);
+			gpxeingabe.setCurrentDirectory(f);
+		}
+		int option = gpxeingabe.showOpenDialog(null);
+		if (option == JFileChooser.APPROVE_OPTION) {
+			String pfadEingabe = gpxeingabe.getSelectedFile().getAbsolutePath();
+			if (FilenameUtils.getExtension(pfadEingabe).toUpperCase().equals("GPX")) {
+				//System.out.println(pfadEingabe);
+				loadpath = pfadEingabe;
+				loadGPX = true;
+				return true;
+			} else {
+				javax.swing.JOptionPane.showMessageDialog(null,
+						"Dateiendung ist nicht GPX, sondern \""
+						+ FilenameUtils.getExtension(pfadEingabe) + "\".",
+						"Fehlerhafte Dateiendung",
+						JOptionPane.WARNING_MESSAGE);
+			}
+		}
+		return false;
+	}
 
 	//Zahlenwert für Cachearten erhalten (in Klasse arten_choose verwendet)
 	public int getCachearten() {
@@ -738,7 +731,7 @@ public class oc_car extends JFrame {
 
 	//Zahlenwert für Cachearten setzen (in Klasse arten_choose verwendet)
 	public void setCachearten(int cachearten) {
-		oc_car.Arten = cachearten;
+		Arten = cachearten;
 	}
 	
 	//Parameter in Konfigurationsdatei schreiben

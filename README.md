@@ -25,8 +25,8 @@ Bitte beschreibt in einem solchen Fall Euer Problem möglichst genau, um es eing
 Externe Beiträge zum Programm sind immer gern gesehen und helfen dabei, auch neue Funktionen zu ermöglichen. Dazu reicht im Normalfall ein Pull Request mit einer kurzen Beschreibung der Veränderung.
 
 Damit alle Funktionen in Eurer Entwicklungsumgebung laufen, benötigt Ihr allerdings noch zwei zusätzliche (externe) JAR-Dateien, die als Bibliothek eingebunden werden müssen (in Eclipse: "Configure Build Path" - "Add external JARs"):
-* http://commons.apache.org/proper/commons-io/download_io.cgi (commons-io-2.4-bin)
-* https://java.net/projects/javamail/downloads (JavaMail API 1.5.4)
+* http://commons.apache.org/proper/commons-io/download_io.cgi (commons-io 2.5)
+* https://java.net/projects/javamail/downloads (javax.mail.jar 1.5.5)
 
 ## Andere Versionen
 * Bash-Version (Linux): https://github.com/kabegeo/oc_car (Original)

@@ -87,7 +87,7 @@ public class arten_choose extends JFrame {
 		JButton btnUebernehmen = new JButton("\u00DCbernehmen");
 		btnUebernehmen.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				//Auswahl mittels Bitmasken zur Integer-Variable hinzufügen
 				//Zustände von 0 bis 1023 möglich
 				if (boxTradi.isSelected()) Auswahl += 1<<0;
@@ -110,7 +110,7 @@ public class arten_choose extends JFrame {
 	}
 	
 	//Frame schließen (nur über externe Funktion in der gleichen Klasse möglich)
-	public void CloseFrame(){
+	private void CloseFrame(){
 	    super.dispose();
 	}
 }

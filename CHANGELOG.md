@@ -1,3 +1,6 @@
+#Version 1.6 - 2016-05-21
+* Dateidialog zur Auswahl einer GPX-Route in eigene Funktion ausgelagert
+
 #Version 1.5 - 2016-02-21
 * Compiler-Warnungen entfernt
 * versehentliche Exception bei Aufruf der Cachesuche via Enter-Taste entfernt
