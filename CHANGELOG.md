@@ -1,5 +1,8 @@
 #Version 1.6 - 2016-05-21
 * Dateidialog zur Auswahl einer GPX-Route in eigene Funktion ausgelagert
+* Schreibfehler bei Namen von Radiobuttons behoben
+* Auswahl der Cachearten häufiger speichern
+* neue Version externer Bibliotheken
 
 #Version 1.5 - 2016-02-21
 * Compiler-Warnungen entfernt
