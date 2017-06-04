@@ -1,37 +1,17 @@
-# Opencaching.de - Caches entlang einer Route (GUI-Version)
+# Opencaching.de - Caches along a route (GUI version)
 
-Download des lauffähigen Programms (JAR-Datei) unter ***Releases*** (https://github.com/FriedrichFroebel/oc_car-gui/releases)
+Runnable JAR files are placed inside the [Releases section](https://github.com/FriedrichFroebel/oc_car-gui/releases).
 
-Dies ist eine Version des oc_car-Skriptes in Java mit grafischer Oberfläche.
+This is a version of the oc_car script with a graphical user interface, written in Java.
 
-Dabei habe ich mich so weit wie möglich an das Original gehalten, musste aber im Endeffekt das meiste komplett neu schreiben, da z.B. ein Einbinden von GPSBabel etc. nicht so einfach möglich ist.
+While the original script uses a `.conf` file for saving the configuration, this application uses a XML file. For security reasons the email password is not saved inside the configuration file anymore (by default). By activating the corresponding checkbox, the password can be saved ***unencrypted*** inside the configuration file.
 
-Dadurch entfällt die Notwendigkeit der Installation zusätzlicher Software. Zudem sollte das Programm auch ohne Anpassungen auf den unterschiedlichen Plattformen laufen.
+The output is placed inside the home directory inside the folder `occar` by default.
 
-Anders als im Original wird zum Speichern der Konfiguration eine XML-Datei genutzt. Aus Sicherheitsgründen wird auch das E-Mail-Passwort (standardmäßig) nicht mehr in der Konfigurationsdatei gelagert, sondern muss bei gewünschtem E-Mail-Versand in ein entsprechendes Feld eingetragen werden. Es gibt allerdings die Möglichkeit, das Passwort via Checkbox *unverschlüsselt* in der Konfigurationsdatei zu speichern.
+## Other versions
+* Bash version (Linux): https://github.com/kabegeo/oc_car (original, German)
+* Bash version (Linux): https://github.com/FriedrichFroebel/oc_car (Fork with some error corrections, German)
+* Bash version (Windows): https://github.com/FriedrichFroebel/oc_car-Windows (program paths are customized, German)
 
-Der vom Programm standardmäßig verwendete Ausgabepfad befindet sich im Homeverzeichnis im Ordner "occar" (bei Windows ist dieser normalerweise **C:\Users&#92;\<Benutzername>**).
-
-## Fehler gefunden? Probleme?
-Das Programm ist sicherlich nicht fehlerfrei.
-
-Sollte das Programm nicht das gewünschte Ergebnis bringen, dann könnt Ihr entweder einen Issue hier auf Github erstellen oder mich per persönlicher Opencaching-Nachricht kontaktieren.
-
-Bitte beschreibt in einem solchen Fall Euer Problem möglichst genau, um es eingrenzen zu können. Eine Hilfe ist mir dabei die eingebaute erweiterte Ausgabe auf der Kommandozeile, die aktiviert wird, sobald beim Start der JAR-Datei via Kommandozeile hinter dem Dateinamen nach einem Leerzeichen ein beliebiger Buchstabe geschrieben wird (also beispielsweise <code>java -jar oc_car-gui.jar d</code>, wenn Ihr Euch im Pfad des Programms befindet). Auch die Eingabe-/Ausgabedateien und die Konfiguration helfen bei der Fehlersuche.
-
-**Hinweis: Der E-Mail-Versand aus dem Programm heraus ist aktuell nur mit einem GMail-Konto getestet worden.**
-
-## Mithelfen?
-Externe Beiträge zum Programm sind immer gern gesehen und helfen dabei, auch neue Funktionen zu ermöglichen. Dazu reicht im Normalfall ein Pull Request mit einer kurzen Beschreibung der Veränderung.
-
-Damit alle Funktionen in Eurer Entwicklungsumgebung laufen, benötigt Ihr allerdings noch zwei zusätzliche (externe) JAR-Dateien, die als Bibliothek eingebunden werden müssen (in Eclipse: "Configure Build Path" - "Add external JARs"):
-* http://commons.apache.org/proper/commons-io/download_io.cgi (commons-io 2.5)
-* https://java.net/projects/javamail/downloads (javax.mail.jar 1.5.5)
-
-## Andere Versionen
-* Bash-Version (Linux): https://github.com/kabegeo/oc_car (Original)
-* Bash-Version (Linux): https://github.com/FriedrichFroebel/oc_car (Fork mit Fehlerbehebungen)
-* Bash-Version (Windows): https://github.com/FriedrichFroebel/oc_car-Windows (Programmpfade werden angepasst)
-
-## Blogartikel
-* Altmetall-Blog von Schrottie: https://blog.dafb-o.de/oc-caches-along-a-route-ein-gui-fuer-das-bashscript/ (14.12.2015)
+## Blog articles
+* Altmetall blog by Schrottie: https://blog.dafb-o.de/oc-caches-along-a-route-ein-gui-fuer-das-bashscript/ (14.12.2015, German)

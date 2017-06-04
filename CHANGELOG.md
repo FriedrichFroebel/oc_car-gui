@@ -1,28 +1,35 @@
-#Version 1.6 - 2016-05-21
-* Dateidialog zur Auswahl einer GPX-Route in eigene Funktion ausgelagert
-* Schreibfehler bei Namen von Radiobuttons behoben
-* Auswahl der Cachearten häufiger speichern
-* neue Version externer Bibliotheken
+# Version 2.0 - 2017-06-04
+* Switch to Gradle.
+* Switch code to English.
+* Use better package and code structure.
+* Get rid of absolute layout.
+* Some additonal small improvements.
 
-#Version 1.5 - 2016-02-21
-* Compiler-Warnungen entfernt
-* versehentliche Exception bei Aufruf der Cachesuche via Enter-Taste entfernt
+# Version 1.6 - 2016-05-21
+* Move file dialog for choosing a GPX route into an own method.
+* Fix typo inside the radio button names.
+* Save selection of cache types more often.
+* Update external libraries.
 
-#Version 1.4 - 2016-01-01
-* beim Laden einer GPX-Route werden jetzt keine Start- und Zielkoordinaten mehr abgerufen, was bisher zu Abstürzen führte
-* Eingabeparameter werden nun (umfangreicher) geprüft: leere Strings werden nicht gespeichert, D-/T-Bereich wird nun via Gleitkommaparsing geprüft
-* Abstand zwischen den Wegpunkten beim Auslesen von KML-/GPX-Dateien nun via Variable änderbar (jeder X. Wegpunkt wird gespeichert)
+# Version 1.5 - 2016-02-21
+* Remove compiler warnings.
+* Fix exception when calling the cache search using the keyboard.
 
-#Version 1.3 - 2015-12-16
-* E-Mail-Versand kann nun via Checkbox aktiviert (und natürlich auch deaktiviert) werden, ohne damit das Passwort und dessen eventuelle Speicherung zu beeinflussen
+# Version 1.4 - 2016-01-01
+* Requesting the coordinates for the start and destination gets disabled when loading a GPX route file.
+* Better input parameter checks: empty strings are skipped, check D/T range using floating point parser.
+* Distance between waypoints while reading KML/GPX files can be modified using a variable.
 
-#Version 1.2 - 2015-12-14
-* optionale Passwortspeicherung via Checkbox möglich
+# Version 1.3 - 2015-12-16
+* Enable email with a checkbox without breaking the password saving functionality.
 
-#Version 1.1 - 2015-12-14
-* Feld- und Framegrößen erhöht, da teilweise Beschriftungen nicht lesbar
-* Fortschrittsbalken während der Cachesuche
-* externe JAR-Dateien nicht mehr als solche eingebunden, sondern in Form von Class-Dateien
+# Version 1.2 - 2015-12-14
+* Optional password saving functionality.
 
-#Version 1.0 - 2015-12-11
-* Erste Version der Javaversion
+# Version 1.1 - 2015-12-14
+* Bigger field and frame size as some labels were cut.
+* Progress bar while searching for caches.
+* Get rid of including external JAR files, use class files instead.
+
+# Version 1.0 - 2015-12-11
+* First version written in Java.

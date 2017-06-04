@@ -1,0 +1,358 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+    "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+    "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+
+<!--
+    Checkstyle configuration based on the Google coding conventions from
+    Google Java Style that can be found at
+    https://google.github.io/styleguide/javaguide.html.
+
+    Based on this source file from Github:
+    https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml.
+
+    All the standard checks available for Checkstyle can be found at
+    http://checkstyle.sourceforge.net/checks.html.
+-->
+
+<module name = "Checker">
+    <!-- Use UTF-8 file encoding by default. -->
+    <property name="charset" value="UTF-8"/>
+
+    <!-- Use English messages. -->
+    <property name="localeCountry" value="EN"/>
+    <property name="localeLanguage" value="en"/>
+
+    <!-- Do not stop on error. -->
+    <property name="severity" value="warning"/>
+    
+    <!-- Report each line which contains tab characters. -->
+    <module name="FileTabCharacter">
+        <property name="eachLine" value="true"/>
+    </module>
+    
+    <!-- Files should not be longer than 1000 lines. -->
+    <module name="FileLength">
+        <property name="max" value="1000"/>
+    </module>
+
+    <!-- Check each source file. -->
+    <module name="TreeWalker">
+        <!-- File names have to match with the outer type defined inside. -->
+        <module name="OuterTypeFilename"/>
+        
+        <!-- These tokens are not allowed. -->
+        <module name="IllegalTokenText">
+            <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
+            <property name="format" value="\\u00(09|0(a|A)|0(c|C)|0(d|D)|22|27|5(C|c))|\\(0(10|11|12|14|15|42|47)|134)"/>
+            <property name="message" value="Consider using special escape sequence instead of octal value or Unicode escaped value."/>
+        </module>
+        
+        <!-- Restrictions for Unicode escapes. -->
+        <module name="AvoidEscapedUnicodeCharacters">
+            <property name="allowEscapesForControlCharacters" value="true"/>
+            <property name="allowByTailComment" value="true"/>
+            <property name="allowNonPrintableEscapes" value="true"/>
+            <property name="allowIfAllCharactersEscaped" value="true"/>
+        </module>
+        
+        <!-- Disallow inline conditionals. -->
+        <module name="AvoidInlineConditionals"/>
+        
+        <!-- Disallow blocks which are not surrounded by a condition. -->
+        <module name="AvoidNestedBlocks"/>
+        
+        <!-- Disallow assignments in subexpressions. -->
+        <module name="InnerAssignment"/>
+        
+        <!-- Restrict line length to 80 characters, but ignore imports and
+        links. -->
+        <module name="LineLength">
+            <property name="max" value="80"/>
+            <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
+        </module>
+        
+        <!-- Disallow more than 50 methods inside a class. -->
+        <module name="MethodCount">
+            <property name="maxTotal" value="50"/>
+        </module>
+        
+        <!-- Disallow methods with more than 100 lines. -->
+        <module name="MethodLength">
+            <property name="max" value="100"/>
+            <property name="countEmpty" value="false"/>
+        </module>
+        
+        <!-- Each import has to be named (no placeholder allowed). -->
+        <module name="AvoidStarImport"/>
+        
+        <!-- Avoid redundant imports. -->
+        <module name="RedundantImport"/>
+        
+        <!-- Each top-level structure needs its own file. -->
+        <module name="OneTopLevelClass"/>
+        
+        <!-- Disallow line wraps inside package definitions and imports. -->
+        <module name="NoLineWrap"/>
+        
+        <!-- Require text inside try, finally, if, else and switch blocks. -->
+        <module name="EmptyBlock">
+            <property name="option" value="TEXT"/>
+            <property name="tokens" value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH"/>
+        </module>
+        
+        <!-- Code blocks to run from inside do, while, else, for and if need
+        braces around it. -->
+        <module name="NeedBraces"/>
+        
+        <!-- Left curly braces have to be placed at the end of the line. -->
+        <module name="LeftCurly"/>
+        
+        <!-- Right curly braces for try, catch, finally, if, else and do
+        have to be placed on the same line. -->
+        <module name="RightCurly">
+            <property name="option" value="same"/>
+            <property name="tokens" value="LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_DO"/>
+        </module>
+        
+        <!-- Right curly braces for classes, methods, constructors, for,
+        while, static init and instance init have to be placed on a
+        separate line. -->
+        <module name="RightCurly">
+            <property name="option" value="alone"/>
+            <property name="tokens" value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT, INSTANCE_INIT"/>
+        </module>
+        
+        <!-- Tokens have to be surrounded by whitespaces.
+        Empty constructor, method, class, interface, enum and loop bodies
+        are allowed. -->
+        <module name="WhitespaceAround">
+            <property name="allowEmptyConstructors" value="true"/>
+            <property name="allowEmptyMethods" value="true"/>
+            <property name="allowEmptyTypes" value="true"/>
+            <property name="allowEmptyLoops" value="true"/>
+            <message key="ws.notFollowed"
+             value="WhitespaceAround: ''{0}'' is not followed by whitespace. Empty blocks may only be represented as '{}' when not part of a multi-block statement (4.1.3)"/>
+             <message key="ws.notPreceded"
+             value="WhitespaceAround: ''{0}'' is not preceded with whitespace."/>
+        </module>
+        
+        <!-- Only one statement per line is allowed. -->
+        <module name="OneStatementPerLine"/>
+        
+        <!-- Each variable declaration needs its own statement and line. -->
+        <module name="MultipleVariableDeclarations"/>
+        
+        <!-- Use array type definitions in Java style (String[] args). -->
+        <module name="ArrayTypeStyle"/>
+        
+        <!-- Require a default branch for switch statements. -->
+        <module name="MissingSwitchDefault"/>
+        
+        <!-- Detect fall throughs inside switch statements. When using
+        'fall through' in a comment inside the case branch, this check
+        is skipped for this branch. -->
+        <module name="FallThrough"/>
+        
+        <!-- Long constants have to be defined with an upper ell. -->
+        <module name="UpperEll"/>
+        
+        <!-- Check that the order of modifiers conforms the suggestions
+        in the Java Language Specification. -->
+        <module name="ModifierOrder"/>
+        
+        <!-- Disallow empty lines between fields. -->
+        <module name="EmptyLineSeparator">
+            <property name="allowNoEmptyLineBetweenFields" value="true"/>
+        </module>
+        
+        <!-- Separator dots on new line. -->
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapDot"/>
+            <property name="option" value="nl"/>
+            <property name="tokens" value="DOT"/>
+        </module>
+        
+        <!-- Separator commas on end of line. -->
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapComma"/>
+            <property name="option" value="EOL"/>
+            <property name="tokens" value="COMMA"/>
+        </module>
+        
+        <!-- Check for valid package names. -->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+            <message key="name.invalidPattern"
+             value="Package name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+        
+        <!-- Check for valid identifiers for classes, interfaces, enums and
+        annotations. -->
+        <module name="TypeName">
+            <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
+            <message key="name.invalidPattern"
+             value="Type name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+        
+        <!-- Check identifiers for non-static fields. -->
+        <module name="MemberName">
+            <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
+            <message key="name.invalidPattern"
+             value="Member name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+        
+        <!-- Check method and catch parameter names. -->
+        <module name="ParameterName">
+            <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+            <message key="name.invalidPattern"
+             value="Parameter name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+        
+        <!-- Check local variable names (non-final). -->
+        <module name="LocalVariableName">
+            <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+            <message key="name.invalidPattern"
+             value="Local variable name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+        
+        <!-- Check identifiers for class type parameters. -->
+        <module name="ClassTypeParameterName">
+            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
+            <message key="name.invalidPattern"
+             value="Class type name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+        
+        <!-- Check identifiers for method type parameters. -->
+        <module name="MethodTypeParameterName">
+            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
+            <message key="name.invalidPattern"
+             value="Method type name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+        
+        <!-- Check identifiers for interface type parameters. -->
+        <module name="InterfaceTypeParameterName">
+            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
+            <message key="name.invalidPattern"
+             value="Interface type name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+        
+        <!-- Check identifiers for methods. -->
+        <module name="MethodName">
+            <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9_]*$"/>
+            <message key="name.invalidPattern"
+             value="Method name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+        
+        <!-- Disallow method without parameters with the name 'finalize'. -->
+        <module name="NoFinalizer"/>
+        
+        <!-- Check for redundant modifiers. -->
+        <module name="RedundantModifier"/>
+        
+        <!-- Avoid generic throw and catch statements. -->
+        <module name="IllegalCatch"/>
+        <module name="IllegalThrows"/>
+        
+        <!-- Avoid empty catch blocks when not expected comment. -->
+        <module name="EmptyCatchBlock">
+            <property name="exceptionVariableName" value="expected"/>
+        </module>
+        
+        <!-- Check that whitespace around angle brackets are correct to the
+        typical convention.
+        Left ones:
+          * preceded with whitespace in generic method definitions only
+          * not preceded with whitespace when it is precede method name or
+            following type name
+          * not followed with whitespace
+        Right ones:
+          * not preceded with whitespace
+          * followed with whitespace in almost all cases, except diamond
+            operators and when preceding method name
+        -->
+        <module name="GenericWhitespace">
+            <message key="ws.followed"
+             value="GenericWhitespace ''{0}'' is followed by whitespace."/>
+             <message key="ws.preceded"
+             value="GenericWhitespace ''{0}'' is preceded with whitespace."/>
+             <message key="ws.illegalFollow"
+             value="GenericWhitespace ''{0}'' should followed by whitespace."/>
+             <message key="ws.notPreceded"
+             value="GenericWhitespace ''{0}'' is not preceded with whitespace."/>
+        </module>
+        
+        <!-- Check the correct indentation.
+        4 additional whitespaces when:
+          * new level
+          * case statement
+          * continuation line when line-wrapping is present
+          * array initialisiation when on next line
+        -->
+        <module name="Indentation">
+            <property name="basicOffset" value="4"/>
+            <property name="braceAdjustment" value="0"/>
+            <property name="caseIndent" value="4"/>
+            <property name="throwsIndent" value="4"/>
+            <property name="lineWrappingIndentation" value="4"/>
+            <property name="arrayInitIndent" value="2"/>
+        </module>
+        
+        <!-- Disallow capital letter followed by another capital letter. -->
+        <module name="AbbreviationAsWordInName">
+            <property name="ignoreFinal" value="false"/>
+            <property name="allowedAbbreviationLength" value="1"/>
+        </module>
+        
+        <!-- Overloaded methods have to be grouped together. -->
+        <module name="OverloadMethodsDeclarationOrder"/>
+        
+        <!-- Variables have to be used 3 lines after they are declared. -->
+        <module name="VariableDeclarationUsageDistance"/>
+        
+        <!-- Import order:
+          * alphabetically ordered groups
+          * each group separated by an empty line
+          * static imports first, third party packages afterwards
+        Third party packages are all except static packages, same package
+        and standard Java packages. -->
+        <module name="CustomImportOrder">
+            <property name="sortImportsInGroupAlphabetically" value="true"/>
+            <property name="separateLineBetweenGroups" value="true"/>
+            <property name="customImportOrderRules" value="STATIC###THIRD_PARTY_PACKAGE"/>
+        </module>
+        
+        <!-- Method parameters on same line as left parenthesis and without
+        a whitespace between the first parameter and the left parenthesis. -->
+        <module name="MethodParamPad"/>
+        
+        <!-- No spaces between left and right parenthesis. -->
+        <module name="ParenPad"/>
+        
+        <!-- Operators on new line when wrapped. -->
+        <module name="OperatorWrap">
+            <property name="option" value="nl"/>
+            <property name="tokens" value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD, NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR, METHOD_REF"/>
+        </module>
+        
+        <!-- Check that at least all public methods have Javadocs for all
+        parameters, thrown exceptions and the return value (if present).
+        Override annotation allow missing javadoc comments. -->
+        <module name="JavadocMethod">
+            <property name="scope" value="private"/>
+            <property name="allowThrowsTagsForSubclasses" value="true"/>
+            <property name="allowedAnnotations" value="Override"/>
+        </module>
+        
+        <!-- The Javadoc at clauses have be ordered by param, return, throws
+        and deprecated. -->
+        <module name="AtclauseOrder">
+            <property name="tagOrder" value="@param, @return, @throws, @deprecated"/>
+            <property name="target" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>
+        </module>
+        
+        <!-- Javadoc comments need descriptions behind @param, @return,
+        @throws and @deprecated. -->
+        <module name="NonEmptyAtclauseDescription"/>
+    </module>
+</module>
