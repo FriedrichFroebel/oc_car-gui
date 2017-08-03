@@ -1,6 +1,7 @@
 package com.github.friedrichfroebel.occar;
 
 import com.github.friedrichfroebel.occar.config.Configuration;
+import com.github.friedrichfroebel.occar.config.Version;
 import com.github.friedrichfroebel.occar.frame.CachetypeChooser;
 import com.github.friedrichfroebel.occar.frame.GpxFileChooser;
 import com.github.friedrichfroebel.occar.helper.Translation;
@@ -24,6 +25,7 @@ import java.io.IOException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.MessageFormat;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -47,11 +49,6 @@ import javax.swing.event.HyperlinkListener;
  * This is the entry point for the user which shows the basic GUI.
  */
 public class Gui extends JFrame {
-
-    /**
-     * The current version of application.
-     */
-    private static final String VERSION = "2.0";
 
     /**
      * The basic panel which holds all the content.
@@ -174,9 +171,9 @@ public class Gui extends JFrame {
     private Gui() {
         Configuration.readConfig();
 
-        setTitle("Opencaching.de - "
-                + Translation.getMessage("cachesAlongRoute")
-                + " v" + VERSION);
+        setTitle(MessageFormat.format("Opencaching.de - {0} v{1}",
+                Translation.getMessage("cachesAlongRoute"),
+                Version.VERSION));
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(450, 390));
@@ -611,7 +608,8 @@ public class Gui extends JFrame {
         gridBagConstraints.anchor = GridBagConstraints.LINE_END;
         gridBagConstraints.gridx = offsetX;
         gridBagConstraints.gridy = offsetY;
-        JLabel label = new JLabel(Translation.getMessage(name) + ":");
+        JLabel label = new JLabel(MessageFormat.format("{0}:",
+                Translation.getMessage(name)));
         contentPane.add(label, gridBagConstraints);
     }
 
@@ -700,27 +698,25 @@ public class Gui extends JFrame {
             return;
         }
 
-        if (!response.equals(VERSION)) {
+        if (!response.equals(Version.VERSION)) {
             JEditorPane editorPane = new JEditorPane("text/html",
-                "<html><body>" + Translation.getMessage("newVersion")
-                + " (v" + response.trim() + "):"
+                MessageFormat.format("<html><body>{0} (v{1}):"
                 + "<br><a href=\"https://github.com/FriedrichFroebel/"
                 + "oc_car-gui/releases/\">https://github.com/FriedrichFroebel/"
                 + "oc_car-gui/releases/</a>"
-                + "</body></html>");
+                + "</body></html>", Translation.getMessage("newVersion"),
+                        response.trim()));
             editorPane.addHyperlinkListener(new HyperlinkListener() {
                 @Override
                 public void hyperlinkUpdate(HyperlinkEvent e) {
-                    if (e.getEventType().equals(
-                            HyperlinkEvent.EventType.ACTIVATED)) {
-                        if (Desktop.isDesktopSupported()) {
-                            try {
-                                Desktop.getDesktop().browse(
-                                    new URI("https://github.com/Friedrich"
-                                        + "Froebel/oc_car-gui/releases/"));
-                            } catch (IOException | URISyntaxException exc) {
-                                // pass
-                            }
+                    if (e.getEventType().equals(HyperlinkEvent.EventType
+                            .ACTIVATED) && Desktop.isDesktopSupported()) {
+                        try {
+                            Desktop.getDesktop().browse(
+                                new URI("https://github.com/Friedrich"
+                                    + "Froebel/oc_car-gui/releases/"));
+                        } catch (IOException | URISyntaxException exc) {
+                            // pass
                         }
                     }
                 }

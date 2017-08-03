@@ -149,11 +149,20 @@ public final class Configuration {
 
         File file = new File(FILEPATH);
 
+        // Avoid errors when path or file does not exist.
+        if (!file.exists()) {
+            try {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            } catch (IOException exception) {
+                return;
+            }
+        }
 
         try (OutputStream outputStream = new FileOutputStream(file)) {
             config.storeToXML(outputStream,
                     "Configuration file for oc_car-gui");
-        } catch (IOException exception) {
+        } catch (IOException | SecurityException exception) {
             // pass
         }
     }
@@ -198,16 +207,18 @@ public final class Configuration {
     public static void setRadius(String radius) {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         try {
-            double radiusValue = Double.parseDouble(radius);
-            if (radiusValue < 0.1) {
+            float radiusValue = Float.parseFloat(radius);
+            if (radiusValue < 0.1f) {
                 JOptionPane.showMessageDialog(null,
                         Translation.getMessage("radiusTooSmall"));
-                throw new NumberFormatException("Radius is too small.");
+                throw new NumberFormatException(
+                        Translation.getMessage("radiusTooSmall"));
             }
-            if (radiusValue > 10.0) {
+            if (radiusValue > 10.0f) {
                 JOptionPane.showMessageDialog(null,
                         Translation.getMessage("radiusTooBig"));
-                throw new NumberFormatException("Radius is too big.");
+                throw new NumberFormatException(
+                        Translation.getMessage("radiusTooBig"));
             }
             setValue("radius", decimalFormat.format(radiusValue));
         } catch (NumberFormatException exception) {
@@ -243,10 +254,12 @@ public final class Configuration {
             int typesValue = Integer.parseInt(types);
 
             if (typesValue < 1) {
-                throw new NumberFormatException("No types chosen.");
+                throw new NumberFormatException(
+                        Translation.getMessage("noTypesChosen"));
             }
             if (typesValue > 1023) {
-                throw new NumberFormatException("Too big type number.");
+                throw new NumberFormatException(
+                        Translation.getMessage("typeNumberTooBig"));
             }
 
             setValue("types", Integer.toString(typesValue));
@@ -278,7 +291,8 @@ public final class Configuration {
         String[] parts = input.split("-");
 
         if (parts.length > 2 || parts.length < 1) {
-            throw new NumberFormatException("No number range given.");
+            throw new NumberFormatException(
+                    Translation.getMessage("noNumberRange"));
         }
 
         for (int i = 0; i < parts.length; i++) {
@@ -361,7 +375,13 @@ public final class Configuration {
      * @return The saved cache types number.
      */
     public static int getTypes() {
-        return Integer.parseInt(getValue("types"));
+        int value;
+        try {
+            value = Integer.parseInt(getValue("types"));
+        } catch (NumberFormatException exception) {
+            value = 1023;
+        }
+        return value;
     }
 
     /**

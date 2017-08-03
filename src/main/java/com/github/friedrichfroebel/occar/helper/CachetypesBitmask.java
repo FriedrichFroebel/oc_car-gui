@@ -11,7 +11,7 @@ public class CachetypesBitmask {
     /**
      * The map with all the bitmask values.
      */
-    private static Map<Integer, String> bitmaskValues = null;
+    private static Map<Integer, String> bitmaskValues;
 
     /**
      * Init the bitmask map.
@@ -119,6 +119,7 @@ public class CachetypesBitmask {
                 value += entry.getKey();
             }
         }
+
         return value;
     }
 }

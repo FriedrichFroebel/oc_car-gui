@@ -11,7 +11,7 @@ public final class Translation {
     /**
      * The resource where the messages are retrieved from.
      */
-    private static ResourceBundle messages = null;
+    private static ResourceBundle messages;
 
     /**
      * Create the bundle by checking whether the user uses German language
@@ -39,6 +39,10 @@ public final class Translation {
     public static String getMessage(String id) {
         if (messages == null) {
             initBundle();
+        }
+
+        if (messages == null) {
+            return "";
         }
 
         if (id != null && messages.containsKey(id)) {

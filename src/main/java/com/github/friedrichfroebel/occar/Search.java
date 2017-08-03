@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class performs the search.
@@ -87,7 +88,7 @@ class Search {
         // Request the coordinates for the start.
         String latLonStart = OpenstreetmapOrg.requestLatLonForQuery(
                 formatCityName(Configuration.getStart()));
-        if (latLonStart == null) {
+        if (latLonStart.isEmpty()) {
             return Translation.getMessage("errorRetrievingCity");
         }
         String latStart = latLonStart.split(";")[0];
@@ -96,7 +97,7 @@ class Search {
         // Request the coordinates for the destination.
         String latLonDestination = OpenstreetmapOrg.requestLatLonForQuery(
                 formatCityName(Configuration.getDestination()));
-        if (latLonDestination == null) {
+        if (latLonDestination.isEmpty()) {
             return Translation.getMessage("errorRetrievingCity");
         }
         String latDestination = latLonDestination.split(";")[0];

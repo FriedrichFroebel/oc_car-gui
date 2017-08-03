@@ -18,7 +18,7 @@ public class OpenstreetmapOrg {
      *
      * @param query The query to perform.
      * @return A string with the latitude and longitude separated by a
-     *         semicolon, {@code null} if there have been errors.
+     *         semicolon, an empty string if there have been errors.
      */
     public static String requestLatLonForQuery(String query) {
         String data;
@@ -26,7 +26,7 @@ public class OpenstreetmapOrg {
             data = RequestBase.getPageContent(URL_BASE + "search?q="
                     + query + "&format=json");
         } catch (IOException exception) {
-            return null;
+            return "";
         }
 
         return jsonToLatLon(data);
@@ -37,7 +37,7 @@ public class OpenstreetmapOrg {
      *
      * @param json The JSON string to parse.
      * @return A string with the latitude and longitude separated by a
-     *         semicolon, {@code null} if there have been errors.
+     *         semicolon, an empty string if there have been errors.
      */
     private static String jsonToLatLon(String json) {
         try {
@@ -46,7 +46,7 @@ public class OpenstreetmapOrg {
 
             return lat + ";" + lon;
         } catch (ArrayIndexOutOfBoundsException exception) {
-            return null;
+            return "";
         }
     }
 }

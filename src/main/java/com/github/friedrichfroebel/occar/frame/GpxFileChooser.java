@@ -4,6 +4,7 @@ import com.github.friedrichfroebel.occar.config.Configuration;
 import com.github.friedrichfroebel.occar.helper.Translation;
 
 import java.io.File;
+import java.text.MessageFormat;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -48,8 +49,9 @@ public final class GpxFileChooser {
                 Configuration.setGpxFile(path);
             } else {
                 javax.swing.JOptionPane.showMessageDialog(null,
-                        Translation.getMessage("invalidExtensionGpx") + " '"
-                            + FilenameUtils.getExtension(path) + "'.",
+                        MessageFormat.format("{0} '{1}'.",
+                                Translation.getMessage("invalidExtensionGpx"),
+                            FilenameUtils.getExtension(path) + "'."),
                         Translation.getMessage("invalidExtension"),
                         JOptionPane.WARNING_MESSAGE);
             }

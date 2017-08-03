@@ -5,6 +5,7 @@ import com.github.friedrichfroebel.occar.helper.CachetypesBitmask;
 import com.github.friedrichfroebel.occar.helper.Translation;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 
 import javax.swing.JOptionPane;
 
@@ -36,9 +37,10 @@ public class OpencachingDe {
                     + "users/by_username?username=" + Configuration.getUser()
                     + "&fields=uuid&consumer_key=" + CONSUMER_KEY);
         } catch (IOException exception) {
-            javax.swing.JOptionPane.showMessageDialog(null,
-                    Translation.getMessage("userNotFound") + "\n"
-                            + Translation.getMessage("checkParameters"),
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format("{0}\n{1}",
+                            Translation.getMessage("userNotFound"),
+                            Translation.getMessage("checkParameters")),
                     Translation.getMessage("invalidUsername"),
                     JOptionPane.INFORMATION_MESSAGE);
             return "";
@@ -49,9 +51,10 @@ public class OpencachingDe {
             uuid = uuid.split("\"}")[0];
             return uuid;
         } catch (ArrayIndexOutOfBoundsException exception) {
-            javax.swing.JOptionPane.showMessageDialog(null,
-                    Translation.getMessage("userNotFound") + "\n"
-                            + Translation.getMessage("checkParameters"),
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format("{0}\n{1}",
+                            Translation.getMessage("userNotFound"),
+                            Translation.getMessage("checkParameters")),
                     Translation.getMessage("invalidUsername"),
                     JOptionPane.INFORMATION_MESSAGE);
             return "";

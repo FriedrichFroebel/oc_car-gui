@@ -12,12 +12,18 @@ repositories {
 }
 
 dependencies {
-    compile 'org.apache.commons:commons-io:1.3.2'
-    compile 'javax.mail:mail:1.5.0-b01'
+    ext.commonsVersion = '1.3.2'
+    ext.mailVersion = '1.6.0'
+    ext.junitVersion = '4.12'
+
+    compile "org.apache.commons:commons-io:$commonsVersion"
+    compile "javax.mail:javax.mail-api:$mailVersion"
 
     // Use JUnit test framework.
-    testCompile 'junit:junit:4.12'
+    testCompile "junit:junit:$junitVersion"
 }
+
+version = '2.1'
 
 // Define the main class for the application
 mainClassName = 'com.github.friedrichfroebel.occar.Gui'
@@ -37,17 +43,38 @@ jar {
 // Check code style.
 apply plugin: 'checkstyle'
 checkstyle {
-    // Use the latest release.
-    toolVersion "7.8"
+    toolVersion '8.1'
 }
 tasks.withType(Checkstyle) {
     reports {
-        xml.enabled false
-        html.enabled true
+        xml.enabled = false
+        html.enabled = true
         html.stylesheet resources.text.fromFile('config/checkstyle/checkstyle.xsl')
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion '3.5'
+// Use the PMD plugin.
+apply plugin: 'pmd'
+tasks.withType(Pmd) {
+    ignoreFailures = true
+    consoleOutput = true
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.0.2'
+}
+
+// Update the version files.
+task versionFiles {
+    def fileJava = new File('src/main/java/com/github/friedrichfroebel/occar/config/Version.java')
+    fileJava.createNewFile()
+    fileJava.text = "package com.github.friedrichfroebel.occar.config;\n\n" +
+            "public final class Version {\n\n" +
+            "    public static final String VERSION = \"$version\";\n\n}"
+
+    def fileRoot = new File('version')
+    fileRoot.createNewFile()
+    fileRoot.text = "$version"
+}
+tasks.getByName('run').dependsOn versionFiles
+tasks.getByName('jar').dependsOn versionFiles

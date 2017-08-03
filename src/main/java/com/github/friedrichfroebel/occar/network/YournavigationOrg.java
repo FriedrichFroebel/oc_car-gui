@@ -20,7 +20,7 @@ public class YournavigationOrg {
      * @param lonStart The longitude of the start.
      * @param latDestination The latitude of the destination.
      * @param lonDestination The longitude of the destination.
-     * @return The KML route as a string, {@code null} if there have been
+     * @return The KML route as a string, an empty string if there have been
      *         errors.
      */
     public static String requestKmlRoute(String latStart, String lonStart,

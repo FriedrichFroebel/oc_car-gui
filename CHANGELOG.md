@@ -1,3 +1,7 @@
+# Version 2.1 - 2017-08-03
+* Create missing configuration directory and configuration file if missing.
+* Automate versioning and add version to the filename of JAR files.
+
 # Version 2.0 - 2017-06-04
 * Switch to Gradle.
 * Switch code to English.

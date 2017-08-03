@@ -22,18 +22,16 @@ public class Kml {
 
         for (int i = 0; i < lines.length; i++) {
             String line = lines[i];
-            if (!line.trim().startsWith("<")) {
-                if (i % distance == 0) {
-                    // Avoid out of bounds errors.
-                    if (!line.contains(",")) {
-                        continue;
-                    }
-
-                    line = line.trim();
-
-                    String[] parts = line.split(",");
-                    coordinates.add(parts[1] + "," + parts[0]);
+            if (!line.trim().startsWith("<") && (i % distance == 0)) {
+                // Avoid out of bounds errors.
+                if (!line.contains(",")) {
+                    continue;
                 }
+
+                line = line.trim();
+
+                String[] parts = line.split(",");
+                coordinates.add(parts[1] + "," + parts[0]);
             }
         }
 

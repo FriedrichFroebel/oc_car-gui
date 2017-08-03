@@ -22,6 +22,6 @@ public class GithubCom {
             return "";
         }
 
-        return data;
+        return data.trim();
     }
 }
