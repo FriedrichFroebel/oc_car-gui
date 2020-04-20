@@ -205,9 +205,9 @@ public final class Configuration {
      * @param radius The radius to set.
      */
     public static void setRadius(String radius) {
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        final DecimalFormat decimalFormat = new DecimalFormat("#.##");
         try {
-            float radiusValue = Float.parseFloat(radius);
+            final float radiusValue = Float.parseFloat(radius);
             if (radiusValue < 0.1f) {
                 JOptionPane.showMessageDialog(null,
                         Translation.getMessage("radiusTooSmall"));
@@ -251,7 +251,7 @@ public final class Configuration {
      */
     private static void setTypes(String types) {
         try {
-            int typesValue = Integer.parseInt(types);
+            final int typesValue = Integer.parseInt(types);
 
             if (typesValue < 1) {
                 throw new NumberFormatException(
@@ -288,19 +288,20 @@ public final class Configuration {
      */
     private static String formatNumberRange(String input)
             throws NumberFormatException {
-        String[] parts = input.split("-");
+        final String[] parts = input.split("-");
+        final int partsCount = parts.length;
 
-        if (parts.length > 2 || parts.length < 1) {
+        if (partsCount > 2 || partsCount < 1) {
             throw new NumberFormatException(
                     Translation.getMessage("noNumberRange"));
         }
 
-        for (int i = 0; i < parts.length; i++) {
-            int temp = Integer.parseInt(parts[i]);
+        for (int i = 0; i < partsCount; i++) {
+            final int temp = Integer.parseInt(parts[i]);
             parts[i] = Integer.toString(temp);
         }
 
-        if (parts.length == 1) {
+        if (partsCount == 1) {
             return parts[0];
         }
 
@@ -418,7 +419,7 @@ public final class Configuration {
      */
     public static void setEmailPort(String port) {
         try {
-            int portValue = Integer.parseInt(port);
+            final int portValue = Integer.parseInt(port);
 
             if (portValue < 1) {
                 throw new NumberFormatException("Invalid port.");

@@ -1,6 +1,12 @@
 package com.github.friedrichfroebel.occar.network;
 
+import com.github.friedrichfroebel.occar.helper.Coordinate;
+
 import java.io.IOException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * This class handles the communcation with Openstreetmap.org.
@@ -20,13 +26,13 @@ public class OpenstreetmapOrg {
      * @return A string with the latitude and longitude separated by a
      *         semicolon, an empty string if there have been errors.
      */
-    public static String requestLatLonForQuery(String query) {
+    public static Coordinate requestLatLonForQuery(String query) {
         String data;
         try {
             data = RequestBase.getPageContent(URL_BASE + "search?q="
                     + query + "&format=json");
         } catch (IOException exception) {
-            return "";
+            return null;
         }
 
         return jsonToLatLon(data);
@@ -39,14 +45,15 @@ public class OpenstreetmapOrg {
      * @return A string with the latitude and longitude separated by a
      *         semicolon, an empty string if there have been errors.
      */
-    private static String jsonToLatLon(String json) {
+    private static Coordinate jsonToLatLon(String json) {
         try {
-            String lat = json.split("\"lat\":\"")[1].split("\"")[0];
-            String lon = json.split("\"lon\":\"")[1].split("\"")[0];
-
-            return lat + ";" + lon;
-        } catch (ArrayIndexOutOfBoundsException exception) {
-            return "";
+            final JSONArray root = new JSONArray(json);
+            final JSONObject first = root.getJSONObject(0);
+            final String lat = first.getString("lat");
+            final String lon = first.getString("lon");
+            return new Coordinate(lat, lon);
+        } catch (JSONException exception) {
+            return null;
         }
     }
 }

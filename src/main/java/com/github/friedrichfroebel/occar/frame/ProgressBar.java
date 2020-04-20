@@ -34,7 +34,7 @@ public class ProgressBar extends JFrame {
         progressBar.setValue(0);
         progressBar.setStringPainted(true);
 
-        Border border = BorderFactory.createTitledBorder(
+        final Border border = BorderFactory.createTitledBorder(
                 Translation.getMessage("performingQueries"));
         progressBar.setBorder(border);
         getContentPane().add(progressBar, BorderLayout.NORTH);

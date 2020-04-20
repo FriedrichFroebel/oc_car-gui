@@ -2,6 +2,7 @@ package com.github.friedrichfroebel.occar;
 
 import com.github.friedrichfroebel.occar.config.Configuration;
 import com.github.friedrichfroebel.occar.frame.ProgressBar;
+import com.github.friedrichfroebel.occar.helper.Coordinate;
 import com.github.friedrichfroebel.occar.helper.Gpx;
 import com.github.friedrichfroebel.occar.helper.Kml;
 import com.github.friedrichfroebel.occar.helper.Translation;
@@ -18,6 +19,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * This class performs the search.
@@ -37,7 +42,7 @@ class Search {
     /**
      * The coordinates retrieved from the route file.
      */
-    private static ArrayList<String> coordinates = new ArrayList<>();
+    private static ArrayList<Coordinate> coordinates = new ArrayList<>();
 
     /**
      * The caches which have been found during the search.
@@ -86,25 +91,26 @@ class Search {
      */
     private static String searchKml() {
         // Request the coordinates for the start.
-        String latLonStart = OpenstreetmapOrg.requestLatLonForQuery(
-                formatCityName(Configuration.getStart()));
-        if (latLonStart.isEmpty()) {
+        final Coordinate latLonStart = OpenstreetmapOrg.requestLatLonForQuery(
+            formatCityName(Configuration.getStart()));
+        if (latLonStart == null) {
             return Translation.getMessage("errorRetrievingCity");
         }
-        String latStart = latLonStart.split(";")[0];
-        String lonStart = latLonStart.split(";")[1];
+        final String latStart = latLonStart.getLat();
+        final String lonStart = latLonStart.getLon();
 
         // Request the coordinates for the destination.
-        String latLonDestination = OpenstreetmapOrg.requestLatLonForQuery(
+        final Coordinate latLonDestination =
+            OpenstreetmapOrg.requestLatLonForQuery(
                 formatCityName(Configuration.getDestination()));
-        if (latLonDestination.isEmpty()) {
+        if (latLonDestination == null) {
             return Translation.getMessage("errorRetrievingCity");
         }
-        String latDestination = latLonDestination.split(";")[0];
-        String lonDestination = latLonDestination.split(";")[1];
+        final String latDestination = latLonDestination.getLat();
+        final String lonDestination = latLonDestination.getLon();
 
         // Request the route between the two coordinates.
-        String kmlRoute = YournavigationOrg.requestKmlRoute(
+        final String kmlRoute = YournavigationOrg.requestKmlRoute(
                 latStart, lonStart, latDestination, lonDestination);
         if (kmlRoute.isEmpty()) {
             return Translation.getMessage("errorRetrievingRoute");
@@ -140,28 +146,26 @@ class Search {
         final int coordinateSize = coordinates.size();
         for (int i = 0; i < coordinateSize; i++) {
             // Request the nearest caches.
-            String[] coordinateParts = coordinates.get(i).split(",");
-            String response = OpencachingDe.requestNearestCaches(
-                    coordinateParts[0], coordinateParts[1], uuid
+            Coordinate coordinate = coordinates.get(i);
+            final String response = OpencachingDe.requestNearestCaches(
+                    coordinate.getLat(), coordinate.getLon(), uuid
             );
 
             // Update the progress bar.
             progressBar.updateBar((100 * i) / coordinates.size());
 
-            // Check if there are caches inside the response.
-            if (response.length() >= 30) {
-                // Remove the first JSON part.
-                response = response.replace("{\"results\":[", "");
-
-                String[] responseParts = response.split("]")[0].split(",");
-
-                // Add all the caches to the list. Each is added only once.
-                for (String responsePart : responseParts) {
-                    responsePart = responsePart.replace("\"", "");
-                    if (!caches.contains(responsePart)) {
-                        caches.add(responsePart);
+            try {
+                final JSONObject root = new JSONObject(response);
+                final JSONArray results = root.getJSONArray("results");
+                final int resultsLength = results.length();
+                for (int j = 0; j < resultsLength; j++) {
+                    final String cacheCode = results.getString(j);
+                    if (!caches.contains(cacheCode)) {
+                        caches.add(cacheCode);
                     }
                 }
+            } catch (JSONException exception) {
+                // Ignore => no caches.
             }
         }
 
@@ -175,25 +179,21 @@ class Search {
      * @return Success or error message.
      */
     private static String downloadCaches() {
-        List<List<String>> subcalls = splitList(caches, 490);
-        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+        final List<List<String>> subcalls = splitList(caches, 490);
+        final DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
 
         boolean successAllEmails = true;
 
-        for (List<String> subcall : subcalls) {
-            StringBuilder codesForCall = new StringBuilder(subcall.get(0));
-            final int subcallSize = subcall.size();
-            for (int i = 1; i < subcallSize; i++) {
-                codesForCall.append("|").append(subcall.get(i));
-            }
+        for (final List<String> subcall : subcalls) {
+            final String codesForCall = String.join("|", subcall);
 
-            Date date = new Date();
-            String outputFile = System.getProperty("user.home")
+            final Date date = new Date();
+            final String outputFile = System.getProperty("user.home")
                     + File.separator + "occar" + File.separator
                     + dateFormat.format(date) + "PQ.gpx";
 
             try {
-                OpencachingDe.requestGpxFromCodes(codesForCall.toString(),
+                OpencachingDe.requestGpxFromCodes(codesForCall,
                         uuid, outputFile);
             } catch (IOException exception) {
                 return Translation.getMessage("errorWritingFile");
@@ -244,7 +244,7 @@ class Search {
      * @return A list which contains all the sublists.
      */
     private static List<List<String>> splitList(List<String> list, int length) {
-        List<List<String>> sublists = new ArrayList<>();
+        final List<List<String>> sublists = new ArrayList<>();
         final int listSize = list.size();
         for (int i = 0; i < listSize; i += length) {
             sublists.add(new ArrayList<>(

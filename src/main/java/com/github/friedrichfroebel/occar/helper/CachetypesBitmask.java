@@ -44,7 +44,7 @@ public class CachetypesBitmask {
             initBitmaskValues();
         }
 
-        StringBuilder query = new StringBuilder();
+        final StringBuilder query = new StringBuilder();
 
         // Perform the check for each bitmask.
         for (Map.Entry<Integer, String> entry : bitmaskValues.entrySet()) {

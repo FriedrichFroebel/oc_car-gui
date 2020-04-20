@@ -8,6 +8,7 @@ import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
+import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -51,8 +52,8 @@ public class Email {
     public static boolean sendEmailWithAttachment(String filename) {
         setServerSettings();
 
-        Session session = Session.getInstance(serverSettings,
-                new javax.mail.Authenticator() {
+        final Session session = Session.getInstance(serverSettings,
+                new Authenticator() {
                     protected PasswordAuthentication
                         getPasswordAuthentication() {
                         return new PasswordAuthentication(
@@ -62,7 +63,7 @@ public class Email {
                 });
 
         try {
-            MimeMessage message = new MimeMessage(session);
+            final MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(
                     Configuration.getEmailSender()));
             message.addRecipient(Message.RecipientType.TO,
@@ -72,11 +73,11 @@ public class Email {
             BodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setText(Configuration.getEmailBody());
 
-            Multipart multipart = new MimeMultipart();
+            final Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPart);
 
             messageBodyPart = new MimeBodyPart();
-            DataSource source = new FileDataSource(filename);
+            final DataSource source = new FileDataSource(filename);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(filename);
             messageBodyPart.setDisposition(Part.ATTACHMENT);

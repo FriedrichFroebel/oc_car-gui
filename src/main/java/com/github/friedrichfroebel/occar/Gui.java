@@ -25,6 +25,7 @@ import java.io.IOException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import java.text.MessageFormat;
 
 import javax.swing.ButtonGroup;
@@ -159,7 +160,7 @@ public class Gui extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Gui frame = new Gui();
+                final Gui frame = new Gui();
                 frame.setVisible(true);
             }
         });
@@ -183,7 +184,7 @@ public class Gui extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
 
-        GridBagLayout gridBagLayout = new GridBagLayout();
+        final GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
         gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.5, 0.0};
         contentPane.setLayout(gridBagLayout);
@@ -202,9 +203,10 @@ public class Gui extends JFrame {
      * Create the search area.
      */
     private static void createSearchArea() {
-        String[] labelIds = { "username", "start", "destination", "radiusKm",
-            "types", "difficultyRange", "terrainRange" };
-        for (int i = 0; i < labelIds.length; i++) {
+        final String[] labelIds = { "username", "start", "destination",
+            "radiusKm", "types", "difficultyRange", "terrainRange" };
+        final int labelCount = labelIds.length;
+        for (int i = 0; i < labelCount; i++) {
             createFieldLabel(labelIds[i], 0, i);
         }
 
@@ -307,7 +309,8 @@ public class Gui extends JFrame {
      * Create the button and label to load a GPX route.
      */
     private static void addGpxLoader() {
-        JButton buttonLoadGpx = new JButton(Translation.getMessage("loadGpx"));
+        final JButton buttonLoadGpx = new JButton(
+            Translation.getMessage("loadGpx"));
 
         buttonLoadGpx.addKeyListener(new KeyAdapter() {
             @Override
@@ -339,7 +342,8 @@ public class Gui extends JFrame {
      * Create the search button.
      */
     private static void addSearchButton() {
-        JButton buttonSearch = new JButton(Translation.getMessage("search"));
+        final JButton buttonSearch = new JButton(
+            Translation.getMessage("search"));
 
         buttonSearch.addKeyListener(new KeyAdapter() {
             @Override
@@ -404,7 +408,7 @@ public class Gui extends JFrame {
         contentPane.add(buttonSelectTypes, createTextConstraints(2, 4, 1));
 
         // Avoid that both buttons can be chosen at the same time.
-        ButtonGroup buttonGroup = new ButtonGroup();
+        final ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(buttonAllTypes);
         buttonGroup.add(buttonSelectTypes);
     }
@@ -542,14 +546,16 @@ public class Gui extends JFrame {
     private static void addMailBoxes() {
         boxEmailSavePassword = new JCheckBox(
                 Translation.getMessage("emailSavePassword"));
-        GridBagConstraints gridBagConstraintsSave = new GridBagConstraints();
+        final GridBagConstraints gridBagConstraintsSave =
+            new GridBagConstraints();
         gridBagConstraintsSave.insets = new Insets(0,0, 5, 5);
         gridBagConstraintsSave.gridx = 2;
         gridBagConstraintsSave.gridy = 12;
         contentPane.add(boxEmailSavePassword, gridBagConstraintsSave);
 
         boxEmailActive = new JCheckBox(Translation.getMessage("emailSend"));
-        GridBagConstraints gridBagConstraintsActive = new GridBagConstraints();
+        final GridBagConstraints gridBagConstraintsActive =
+            new GridBagConstraints();
         gridBagConstraintsActive.insets = new Insets(0, 0, 5, 5);
         gridBagConstraintsActive.gridx = 3;
         gridBagConstraintsActive.gridy = 12;
@@ -561,7 +567,7 @@ public class Gui extends JFrame {
      */
     private static void createInfoArea() {
         labelInfo = new JLabel(" ");
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        final GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.insets = new Insets(0, 0, 5, 5);
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -574,22 +580,24 @@ public class Gui extends JFrame {
      * Create the separator lines between the different areas.
      */
     private static void addSeparators() {
-        GridBagConstraints gridBagConstraintsUpper = new GridBagConstraints();
+        final GridBagConstraints gridBagConstraintsUpper =
+            new GridBagConstraints();
         gridBagConstraintsUpper.insets = new Insets(0,0,5,5);
         gridBagConstraintsUpper.gridwidth = 4;
         gridBagConstraintsUpper.gridx = 0;
         gridBagConstraintsUpper.gridy = 7;
         gridBagConstraintsUpper.fill = GridBagConstraints.HORIZONTAL;
-        JSeparator upperSeparator = new JSeparator();
+        final JSeparator upperSeparator = new JSeparator();
         contentPane.add(upperSeparator, gridBagConstraintsUpper);
 
-        GridBagConstraints gridBagConstraintsLower = new GridBagConstraints();
+        final GridBagConstraints gridBagConstraintsLower =
+            new GridBagConstraints();
         gridBagConstraintsLower.insets = new Insets(0,0,5,5);
         gridBagConstraintsLower.gridwidth = 4;
         gridBagConstraintsLower.gridx = 0;
         gridBagConstraintsLower.gridy = 13;
         gridBagConstraintsLower.fill = GridBagConstraints.HORIZONTAL;
-        JSeparator lowerSeparator = new JSeparator();
+        final JSeparator lowerSeparator = new JSeparator();
         contentPane.add(lowerSeparator, gridBagConstraintsLower);
     }
 
@@ -603,12 +611,13 @@ public class Gui extends JFrame {
      */
     private static void createFieldLabel(String name, int offsetX,
                                          int offsetY) {
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        final GridBagConstraints gridBagConstraints =
+            new GridBagConstraints();
         gridBagConstraints.insets = new Insets(0, 0, 5, 5);
         gridBagConstraints.anchor = GridBagConstraints.LINE_END;
         gridBagConstraints.gridx = offsetX;
         gridBagConstraints.gridy = offsetY;
-        JLabel label = new JLabel(MessageFormat.format("{0}:",
+        final JLabel label = new JLabel(MessageFormat.format("{0}:",
                 Translation.getMessage(name)));
         contentPane.add(label, gridBagConstraints);
     }
@@ -624,7 +633,7 @@ public class Gui extends JFrame {
     private static GridBagConstraints createTextConstraints(int offsetX,
                                                             int offsetY,
                                                             int width) {
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        final GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.insets = new Insets(0, 0, 5, 5);
         gridBagConstraints.anchor = GridBagConstraints.LINE_START;
         gridBagConstraints.gridwidth = width;
@@ -691,7 +700,7 @@ public class Gui extends JFrame {
      * Check for a new application version.
      */
     private static void checkForNewVersion() {
-        String response = GithubCom.getVersion();
+        final String response = GithubCom.getVersion();
 
         // Skip if there has been a connection error.
         if (response.length() == 0) {
@@ -699,7 +708,7 @@ public class Gui extends JFrame {
         }
 
         if (!response.equals(Version.VERSION)) {
-            JEditorPane editorPane = new JEditorPane("text/html",
+            final JEditorPane editorPane = new JEditorPane("text/html",
                 MessageFormat.format("<html><body>{0} (v{1}):"
                 + "<br><a href=\"https://github.com/FriedrichFroebel/"
                 + "oc_car-gui/releases/\">https://github.com/FriedrichFroebel/"

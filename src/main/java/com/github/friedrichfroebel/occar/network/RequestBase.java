@@ -23,12 +23,12 @@ class RequestBase {
      * @throws IOException An error occurred while retrieving the data.
      */
     static String getPageContent(String urlString) throws IOException {
-        URL url = new URL(urlString);
+        final URL url = new URL(urlString);
         InputStream inputStream = url.openStream();
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(inputStream, "UTF-8"));
 
-        StringBuilder content = new StringBuilder();
+        final StringBuilder content = new StringBuilder();
         String line;
         while ((line = bufferedReader.readLine()) != null) {
             content.append(line).append("\n");
@@ -50,7 +50,7 @@ class RequestBase {
      */
     static void writePageContentToFile(String urlString, String filepath)
             throws IOException {
-        URL url = new URL(urlString);
+        final URL url = new URL(urlString);
         File file = new File(filepath);
         FileUtils.copyURLToFile(url, file);
     }

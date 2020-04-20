@@ -19,7 +19,7 @@ public final class Translation {
      * is English.
      */
     private static void initBundle() {
-        String language = Locale.getDefault().getLanguage();
+        final String language = Locale.getDefault().getLanguage();
         Locale locale = Locale.ENGLISH;
 
         if (language.startsWith("de")) {

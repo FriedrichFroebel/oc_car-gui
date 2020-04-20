@@ -21,10 +21,10 @@ public final class GpxFileChooser {
      * Open a file chooser dialog to select a GPX file.
      */
     public static void chooseGpxFile() {
-        JFileChooser fileChooser = new JFileChooser();
+        final JFileChooser fileChooser = new JFileChooser();
 
         // Add a GPX file filter.
-        FileNameExtensionFilter gpx = new FileNameExtensionFilter(
+        final FileNameExtensionFilter gpx = new FileNameExtensionFilter(
                 Translation.getMessage("gpxFiles"), "gpx", "GPX");
         fileChooser.setFileFilter(gpx);
 
@@ -39,10 +39,10 @@ public final class GpxFileChooser {
         fileChooser.setCurrentDirectory(file);
 
         // Show the dialog itself.
-        int option = fileChooser.showOpenDialog(null);
+        final int option = fileChooser.showOpenDialog(null);
 
         if (option == JFileChooser.APPROVE_OPTION) {
-            String path = fileChooser.getSelectedFile().getAbsolutePath();
+            final String path = fileChooser.getSelectedFile().getAbsolutePath();
 
             // Check that the extension is GPX
             if (FilenameUtils.getExtension(path).toUpperCase().equals("GPX")) {

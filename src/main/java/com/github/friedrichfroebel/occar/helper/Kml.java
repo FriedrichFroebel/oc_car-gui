@@ -1,6 +1,19 @@
 package com.github.friedrichfroebel.occar.helper;
 
+import java.io.IOException;
+import java.io.StringReader;
+
 import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * This class is responsible for parsing KML files.
@@ -15,24 +28,50 @@ public class Kml {
      *                 coordinate gets saved).
      * @return The retrieved coordinates.
      */
-    public static ArrayList<String> kml2Array(String kmlData, int distance) {
-        ArrayList<String> coordinates = new ArrayList<>();
+    public static ArrayList<Coordinate> kml2Array(String kmlData,
+                                                  int distance) {
+        final ArrayList<Coordinate> coordinates = new ArrayList<>();
 
-        String[] lines = kmlData.split("\n");
+        Document document;
+        try {
+            document = DocumentBuilderFactory.newInstance()
+                    .newDocumentBuilder().parse(
+                            new InputSource(new StringReader(kmlData)));
+        } catch (ParserConfigurationException | SAXException
+                | IOException exception) {
+            return null;
+        }
 
-        for (int i = 0; i < lines.length; i++) {
-            String line = lines[i];
-            if (!line.trim().startsWith("<") && (i % distance == 0)) {
-                // Avoid out of bounds errors.
-                if (!line.contains(",")) {
-                    continue;
-                }
+        // Coordinates
+        final NodeList coordinateTags =
+            document.getElementsByTagName("coordinates");
+        if (coordinateTags.getLength() != 1) {
+            return coordinates;
+        }
+        final Node coordinateNode = coordinateTags.item(0);
+        if (coordinateNode.getNodeType() != Node.ELEMENT_NODE) {
+            return coordinates;
+        }
+        final Element coordinateElement = (Element) coordinateNode;
 
-                line = line.trim();
+        final String[] lines = coordinateNode.getTextContent().split("\n");
+        final int lineCount = lines.length;
 
-                String[] parts = line.split(",");
-                coordinates.add(parts[1] + "," + parts[0]);
+        for (int i = 0; i < lineCount; i++) {
+            final String line = lines[i].trim();
+
+            // Skip invalid entries.
+            if (!line.contains(",")) {
+                continue;
             }
+
+            if (i % distance != 0) {
+                continue;
+            }
+
+            // KML: longitude, latitude, and optional altitude.
+            final String[] parts = line.split(",");
+            coordinates.add(new Coordinate(parts[1], parts[0]));
         }
 
         return coordinates;
@@ -45,7 +84,7 @@ public class Kml {
      * @param kmlData The KML route data.
      * @return The retrieved coordinates.
      */
-    public static ArrayList<String> kml2Array(String kmlData) {
+    public static ArrayList<Coordinate> kml2Array(String kmlData) {
         return kml2Array(kmlData, 10);
     }
 }

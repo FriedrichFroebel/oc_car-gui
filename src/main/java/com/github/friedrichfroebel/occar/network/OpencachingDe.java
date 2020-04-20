@@ -9,6 +9,9 @@ import java.text.MessageFormat;
 
 import javax.swing.JOptionPane;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * This class handles the communication with Opencaching.de
  */
@@ -47,10 +50,10 @@ public class OpencachingDe {
         }
 
         try {
-            String uuid = data.split("uuid\":\"")[1];
-            uuid = uuid.split("\"}")[0];
+            final JSONObject root = new JSONObject(data);
+            final String uuid = root.getString("uuid");
             return uuid;
-        } catch (ArrayIndexOutOfBoundsException exception) {
+        } catch (JSONException exception) {
             JOptionPane.showMessageDialog(null,
                     MessageFormat.format("{0}\n{1}",
                             Translation.getMessage("userNotFound"),
