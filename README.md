@@ -13,4 +13,4 @@ The output is placed inside the home directory inside the folder `occar` by defa
 * Bash version (Linux): https://github.com/FriedrichFroebel/oc_car (Fork with some error corrections, German)
 
 ## Blog articles
-* Altmetall blog by Schrottie: https://blog.dafb-o.de/oc-caches-along-a-route-ein-gui-fuer-das-bashscript/ (14.12.2015, German)
+* Altmetall blog by Schrottie: https://web.archive.org/web/20170423130057/https://blog.dafb-o.de/oc-caches-along-a-route-ein-gui-fuer-das-bashscript/ (14.12.2015, German)
