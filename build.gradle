@@ -18,12 +18,14 @@ repositories {
 
 dependencies {
     ext.commonsVersion = '1.3.2'
-    ext.mailVersion = '1.6.2'
+    ext.mailVersion = '1.6.5'
+    ext.activationVersion = '1.2.2'
     ext.jsonVersion = '20190722'
     ext.junitVersion = '4.13'
 
     implementation "org.apache.commons:commons-io:$commonsVersion"
-    implementation "javax.mail:javax.mail-api:$mailVersion"
+    implementation "jakarta.activation:jakarta.activation-api:$activationVersion"
+    implementation "jakarta.mail:jakarta.mail-api:$mailVersion"
     implementation "org.json:json:$jsonVersion"
 
     // Use JUnit test framework.
