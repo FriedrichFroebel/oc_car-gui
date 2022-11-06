@@ -351,7 +351,8 @@ public class Gui extends JFrame {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     updateConfiguration();
                     labelInfo.setText(" ");
-                    labelInfo.setText(Search.performSearch());
+                    final String result = Search.performSearch();
+                    labelInfo.setText(showYournavigationMessage(result));
                 }
             }
         });
@@ -360,7 +361,8 @@ public class Gui extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 updateConfiguration();
                 labelInfo.setText(" ");
-                labelInfo.setText(Search.performSearch());
+                final String result = Search.performSearch();
+                labelInfo.setText(showYournavigationMessage(result));
             }
         });
 
@@ -738,5 +740,43 @@ public class Gui extends JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
 
         }
+    }
+
+    /**
+     * Show dialog box when yournavigation.org should be used.
+     */
+    private static String showYournavigationMessage(final String message) {
+        if (!message.equals("yoursIsOffline")) {
+            return message;
+        }
+        final JEditorPane editorPane = new JEditorPane("text/html",
+            MessageFormat.format("<html><body>{0}"
+            + "<br><a href=\"https://github.com/FriedrichFroebel/"
+            + "oc_car-gui/issues/2\">https://github.com/FriedrichFroebel/"
+            + "oc_car-gui/issues/2</a>"
+            + "</body></html>", Translation.getMessage("yoursIsOffline")));
+        editorPane.addHyperlinkListener(new HyperlinkListener() {
+            @Override
+            public void hyperlinkUpdate(HyperlinkEvent e) {
+                if (e.getEventType().equals(HyperlinkEvent.EventType
+                        .ACTIVATED) && Desktop.isDesktopSupported()) {
+                    try {
+                        Desktop.getDesktop().browse(
+                            new URI("https://github.com/Friedrich"
+                                + "Froebel/oc_car-gui/issues/2"));
+                    } catch (IOException | URISyntaxException exc) {
+                        // pass
+                    }
+                }
+            }
+        });
+        editorPane.setEditable(false);
+        editorPane.setBackground(new JLabel().getBackground());
+
+        JOptionPane.showMessageDialog(null, editorPane,
+            Translation.getMessage("yoursIsOfflineShort"),
+            JOptionPane.ERROR_MESSAGE);
+        
+        return Translation.getMessage("yoursIsOfflineShort");
     }
 }

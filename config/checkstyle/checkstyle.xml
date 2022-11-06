@@ -316,12 +316,12 @@
         * static imports first, third party packages afterwards.
         Third party packages are all except static packages, same package
         and standard Java packages. -->
-        <module name="CustomImportOrder">
+        <!--<module name="CustomImportOrder">
             <property name="sortImportsInGroupAlphabetically" value="true"/>
             <property name="separateLineBetweenGroups" value="true"/>
             <property name="customImportOrderRules" value="STATIC###SAME_PACKAGE(3)###THIRD_PARTY_PACKAGE"/>
             <property name="tokens" value="IMPORT, STATIC_IMPORT, PACKAGE_DEF"/>
-        </module>
+        </module>-->
 
         <!-- Method parameters on same line as left parenthesis and without
         a whitespace between the first parameter and the left parenthesis. -->
@@ -340,7 +340,7 @@
         parameters, thrown exceptions and the return value (if present).
         Override annotation allow missing javadoc comments. -->
         <module name="JavadocMethod">
-            <property name="scope" value="private"/>
+            <property name="accessModifiers" value="private"/>
             <property name="allowedAnnotations" value="Override"/>
         </module>
 

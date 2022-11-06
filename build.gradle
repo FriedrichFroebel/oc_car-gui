@@ -1,6 +1,6 @@
 // Apply the versions plugin to check for module dependency updates.
 plugins {
-    id 'com.github.ben-manes.versions' version '0.28.0'
+    id 'com.github.ben-manes.versions' version '0.43.0'
 }
 
 // Apply the java plugin to add support for Java
@@ -11,19 +11,17 @@ apply plugin: 'application'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
-    // Use jcenter for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    ext.commonsVersion = '1.3.2'
-    ext.mailVersion = '1.6.5'
-    ext.activationVersion = '1.2.2'
-    ext.jsonVersion = '20190722'
-    ext.junitVersion = '4.13'
+    ext.commonsVersion = '2.11.0'
+    ext.mailVersion = '2.1.0'
+    ext.activationVersion = '2.1.0'
+    ext.jsonVersion = '20220924'
+    ext.junitVersion = '4.13.2'
 
-    implementation "org.apache.commons:commons-io:$commonsVersion"
+    implementation "commons-io:commons-io:$commonsVersion"
     implementation "jakarta.activation:jakarta.activation-api:$activationVersion"
     implementation "jakarta.mail:jakarta.mail-api:$mailVersion"
     implementation "org.json:json:$jsonVersion"
@@ -52,8 +50,8 @@ jar {
     from configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     manifest {
         attributes (
-                'Class-Path': configurations.compileClasspath.collect { it.getName() }.join(' '),
-                'Main-Class': mainClassName
+            'Class-Path': configurations.compileClasspath.collect { it.getName() }.join(' '),
+            'Main-Class': mainClassName
         )
     }
 }
@@ -61,12 +59,12 @@ jar {
 // Check code style.
 apply plugin: 'checkstyle'
 checkstyle {
-    toolVersion '8.31'
+    toolVersion '10.4'
 }
 tasks.withType(Checkstyle) {
     reports {
-        xml.enabled = false
-        html.enabled = true
+        xml.required = false
+        html.required = true
         html.stylesheet resources.text.fromFile('config/checkstyle/checkstyle.xsl')
     }
 }
@@ -79,7 +77,7 @@ tasks.withType(Pmd) {
 }
 
 wrapper {
-    gradleVersion = '6.3'
+    gradleVersion = '7.5.1'
 }
 
 // Update the version files.

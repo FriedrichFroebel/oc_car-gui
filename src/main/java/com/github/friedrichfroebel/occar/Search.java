@@ -90,7 +90,9 @@ class Search {
      * @return Success or error message.
      */
     private static String searchKml() {
-        // Request the coordinates for the start.
+        return "yoursIsOffline";
+
+        /* // Request the coordinates for the start.
         final Coordinate latLonStart = OpenstreetmapOrg.requestLatLonForQuery(
             formatCityName(Configuration.getStart()));
         if (latLonStart == null) {
@@ -108,7 +110,7 @@ class Search {
         }
         final String latDestination = latLonDestination.getLat();
         final String lonDestination = latLonDestination.getLon();
-
+        
         // Request the route between the two coordinates.
         final String kmlRoute = YournavigationOrg.requestKmlRoute(
                 latStart, lonStart, latDestination, lonDestination);
@@ -117,8 +119,8 @@ class Search {
         }
 
         coordinates = Kml.kml2Array(kmlRoute);
-
-        return searchCommon();
+ 
+        return searchCommon(); */
     }
 
     /**
