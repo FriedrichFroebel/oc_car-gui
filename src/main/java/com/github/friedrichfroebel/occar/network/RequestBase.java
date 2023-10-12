@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.net.URI;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
@@ -16,6 +17,18 @@ import org.apache.commons.io.FileUtils;
 class RequestBase {
 
     /**
+     * Convert the given URL string to an actual URL object.
+     *
+     * @param urlString The URL string to convert.
+     * @return The generated URL object.
+     * @throws IOException The string could not be converted.
+     */
+    static URL convertStringToUrl(String urlString) throws IOException {
+        URI uri = URI.create(urlString);
+        return uri.toURL();
+    }
+
+    /**
      * Get the content of the given website.
      *
      * @param urlString The website to get the data from.
@@ -23,7 +36,7 @@ class RequestBase {
      * @throws IOException An error occurred while retrieving the data.
      */
     static String getPageContent(String urlString) throws IOException {
-        final URL url = new URL(urlString);
+        final URL url = convertStringToUrl(urlString);
         InputStream inputStream = url.openStream();
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(inputStream, "UTF-8"));
@@ -50,7 +63,7 @@ class RequestBase {
      */
     static void writePageContentToFile(String urlString, String filepath)
             throws IOException {
-        final URL url = new URL(urlString);
+        final URL url = convertStringToUrl(urlString);
         File file = new File(filepath);
         FileUtils.copyURLToFile(url, file);
     }
