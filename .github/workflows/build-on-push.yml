@@ -76,7 +76,7 @@ jobs:
         run: ./gradlew clean
       - name: Verify Code Format
         run: ./gradlew checkstyleMain
-      - name: Complexity Analysis
+      - name: PMD Analysis
         run: ./gradlew pmdMain
       - name: Build JAR
         run: ./gradlew jar
@@ -143,7 +143,7 @@ jobs:
         run: ./gradlew clean
       - name: Verify Code Format
         run: ./gradlew checkstyleMain
-      - name: Complexity Analysis
+      - name: PMD Analysis
         run: ./gradlew pmdMain
       - name: Build JAR
         run: ./gradlew jar
