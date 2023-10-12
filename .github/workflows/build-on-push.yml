@@ -1,0 +1,156 @@
+# Build a Java project with Gradle for every push.
+# Based upon https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle.
+
+# TODO:
+#   * Add test support.
+
+name: Build for every push
+
+# Run this on every push to the `master` branch.
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  # The Ubuntu-based build job.
+  buildLinux:
+    runs-on: ubuntu-latest
+
+    # Run compilation tests using the OpenJDK in version 11 and 14 to 18.
+    strategy:
+      matrix:
+        java: [11, 16, 17, 18, 19, 20, GA]
+      # Make sure to always run for all Java versions to sort out possible incompatibilities.
+      # Example: Gradle does not yet support the GA/EA releases, as indicated by
+      # https://docs.gradle.org/current/userguide/compatibility.html
+      fail-fast: false
+
+    # Use a better name.
+    name: Linux Build with Java ${{ matrix.java }}
+
+    # The actual build process.
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Use OpenJDK from https://jdk.java.net/.
+      # See https://github.com/oracle-actions/setup-java.
+      # This action only supports the latest release, see https://github.com/oracle-actions/setup-java/issues/14.
+      # For this reason, all other builds happen with the https://github.com/actions/setup-java action.
+      - name: Download JDK (jdk.java.net)
+        uses: oracle-actions/setup-java@v1
+        id: jdk
+        with:
+          website: jdk.java.net
+          release: ${{ matrix.java }}
+        if: ${{ contains(fromJson('["GA", "EA"]'), matrix.java) }}
+      - name: Download JDK (Eclipse)
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
+        if: ${{ !contains(fromJson('["GA", "EA"]'), matrix.java) }}
+      - name: Display Java Version
+        run: java --version
+
+      # Cache some Gradle files.
+      - name: Cache Gradle Wrapper
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+      - name: Cache Gradle Packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      # Run the actual steps after the preparations.
+      - name: Grant Execute Permission for gradlew
+        run: chmod +x gradlew
+      - name: Clean Build Area
+        run: ./gradlew clean
+      - name: Verify Code Format
+        run: ./gradlew checkstyleMain
+      - name: Complexity Analysis
+        run: ./gradlew pmdMain
+      - name: Build JAR
+        run: ./gradlew jar
+
+      # Clean some files before caching.
+      - name: Cache Cleanup
+        run: |
+          rm -f  ~/.gradle/caches/modules-2/modules-2.lock
+          rm -fr ~/.gradle/caches/*/plugin-resolution/    
+
+      # Upload the artifact to access it for deployment.
+      - name: Upload Artifact
+        if: ${{ matrix.java == 'GA' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: oc_car-ci.jar
+          path: build/libs/oc_car-ci.jar
+
+  # The Windows-based build job.
+  buildWindows:
+    runs-on: windows-latest
+
+    # Run compilation tests.
+    strategy:
+      matrix:
+        java: [GA]
+
+    # Use a better name.
+    name: Windows Build with Java ${{ matrix.java }}
+
+    # The actual build process.
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Use OpenJDK from https://jdk.java.net/.
+      # See https://github.com/oracle-actions/setup-java.
+      # This action only supports the latest release, see https://github.com/oracle-actions/setup-java/issues/14.
+      # For this reason, all other builds happen with the https://github.com/actions/setup-java action.
+      - name: Download JDK (jdk.java.net)
+        uses: oracle-actions/setup-java@v1
+        id: jdk
+        with:
+          website: jdk.java.net
+          release: ${{ matrix.java }}
+      - name: Display Java Version
+        run: java --version
+
+      # Cache some Gradle files.
+      - name: Cache Gradle Wrapper
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+      - name: Cache Gradle Packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      # Run the actual steps after the preparations.
+      - name: Clean Build Area
+        run: ./gradlew clean
+      - name: Verify Code Format
+        run: ./gradlew checkstyleMain
+      - name: Complexity Analysis
+        run: ./gradlew pmdMain
+      - name: Build JAR
+        run: ./gradlew jar
+
+      # Clean some files before caching.
+      # We have to stop the Gradle daemon beforehand, as the `modules-2.lock` file would be locked otherwise.
+      - name: Cache Cleanup
+        run: |
+          ./gradlew --stop
+          rm ~/.gradle/caches/modules-2/modules-2.lock
+          rm -r ~/.gradle/caches/*/plugin-resolution
