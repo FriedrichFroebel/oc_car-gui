@@ -64,7 +64,7 @@ jar {
 // Check code style.
 apply plugin: 'checkstyle'
 checkstyle {
-    toolVersion '10.4'
+    toolVersion '10.12.4'
 }
 tasks.withType(Checkstyle) {
     reports {
@@ -91,7 +91,7 @@ task versionFiles {
     fileJava.createNewFile()
     fileJava.text = "package com.github.friedrichfroebel.occar.config;\n\n" +
             "public final class Version {\n\n" +
-            "    public static final String VERSION = \"$version\";\n\n}"
+            "    public static final String VERSION = \"$version\";  // NOPMD\n\n}"
 
     def fileRoot = new File('version')
     fileRoot.createNewFile()

@@ -23,6 +23,8 @@ import javax.swing.border.EmptyBorder;
  */
 public class CachetypeChooser extends JFrame {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The panel which holds all the content.
      */

@@ -45,7 +45,7 @@ public final class GpxFileChooser {
             final String path = fileChooser.getSelectedFile().getAbsolutePath();
 
             // Check that the extension is GPX
-            if (FilenameUtils.getExtension(path).toUpperCase().equals("GPX")) {
+            if (FilenameUtils.getExtension(path).equalsIgnoreCase("GPX")) {
                 Configuration.setGpxFile(path);
             } else {
                 javax.swing.JOptionPane.showMessageDialog(null,

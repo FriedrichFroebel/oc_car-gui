@@ -84,11 +84,11 @@ public class OpencachingDe {
                     + "&terrain=" + Configuration.getTerrain()
                     + "&not_found_by=" + uuid
                     + "&status=Available&consumer_key=" + CONSUMER_KEY);
-            if (Configuration.getTypes() != 1023) {
+            if (Configuration.getTypes() != 1023) {  // NOPMD
                 data = data + "&type=" + CachetypesBitmask.intToQuery(
                         Configuration.getTypes());
             }
-        } catch (IOException exception) {
+        } catch (IOException exception) {  // NOPMD
             // pass
         }
 

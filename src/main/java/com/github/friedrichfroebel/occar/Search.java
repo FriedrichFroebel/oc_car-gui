@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import org.json.JSONArray;
@@ -166,7 +167,7 @@ class Search {
                         caches.add(cacheCode);
                     }
                 }
-            } catch (JSONException exception) {
+            } catch (JSONException exception) {  // NOPMD
                 // Ignore => no caches.
             }
         }
@@ -182,7 +183,9 @@ class Search {
      */
     private static String downloadCaches() {
         final List<List<String>> subcalls = splitList(caches, 490);
-        final DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+        final DateFormat dateFormat = new SimpleDateFormat(
+            "yyyyMMdd-HHmmss", Locale.getDefault()
+        );
 
         boolean successAllEmails = true;
 

@@ -39,13 +39,13 @@ public class Kml {
                             new InputSource(new StringReader(kmlData)));
         } catch (ParserConfigurationException | SAXException
                 | IOException exception) {
-            return null;
+            return coordinates;
         }
 
         // Coordinates
         final NodeList coordinateTags =
             document.getElementsByTagName("coordinates");
-        if (coordinateTags.getLength() != 1) {
+        if (coordinateTags.getLength() != 1) {  // NOPMD
             return coordinates;
         }
         final Node coordinateNode = coordinateTags.item(0);

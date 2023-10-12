@@ -45,7 +45,7 @@ public class Gpx {
                                 "UTF-8")));
         } catch (ParserConfigurationException | SAXException
                 | IOException exception) {
-            return null;
+            return coordinates;
         }
 
         // Track points.

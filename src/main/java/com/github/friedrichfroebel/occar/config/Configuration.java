@@ -20,6 +20,24 @@ import javax.swing.JOptionPane;
  */
 public final class Configuration {
 
+    private static final String KEY_OC_USER = "ocUser";
+    private static final String KEY_RADIUS = "radius";
+    private static final String KEY_START = "start";
+    private static final String KEY_DESTINATION = "destination";
+    private static final String KEY_TYPES = "types";
+    private static final String KEY_DIFFICULTY = "difficulty";
+    private static final String KEY_TERRAIN = "terrain";
+    private static final String KEY_EMAIL_HOST = "emailHost";
+    private static final String KEY_EMAIL_PORT = "emailPort";
+    private static final String KEY_EMAIL_SENDER = "emailSender";
+    private static final String KEY_EMAIL_RECIPIENT = "emailRecipient";
+    private static final String KEY_EMAIL_SUBJECT = "emailSubject";
+    private static final String KEY_EMAIL_BODY = "emailBody";
+    private static final String KEY_EMAIL_ACTIVE = "emailActive";
+    private static final String KEY_EMAIL_PASSWORD = "emailPassword";
+
+    private static final String DEFAULT_NUMBER_RANGE = "1-5";
+
     /**
      * The path of the configuration file.
      */
@@ -65,40 +83,44 @@ public final class Configuration {
         try (InputStream inputStream = new FileInputStream(file)) {
             config.loadFromXML(inputStream);
 
-            values.put("ocUser",
-                    config.getProperty("ocUser", "User"));
-            values.put("radius",
-                    config.getProperty("radius", "2"));
-            values.put("start",
-                    config.getProperty("start", "Stuttgart"));
-            values.put("destination",
-                    config.getProperty("destination", "Hamburg"));
-            values.put("types",
-                    config.getProperty("types", "1023"));
-            values.put("difficulty",
-                    config.getProperty("difficulty", "1-5"));
-            values.put("terrain",
-                    config.getProperty("terrain", "1-5"));
+            values.put(KEY_OC_USER,
+                    config.getProperty(KEY_OC_USER, "User"));
+            values.put(KEY_RADIUS,
+                    config.getProperty(KEY_RADIUS, "2"));
+            values.put(KEY_START,
+                    config.getProperty(KEY_START, "Stuttgart"));
+            values.put(KEY_DESTINATION,
+                    config.getProperty(KEY_DESTINATION, "Hamburg"));
+            values.put(KEY_TYPES,
+                    config.getProperty(KEY_TYPES, "1023"));
+            values.put(KEY_DIFFICULTY,
+                    config.getProperty(KEY_DIFFICULTY, DEFAULT_NUMBER_RANGE));
+            values.put(KEY_TERRAIN,
+                    config.getProperty(KEY_TERRAIN, DEFAULT_NUMBER_RANGE));
 
-            values.put("emailHost",
-                    config.getProperty("emailHost", "smtp.gmail.com"));
-            values.put("emailPort",
-                    config.getProperty("emailPort", "587"));
-            values.put("emailSender",
-                    config.getProperty("emailSender", "sender@gmail.com"));
-            values.put("emailRecipient",
-                    config.getProperty("emailRecipient", "receiver@gmail.com"));
-            values.put("emailSubject",
-                    config.getProperty("emailSubject", "oc_car - "
-                            + Translation.getMessage("gpxForRoute")));
-            values.put("emailBody",
-                    config.getProperty("emailBody",
-                            Translation.getMessage("gpxForRoute")));
-            values.put("emailActive",
-                    config.getProperty("emailActive", "false"));
-            values.put("emailPassword",
-                    config.getProperty("emailPassword", ""));
-        } catch (IOException exception) {
+            values.put(KEY_EMAIL_HOST,
+                    config.getProperty(KEY_EMAIL_HOST, "smtp.gmail.com"));
+            values.put(KEY_EMAIL_PORT,
+                    config.getProperty(KEY_EMAIL_PORT, "587"));
+            values.put(KEY_EMAIL_SENDER,
+                    config.getProperty(KEY_EMAIL_SENDER, "sender@gmail.com"));
+            values.put(
+                KEY_EMAIL_RECIPIENT,
+                config.getProperty(
+                    KEY_EMAIL_RECIPIENT, "receiver@gmail.com"
+                )
+            );
+            values.put(KEY_EMAIL_SUBJECT,
+                    config.getProperty(KEY_EMAIL_SUBJECT, "oc_car - "
+                            + Translation.getMessage("gpxForRoute")));  // NOPMD
+            values.put(KEY_EMAIL_BODY,
+                    config.getProperty(KEY_EMAIL_BODY,
+                            Translation.getMessage("gpxForRoute")));  // NOPMD
+            values.put(KEY_EMAIL_ACTIVE,
+                    config.getProperty(KEY_EMAIL_ACTIVE, "false"));
+            values.put(KEY_EMAIL_PASSWORD,
+                    config.getProperty(KEY_EMAIL_PASSWORD, ""));
+        } catch (IOException exception) {  // NOPMD
             // pass
         }
     }
@@ -107,44 +129,44 @@ public final class Configuration {
      * Write the values to the configuration file.
      */
     public static void writeConfig() {
-        config.setProperty("ocUser",
-                values.getOrDefault("ocUser", "User"));
-        config.setProperty("radius",
-                values.getOrDefault("radius", "2"));
-        config.setProperty("start",
-                values.getOrDefault("start", "Stuttgart"));
-        config.setProperty("destination",
-                values.getOrDefault("destination", "Hamburg"));
-        config.setProperty("types",
-                values.getOrDefault("types", "1023"));
-        config.setProperty("difficulty",
-                values.getOrDefault("difficulty", "1-5"));
-        config.setProperty("terrain",
-                values.getOrDefault("terrain", "1-5"));
+        config.setProperty(KEY_OC_USER,
+                values.getOrDefault(KEY_OC_USER, "User"));
+        config.setProperty(KEY_RADIUS,
+                values.getOrDefault(KEY_RADIUS, "2"));
+        config.setProperty(KEY_START,
+                values.getOrDefault(KEY_START, "Stuttgart"));
+        config.setProperty(KEY_DESTINATION,
+                values.getOrDefault(KEY_DESTINATION, "Hamburg"));
+        config.setProperty(KEY_TYPES,
+                values.getOrDefault(KEY_TYPES, "1023"));
+        config.setProperty(KEY_DIFFICULTY,
+                values.getOrDefault(KEY_DIFFICULTY, DEFAULT_NUMBER_RANGE));
+        config.setProperty(KEY_TERRAIN,
+                values.getOrDefault(KEY_TERRAIN, DEFAULT_NUMBER_RANGE));
 
-        config.setProperty("emailHost",
-                values.getOrDefault("emailHost", "smtp.gmail.com"));
-        config.setProperty("emailPort",
-                values.getOrDefault("emailPort", "587"));
-        config.setProperty("emailSender",
-                values.getOrDefault("emailSender", "sender@gmail.com"));
-        config.setProperty("emailRecipient",
-                values.getOrDefault("emailRecipient",
+        config.setProperty(KEY_EMAIL_HOST,
+                values.getOrDefault(KEY_EMAIL_HOST, "smtp.gmail.com"));
+        config.setProperty(KEY_EMAIL_PORT,
+                values.getOrDefault(KEY_EMAIL_PORT, "587"));
+        config.setProperty(KEY_EMAIL_SENDER,
+                values.getOrDefault(KEY_EMAIL_SENDER, "sender@gmail.com"));
+        config.setProperty(KEY_EMAIL_RECIPIENT,
+                values.getOrDefault(KEY_EMAIL_RECIPIENT,
                         "receiver@gmail.com"));
-        config.setProperty("emailSubject",
-                values.getOrDefault("emailSubject", "oc_car - "
-                        + Translation.getMessage("gpxForRoute")));
-        config.setProperty("emailBody",
-                values.getOrDefault("emailBody",
-                        Translation.getMessage("gpxForRoute")));
-        config.setProperty("emailActive",
-                values.getOrDefault("emailActive", "false"));
+        config.setProperty(KEY_EMAIL_SUBJECT,
+                values.getOrDefault(KEY_EMAIL_SUBJECT, "oc_car - "
+                        + Translation.getMessage("gpxForRoute")));  // NOPMD
+        config.setProperty(KEY_EMAIL_BODY,
+                values.getOrDefault(KEY_EMAIL_BODY,
+                        Translation.getMessage("gpxForRoute")));  // NOPMD
+        config.setProperty(KEY_EMAIL_ACTIVE,
+                values.getOrDefault(KEY_EMAIL_ACTIVE, "false"));
 
         if (saveEmailPassword) {
-            config.setProperty("emailPassword",
-                    values.getOrDefault("emailPassword", ""));
+            config.setProperty(KEY_EMAIL_PASSWORD,
+                    values.getOrDefault(KEY_EMAIL_PASSWORD, ""));
         } else {
-            config.setProperty("emailPassword", "");
+            config.setProperty(KEY_EMAIL_PASSWORD, "");
         }
 
         File file = new File(FILEPATH);
@@ -162,7 +184,7 @@ public final class Configuration {
         try (OutputStream outputStream = new FileOutputStream(file)) {
             config.storeToXML(outputStream,
                     "Configuration file for oc_car-gui");
-        } catch (IOException | SecurityException exception) {
+        } catch (IOException | SecurityException exception) {  // NOPMD
             // pass
         }
     }
@@ -195,7 +217,7 @@ public final class Configuration {
      */
     public static void setUser(String user) {
         if (!user.isEmpty()) {
-            setValue("ocUser", user);
+            setValue(KEY_OC_USER, user);
         }
     }
 
@@ -208,20 +230,20 @@ public final class Configuration {
         final DecimalFormat decimalFormat = new DecimalFormat("#.##");
         try {
             final float radiusValue = Float.parseFloat(radius);
-            if (radiusValue < 0.1f) {
+            if (radiusValue < 0.1f) {  // NOPMD
                 JOptionPane.showMessageDialog(null,
                         Translation.getMessage("radiusTooSmall"));
                 throw new NumberFormatException(
                         Translation.getMessage("radiusTooSmall"));
             }
-            if (radiusValue > 10.0f) {
+            if (radiusValue > 10.0f) {  // NOPMD
                 JOptionPane.showMessageDialog(null,
                         Translation.getMessage("radiusTooBig"));
                 throw new NumberFormatException(
                         Translation.getMessage("radiusTooBig"));
             }
-            setValue("radius", decimalFormat.format(radiusValue));
-        } catch (NumberFormatException exception) {
+            setValue(KEY_RADIUS, decimalFormat.format(radiusValue));
+        } catch (NumberFormatException exception) {  // NOPMD
             // pass
         }
     }
@@ -232,7 +254,7 @@ public final class Configuration {
      * @param start The start to set.
      */
     public static void setStart(String start) {
-        setValue("start", start);
+        setValue(KEY_START, start);
     }
 
     /**
@@ -241,7 +263,7 @@ public final class Configuration {
      * @param destination The destination to set.
      */
     public static void setDestination(String destination) {
-        setValue("destination", destination);
+        setValue(KEY_DESTINATION, destination);
     }
 
     /**
@@ -253,17 +275,17 @@ public final class Configuration {
         try {
             final int typesValue = Integer.parseInt(types);
 
-            if (typesValue < 1) {
+            if (typesValue < 1) {  // NOPMD
                 throw new NumberFormatException(
                         Translation.getMessage("noTypesChosen"));
             }
-            if (typesValue > 1023) {
+            if (typesValue > 1023) {  // NOPMD
                 throw new NumberFormatException(
                         Translation.getMessage("typeNumberTooBig"));
             }
 
-            setValue("types", Integer.toString(typesValue));
-        } catch (NumberFormatException exception) {
+            setValue(KEY_TYPES, Integer.toString(typesValue));
+        } catch (NumberFormatException exception) {  // NOPMD
             // pass
         }
     }
@@ -301,7 +323,7 @@ public final class Configuration {
             parts[i] = Integer.toString(temp);
         }
 
-        if (partsCount == 1) {
+        if (partsCount == 1) {  // NOPMD
             return parts[0];
         }
 
@@ -315,8 +337,8 @@ public final class Configuration {
      */
     public static void setDifficulty(String difficulty) {
         try {
-            setValue("difficulty", formatNumberRange(difficulty));
-        } catch (NumberFormatException exception) {
+            setValue(KEY_DIFFICULTY, formatNumberRange(difficulty));
+        } catch (NumberFormatException exception) {  // NOPMD
             // pass
         }
     }
@@ -329,7 +351,7 @@ public final class Configuration {
     public static void setTerrain(String terrain) {
         try {
             setValue("terrain", formatNumberRange(terrain));
-        } catch (NumberFormatException exception) {
+        } catch (NumberFormatException exception) {  // NOPMD
             // pass
         }
     }
@@ -340,7 +362,7 @@ public final class Configuration {
      * @return The saved username.
      */
     public static String getUser() {
-        return getValue("ocUser");
+        return getValue(KEY_OC_USER);
     }
 
     /**
@@ -349,7 +371,7 @@ public final class Configuration {
      * @return The saved radius.
      */
     public static String getRadius() {
-        return getValue("radius");
+        return getValue(KEY_RADIUS);
     }
 
     /**
@@ -358,7 +380,7 @@ public final class Configuration {
      * @return The saved start.
      */
     public static String getStart() {
-        return getValue("start");
+        return getValue(KEY_START);
     }
 
     /**
@@ -367,7 +389,7 @@ public final class Configuration {
      * @return The saved destination.
      */
     public static String getDestination() {
-        return getValue("destination");
+        return getValue(KEY_DESTINATION);
     }
 
     /**
@@ -378,7 +400,7 @@ public final class Configuration {
     public static int getTypes() {
         int value;
         try {
-            value = Integer.parseInt(getValue("types"));
+            value = Integer.parseInt(getValue(KEY_TYPES));
         } catch (NumberFormatException exception) {
             value = 1023;
         }
@@ -391,7 +413,7 @@ public final class Configuration {
      * @return The saved difficulty range.
      */
     public static String getDifficulty() {
-        return getValue("difficulty");
+        return getValue(KEY_DIFFICULTY);
     }
 
     /**
@@ -400,7 +422,7 @@ public final class Configuration {
      * @return The saved terrain range.
      */
     public static String getTerrain() {
-        return getValue("terrain");
+        return getValue(KEY_TERRAIN);
     }
 
     /**
@@ -409,7 +431,7 @@ public final class Configuration {
      * @param host The host to set.
      */
     public static void setEmailHost(String host) {
-        setValue("emailHost", host);
+        setValue(KEY_EMAIL_HOST, host);
     }
 
     /**
@@ -421,12 +443,12 @@ public final class Configuration {
         try {
             final int portValue = Integer.parseInt(port);
 
-            if (portValue < 1) {
+            if (portValue < 1) {  // NOPMD
                 throw new NumberFormatException("Invalid port.");
             }
 
-            setValue("emailPort", Integer.toString(portValue));
-        } catch (NumberFormatException exception) {
+            setValue(KEY_EMAIL_PORT, Integer.toString(portValue));
+        } catch (NumberFormatException exception) {  // NOPMD
             // pass
         }
     }
@@ -437,7 +459,7 @@ public final class Configuration {
      * @param sender The sender to set.
      */
     public static void setEmailSender(String sender) {
-        setValue("emailSender", sender);
+        setValue(KEY_EMAIL_SENDER, sender);
     }
 
     /**
@@ -446,7 +468,7 @@ public final class Configuration {
      * @param recipient The recipient to set.
      */
     public static void setEmailRecipient(String recipient) {
-        setValue("emailRecipient", recipient);
+        setValue(KEY_EMAIL_RECIPIENT, recipient);
     }
 
     /**
@@ -455,7 +477,7 @@ public final class Configuration {
      * @param subject The subject to set.
      */
     public static void setEmailSubject(String subject) {
-        setValue("emailSubject", subject);
+        setValue(KEY_EMAIL_SUBJECT, subject);
     }
 
     /**
@@ -464,7 +486,7 @@ public final class Configuration {
      * @param body The body to set.
      */
     public static void setEmailBody(String body) {
-        setValue("emailBody", body);
+        setValue(KEY_EMAIL_BODY, body);
     }
 
     /**
@@ -473,7 +495,7 @@ public final class Configuration {
      * @param password The password to set.
      */
     public static void setEmailPassword(char[] password) {
-        setValue("emailPassword", new String(password));
+        setValue(KEY_EMAIL_PASSWORD, new String(password));
     }
 
     /**
@@ -482,7 +504,7 @@ public final class Configuration {
      * @param active Enable/disable email functionality.
      */
     public static void setEmailActive(boolean active) {
-        setValue("emailActive", Boolean.toString(active));
+        setValue(KEY_EMAIL_ACTIVE, Boolean.toString(active));
     }
 
     /**
@@ -500,7 +522,7 @@ public final class Configuration {
      * @return The saved host.
      */
     public static String getEmailHost() {
-        return getValue("emailHost");
+        return getValue(KEY_EMAIL_HOST);
     }
 
     /**
@@ -509,7 +531,7 @@ public final class Configuration {
      * @return The saved port.
      */
     public static String getEmailPort() {
-        return getValue("emailPort");
+        return getValue(KEY_EMAIL_PORT);
     }
 
     /**
@@ -518,7 +540,7 @@ public final class Configuration {
      * @return The saved sender.
      */
     public static String getEmailSender() {
-        return getValue("emailSender");
+        return getValue(KEY_EMAIL_SENDER);
     }
 
     /**
@@ -527,7 +549,7 @@ public final class Configuration {
      * @return The saved recipient.
      */
     public static String getEmailRecipient() {
-        return getValue("emailRecipient");
+        return getValue(KEY_EMAIL_RECIPIENT);
     }
 
     /**
@@ -536,7 +558,7 @@ public final class Configuration {
      * @return The saved subject.
      */
     public static String getEmailSubject() {
-        return getValue("emailSubject");
+        return getValue(KEY_EMAIL_SUBJECT);
     }
 
     /**
@@ -545,7 +567,7 @@ public final class Configuration {
      * @return The saved body.
      */
     public static String getEmailBody() {
-        return getValue("emailBody");
+        return getValue(KEY_EMAIL_BODY);
     }
 
     /**
@@ -554,7 +576,7 @@ public final class Configuration {
      * @return Whether the email functionality is enabled.
      */
     public static boolean isEmailActive() {
-        return Boolean.parseBoolean(getValue("emailActive"));
+        return Boolean.parseBoolean(getValue(KEY_EMAIL_ACTIVE));
     }
 
     /**
@@ -563,7 +585,7 @@ public final class Configuration {
      * @return The saved password.
      */
     public static String getEmailPassword() {
-        return getValue("emailPassword");
+        return getValue(KEY_EMAIL_PASSWORD);
     }
 
     /**
@@ -576,7 +598,7 @@ public final class Configuration {
     }
 
     /**
-     * Get the GPX file path.
+     * Get the GPX file p´ath.
      *
      * @return The saved file path.
      */

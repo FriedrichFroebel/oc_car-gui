@@ -51,106 +51,110 @@ import javax.swing.event.HyperlinkListener;
  */
 public class Gui extends JFrame {
 
+    private static final long serialVersionUID = 1L;
+
+    private static final int ALL_TYPES = 1023;
+
     /**
      * The basic panel which holds all the content.
      */
-    private static JPanel contentPane;
+    private JPanel contentPane;
 
     /**
      * The input field for the username.
      */
-    private static JTextField textUser;
+    private JTextField textUser;
 
     /**
      * The input field for the start.
      */
-    private static JTextField textStart;
+    private JTextField textStart;
 
     /**
      * The input field for the destination.
      */
-    private static JTextField textDestination;
+    private JTextField textDestination;
 
     /**
      * The input field for the radius.
      */
-    private static JTextField textRadius;
+    private JTextField textRadius;
 
     /**
      * The input field for the difficulty.
      */
-    private static JTextField textDifficultyRange;
+    private JTextField textDifficultyRange;
 
     /**
      * The input field for the terrain.
      */
-    private static JTextField textTerrainRange;
+    private JTextField textTerrainRange;
 
     /**
      * The input field for the email server host.
      */
-    private static JTextField textEmailServer;
+    private JTextField textEmailServer;
 
     /**
      * The input field for the email server port.
      */
-    private static JTextField textEmailPort;
+    private JTextField textEmailPort;
 
     /**
      * The input field for the email sender.
      */
-    private static JTextField textEmailSender;
+    private JTextField textEmailSender;
 
     /**
      * The input field for the email recipient.
      */
-    private static JTextField textEmailRecipient;
+    private JTextField textEmailRecipient;
 
     /**
      * The input field for the email subject.
      */
-    private static JTextField textEmailSubject;
+    private JTextField textEmailSubject;
 
     /**
      * The input field for the email body.
      */
-    private static JTextField textEmailBody;
+    private JTextField textEmailBody;
 
     /**
      * The input field for the email password.
      */
-    private static JPasswordField textEmailPassword;
+    private JPasswordField textEmailPassword;
 
     /**
      * The checkbox which determines whether to save the email password.
      */
-    private static JCheckBox boxEmailSavePassword;
+    private JCheckBox boxEmailSavePassword;
 
     /**
      * The checkbox which determines whether to send emails.
      */
-    private static JCheckBox boxEmailActive;
+    private JCheckBox boxEmailActive;
 
     /**
      * The button which allows searching for all cache types.
      */
-    private static JRadioButton buttonAllTypes;
+    private JRadioButton buttonAllTypes;
 
     /**
      * The button which allows searching for specific cache types.
      */
-    private static JRadioButton buttonSelectTypes;
+    private JRadioButton buttonSelectTypes;
 
     /**
      * The indicator which shows whether a GPX route has been loaded.
      */
-    private static JLabel labelGpx;
+    private JLabel labelGpx;
 
     /**
      * The label which prints some (hopefully) helpful output at the end of the
      * run.
      */
-    private static JLabel labelInfo;
+    private JLabel labelInfo;
 
     /**
      * Launch the application.
@@ -202,7 +206,7 @@ public class Gui extends JFrame {
     /**
      * Create the search area.
      */
-    private static void createSearchArea() {
+    private void createSearchArea() {
         final String[] labelIds = { "username", "start", "destination",
             "radiusKm", "types", "difficultyRange", "terrainRange" };
         final int labelCount = labelIds.length;
@@ -308,7 +312,7 @@ public class Gui extends JFrame {
     /**
      * Create the button and label to load a GPX route.
      */
-    private static void addGpxLoader() {
+    private void addGpxLoader() {
         final JButton buttonLoadGpx = new JButton(
             Translation.getMessage("loadGpx"));
 
@@ -341,7 +345,7 @@ public class Gui extends JFrame {
     /**
      * Create the search button.
      */
-    private static void addSearchButton() {
+    private void addSearchButton() {
         final JButton buttonSearch = new JButton(
             Translation.getMessage("search"));
 
@@ -372,7 +376,7 @@ public class Gui extends JFrame {
     /**
      * Create the cache type buttons.
      */
-    private static void addTypeButtons() {
+    private void addTypeButtons() {
         buttonAllTypes = new JRadioButton(Translation.getMessage("all"));
 
         buttonAllTypes.addMouseListener(new MouseAdapter() {
@@ -391,7 +395,7 @@ public class Gui extends JFrame {
             @Override
             public void focusGained(FocusEvent e) {
                 // Fix error that this button does not get enabled when clicked.
-                if (Configuration.getTypes() == 1023) {
+                if (Configuration.getTypes() == ALL_TYPES) {
                     buttonAllTypes.setSelected(true);
                 } else {
                     buttonSelectTypes.setSelected(true);
@@ -532,7 +536,7 @@ public class Gui extends JFrame {
     /**
      * Create the labels for the email input fields.
      */
-    private static void createEmailLabels() {
+    private void createEmailLabels() {
         createFieldLabel("emailServer", 0, 8);
         createFieldLabel("emailPort", 2, 8);
         createFieldLabel("emailSender", 0, 9);
@@ -545,7 +549,7 @@ public class Gui extends JFrame {
     /**
      * Create the checkboxes for the email area.
      */
-    private static void addMailBoxes() {
+    private void addMailBoxes() {
         boxEmailSavePassword = new JCheckBox(
                 Translation.getMessage("emailSavePassword"));
         final GridBagConstraints gridBagConstraintsSave =
@@ -567,7 +571,7 @@ public class Gui extends JFrame {
     /**
      * Create the information area.
      */
-    private static void createInfoArea() {
+    private void createInfoArea() {
         labelInfo = new JLabel(" ");
         final GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.insets = new Insets(0, 0, 5, 5);
@@ -581,7 +585,7 @@ public class Gui extends JFrame {
     /**
      * Create the separator lines between the different areas.
      */
-    private static void addSeparators() {
+    private void addSeparators() {
         final GridBagConstraints gridBagConstraintsUpper =
             new GridBagConstraints();
         gridBagConstraintsUpper.insets = new Insets(0,0,5,5);
@@ -611,7 +615,7 @@ public class Gui extends JFrame {
      * @param offsetX The offset in x direction.
      * @param offsetY The offset in y direction.
      */
-    private static void createFieldLabel(String name, int offsetX,
+    private void createFieldLabel(String name, int offsetX,
                                          int offsetY) {
         final GridBagConstraints gridBagConstraints =
             new GridBagConstraints();
@@ -632,7 +636,7 @@ public class Gui extends JFrame {
      * @param width The number of columns to span.
      * @return The constraints build with the given values.
      */
-    private static GridBagConstraints createTextConstraints(int offsetX,
+    private GridBagConstraints createTextConstraints(int offsetX,
                                                             int offsetY,
                                                             int width) {
         final GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -649,7 +653,7 @@ public class Gui extends JFrame {
     /**
      * Update the configuration with the GUI values.
      */
-    private static void updateConfiguration() {
+    private void updateConfiguration() {
         Configuration.setUser(textUser.getText());
         Configuration.setRadius(textRadius.getText());
         Configuration.setStart(textStart.getText());
@@ -675,7 +679,7 @@ public class Gui extends JFrame {
     /**
      * Set the values of the input fields according to the configuration.
      */
-    private static void setGuiText() {
+    private void setGuiText() {
         textUser.setText(Configuration.getUser());
         textRadius.setText(Configuration.getRadius());
         textStart.setText(Configuration.getStart());
@@ -683,7 +687,7 @@ public class Gui extends JFrame {
         textDifficultyRange.setText(Configuration.getDifficulty());
         textTerrainRange.setText(Configuration.getTerrain());
 
-        if (Configuration.getTypes() == 1023) {
+        if (Configuration.getTypes() == ALL_TYPES) {
             buttonAllTypes.setSelected(true);
         } else {
             buttonSelectTypes.setSelected(true);
@@ -701,7 +705,7 @@ public class Gui extends JFrame {
     /**
      * Check for a new application version.
      */
-    private static void checkForNewVersion() {
+    private void checkForNewVersion() {
         final String response = GithubCom.getVersion();
 
         // Skip if there has been a connection error.
@@ -726,7 +730,9 @@ public class Gui extends JFrame {
                             Desktop.getDesktop().browse(
                                 new URI("https://github.com/Friedrich"
                                     + "Froebel/oc_car-gui/releases/"));
-                        } catch (IOException | URISyntaxException exc) {
+                        } catch (// NOPMD
+                            IOException | URISyntaxException exc
+                        ) {
                             // pass
                         }
                     }
@@ -745,7 +751,7 @@ public class Gui extends JFrame {
     /**
      * Show dialog box when yournavigation.org should be used.
      */
-    private static String showYournavigationMessage(final String message) {
+    private String showYournavigationMessage(final String message) {
         if (!message.equals("yoursIsOffline")) {
             return message;
         }
@@ -764,7 +770,7 @@ public class Gui extends JFrame {
                         Desktop.getDesktop().browse(
                             new URI("https://github.com/Friedrich"
                                 + "Froebel/oc_car-gui/issues/2"));
-                    } catch (IOException | URISyntaxException exc) {
+                    } catch (IOException | URISyntaxException exc) {  // NOPMD
                         // pass
                     }
                 }

@@ -14,10 +14,12 @@ import javax.swing.border.Border;
  */
 public class ProgressBar extends JFrame {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The progress bar element.
      */
-    private JProgressBar progressBar;
+    private JProgressBar progressBar;  // NOPMD
 
     /**
      * Create the progress bar window.
