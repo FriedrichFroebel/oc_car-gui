@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    ext.commonsVersion = '2.14.0'
+    ext.commonsVersion = '2.15.0'
     ext.mailVersion = '2.1.2'
     ext.activationVersion = '2.1.2'
     ext.jsonVersion = '20231013'
