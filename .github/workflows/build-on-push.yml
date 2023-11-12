@@ -94,7 +94,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: oc_car-ci.jar
-          path: build/libs/oc_car-ci.jar
+          path: build/libs/oc_car-gui-*.jar
 
   # The Windows-based build job.
   buildWindows:
