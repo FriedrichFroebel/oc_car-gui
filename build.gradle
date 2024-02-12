@@ -18,7 +18,7 @@ dependencies {
     ext.commonsVersion = '2.15.1'
     ext.mailVersion = '2.1.2'
     ext.activationVersion = '2.1.2'
-    ext.jsonVersion = '20231013'
+    ext.jsonVersion = '20240205'
     ext.junitVersion = '4.13.2'
 
     implementation "commons-io:commons-io:$commonsVersion"
