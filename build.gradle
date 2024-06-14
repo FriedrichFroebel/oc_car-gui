@@ -82,7 +82,7 @@ tasks.withType(Pmd) {
 }
 
 wrapper {
-    gradleVersion = '8.4'
+    gradleVersion = '8.8'
 }
 
 // Update the version files.
