@@ -64,7 +64,7 @@ jar {
 // Check code style.
 apply plugin: 'checkstyle'
 checkstyle {
-    toolVersion '10.12.4'
+    toolVersion '10.17.0'
 }
 tasks.withType(Checkstyle) {
     reports {
@@ -76,6 +76,9 @@ tasks.withType(Checkstyle) {
 
 // Use the PMD plugin.
 apply plugin: 'pmd'
+pmd {
+    toolVersion '7.2.0'
+}
 tasks.withType(Pmd) {
     ignoreFailures = true
     consoleOutput = true
