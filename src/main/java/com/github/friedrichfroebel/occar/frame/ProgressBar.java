@@ -25,11 +25,11 @@ public class ProgressBar extends JFrame {
      * Create the progress bar window.
      */
     public ProgressBar() {
-        setResizable(false);
-        setTitle(Translation.getMessage("progress"));
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(200, 200, 350, 80);
-        getContentPane().setLayout(null);
+        setResizable(false);  // NOPMD
+        setTitle(Translation.getMessage("progress"));  // NOPMD
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  // NOPMD
+        setBounds(200, 200, 350, 80);  // NOPMD
+        getContentPane().setLayout(null);  // NOPMD
 
         progressBar = new JProgressBar(0, 100);
         progressBar.setBounds(10, 10, 330, 40);
@@ -39,7 +39,7 @@ public class ProgressBar extends JFrame {
         final Border border = BorderFactory.createTitledBorder(
                 Translation.getMessage("performingQueries"));
         progressBar.setBorder(border);
-        getContentPane().add(progressBar, BorderLayout.NORTH);
+        getContentPane().add(progressBar, BorderLayout.NORTH);  // NOPMD
     }
 
     /**

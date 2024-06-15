@@ -37,15 +37,15 @@ public class CachetypeChooser extends JFrame {
         final String preselection =
                 CachetypesBitmask.intToQuery(Configuration.getTypes());
 
-        setTitle(Translation.getMessage("chooseTypes"));
+        setTitle(Translation.getMessage("chooseTypes"));  // NOPMD
 
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new Dimension(320, 220));
-        setBounds(175, 175, 320, 220);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);  // NOPMD
+        setMinimumSize(new Dimension(320, 220));  // NOPMD
+        setBounds(175, 175, 320, 220);  // NOPMD
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
+        setContentPane(contentPane);  // NOPMD
 
         // Use GridBagLayout with three columns of equal weight.
         final GridBagLayout gridBagLayout = new GridBagLayout();

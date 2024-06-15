@@ -37,20 +37,20 @@ class RequestBase {
      */
     static String getPageContent(String urlString) throws IOException {
         final URL url = convertStringToUrl(urlString);
-        InputStream inputStream = url.openStream();
-        BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(inputStream, "UTF-8"));
-
-        final StringBuilder content = new StringBuilder();
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            content.append(line).append("\n");
+        try (InputStream inputStream = url.openStream()) {
+            try (BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(inputStream, "UTF-8"))) {
+                final StringBuilder content = new StringBuilder();
+                while (true) {
+                    String line = bufferedReader.readLine();
+                    if (line == null) {
+                        break;
+                    }
+                    content.append(line).append("\n");
+                }
+                return content.toString();
+            }
         }
-
-        inputStream.close();
-        bufferedReader.close();
-
-        return content.toString();
     }
 
     /**

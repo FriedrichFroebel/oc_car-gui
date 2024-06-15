@@ -176,17 +176,17 @@ public class Gui extends JFrame {
     private Gui() {
         Configuration.readConfig();
 
-        setTitle(MessageFormat.format("Opencaching.de - {0} v{1}",
+        setTitle(MessageFormat.format("Opencaching.de - {0} v{1}",  // NOPMD
                 Translation.getMessage("cachesAlongRoute"),
                 Version.VERSION));
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(450, 390));
-        setBounds(100, 100, 510, 390);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  // NOPMD
+        setMinimumSize(new Dimension(450, 390));  // NOPMD
+        setBounds(100, 100, 510, 390);  // NOPMD
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
+        setContentPane(contentPane);  // NOPMD
 
         final GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
