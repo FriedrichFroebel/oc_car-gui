@@ -64,20 +64,20 @@ jar {
 // Check code style.
 apply plugin: 'checkstyle'
 checkstyle {
-    toolVersion '10.17.0'
+    toolVersion = '10.23.1'
 }
 tasks.withType(Checkstyle) {
     reports {
         xml.required = false
         html.required = true
-        html.stylesheet resources.text.fromFile('config/checkstyle/checkstyle.xsl')
+        html.stylesheet = resources.text.fromFile('config/checkstyle/checkstyle.xsl')
     }
 }
 
 // Use the PMD plugin.
 apply plugin: 'pmd'
 pmd {
-    toolVersion '7.5.0'
+    toolVersion = '7.13.0'
 }
 tasks.withType(Pmd) {
     ignoreFailures = true
@@ -85,7 +85,7 @@ tasks.withType(Pmd) {
 }
 
 wrapper {
-    gradleVersion = '8.8'
+    gradleVersion = '8.14'
 }
 
 // Update the version files.
