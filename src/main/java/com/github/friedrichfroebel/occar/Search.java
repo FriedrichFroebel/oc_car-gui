@@ -13,10 +13,9 @@ import com.github.friedrichfroebel.occar.network.YournavigationOrg;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -183,7 +182,7 @@ class Search {
      */
     private static String downloadCaches() {
         final List<List<String>> subcalls = splitList(caches, 490);
-        final DateFormat dateFormat = new SimpleDateFormat(
+        final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(
             "yyyyMMdd-HHmmss", Locale.getDefault()
         );
 
@@ -192,10 +191,10 @@ class Search {
         for (final List<String> subcall : subcalls) {
             final String codesForCall = String.join("|", subcall);
 
-            final Date date = new Date();
+            final LocalDateTime now = LocalDateTime.now();
             final String outputFile = System.getProperty("user.home")
                     + File.separator + "occar" + File.separator
-                    + dateFormat.format(date) + "PQ.gpx";
+                    + now.format(dateFormat) + "PQ.gpx";
 
             try {
                 OpencachingDe.requestGpxFromCodes(codesForCall,

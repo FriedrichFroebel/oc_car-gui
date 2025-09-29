@@ -2,6 +2,8 @@ package com.github.friedrichfroebel.occar.network;
 
 import com.github.friedrichfroebel.occar.config.Configuration;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Properties;
 
@@ -84,7 +86,10 @@ public class Email {
             messageBodyPart.setHeader("Content-Transfer-Encoding", "base64");
             multipart.addBodyPart(messageBodyPart);
 
-            message.setSentDate(new Date());
+            final Date legacyDate = Date.from(// NOPMD - ReplaceJavaUtilDate
+                LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()
+            );
+            message.setSentDate(legacyDate);
             message.setContent(multipart);
 
             Transport.send(message);
