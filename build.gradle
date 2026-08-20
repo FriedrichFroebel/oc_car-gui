@@ -1,6 +1,6 @@
 // Apply the versions plugin to check for module dependency updates.
 plugins {
-    id 'io.github.ben-manes.versions' version '0.60.0'
+    id 'io.github.ben-manes.versions' version '0.61.0'
 }
 
 // Apply the java plugin to add support for Java
